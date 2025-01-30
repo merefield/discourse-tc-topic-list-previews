@@ -1,15 +1,15 @@
-// import { service } from "@ember/service";
-// import Component from "@glimmer/component";
-// import PreviewsMeta from "./../components/previews-meta";
-// import PreviewsUsers from "./../components/previews-users";
-// import PreviewsActions from "./../components/previews-actions";
+import { service } from "@ember/service";
+import Component from "@glimmer/component";
+import ItemTopicCell from "discourse/components/topic-list/item/topic-cell";
+import PreviewsExcerpt from "./details/previews-excerpt";
+import PreviewsFooter from "./details/previews-footer";
 
-// export default class PreviewsFooter extends Component {
-//   <template>
-//     <div class="topic-footer">
-//       <Previews @topic={{@topic}} />
-//       <PreviewsUsers @topic={{@topic}} />
-//       <PreviewsActions @topic={{@topic}} />
-//     </div>
-//   </template>
-// }
+export default class PreviewsDetails extends Component {
+  <template>
+    <div class="topic-details">
+      <ItemTopicCell @topic={{@topic}} />
+      <PreviewsExcerpt @topic={{@topic}} />
+      <PreviewsFooter @topic={{@topic}} />
+    </div>
+  </template>
+}

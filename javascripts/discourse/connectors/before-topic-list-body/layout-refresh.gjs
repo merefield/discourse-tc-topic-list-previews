@@ -10,6 +10,12 @@ export default class LayoutRefresh extends Component {
 
   attachResizeObserver = modifier((element) => {
     const topicList = element.closest(".topic-list");
+    const listArea = document.getElementById("list-area");
+
+    let isSideBySide = topicList?.classList.contains("side-by-side") &&
+                       listArea &&
+                       listArea.offsetWidth > 900;
+    console.log("isSideBySide", isSideBySide);
 
     if (!topicList) {
       console.error("topic-list-previews resize-observer must be inside a topic-list");
@@ -24,20 +30,18 @@ export default class LayoutRefresh extends Component {
       requestAnimationFrame(() => {
         this.isResizing = true;
         console.log("Resizing grid items");
-        resizeAllGridItems();
+        resizeAllGridItems(isSideBySide);
         this.isResizing = false;
       });
     };
 
     // Observe width changes
-    const onResize = (thing) => {
-      // for (let entry of entries) {
+    const onResize = () => {
         const newWidth = topicList.offsetWidth;
         if (newWidth !== lastWidth) {
           lastWidth = newWidth;
           triggerResize();
         }
-      //}
     };
 
     const resizeObserver = new ResizeObserver(onResize);
@@ -47,7 +51,6 @@ export default class LayoutRefresh extends Component {
     const mutationObserver = new MutationObserver((mutationsList) => {
       for (let mutation of mutationsList) {
         if (mutation.type === "childList") {
-          // debugger;
           triggerResize(); // Resize when children change
           break; // No need to check further mutations in this cycle
         }

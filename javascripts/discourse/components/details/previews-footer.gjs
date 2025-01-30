@@ -1,8 +1,8 @@
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
-import PreviewsMeta from "./../components/previews-meta";
-import PreviewsUsers from "./../components/previews-users";
-import PreviewsActions from "./../components/previews-actions";
+import PreviewsMeta from "./footer/previews-meta";
+import PreviewsUsers from "./footer/previews-users";
+import PreviewsActions from "./footer/previews-actions";
 
 export default class PreviewsFooter extends Component {
   <template>

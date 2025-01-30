@@ -329,17 +329,12 @@
         grid-auto-rows: auto;
 
         .topic-list-item {
+          flex-direction: row;
           box-sizing: border-box;
           cursor: pointer;
           border-radius: 3px;
           grid-row-end: span 1;
-          .topic-thumbnail {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100px;
-            height: auto;
-          }
+
         }
 
         // .tiles-grid-item-content {
@@ -349,7 +344,8 @@
         // }
 
         .topic-details {
-          grid-template-rows: auto auto 20px;
+          // grid-template-rows: auto auto 20px;
+          flex: 2;
 
           .topic-users {
             justify-content: center;
@@ -379,10 +375,11 @@
         }
 
         .topic-thumbnail {
+          flex: 1;
           width: 100%;
           overflow: hidden;
           margin: 0;
-          padding-top: 56.25%;
+          // padding-top: 56.25%;
           position: relative;
           z-index: 100;
           img {
