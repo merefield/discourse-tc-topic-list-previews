@@ -8,7 +8,7 @@ function resizeGridItem (item, grid, rowHeight, rowGap) {
   ).then (() => {
     imagesLoaded (item, function () {
       console.log('resizeGridItem')
-      const contentHeight = item.firstElementChild.getBoundingClientRect().height;
+      const contentHeight = item.getBoundingClientRect().height;
       let rowSpan = Math.ceil (
         (contentHeight + rowGap) / (rowHeight + rowGap)
       );
@@ -21,7 +21,7 @@ function resizeGridItem (item, grid, rowHeight, rowGap) {
 }
 
 function resizeAllGridItems () {
-  const allItems = document.getElementsByClassName ('tiles-grid-item');
+  const allItems = document.getElementsByClassName ('topic-list-item');
   let grid = false;
 
   grid = document.getElementsByTagName('tbody')[0];

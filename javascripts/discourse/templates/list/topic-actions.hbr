@@ -1,7 +1,0 @@
-<div class="topic-actions">
-  <div class="inline">
-    {{#each topicActions as |action|}}
-      {{list-button action}}
-    {{/each}}
-  </div>
-</div>

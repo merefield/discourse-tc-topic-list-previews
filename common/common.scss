@@ -1,11 +1,9 @@
-.topic-list-item {
-  .discourse-tags {
-    display: inline;
-  }
-}
-
 .topic-list .link-bottom-line {
   display: block;
+}
+
+.discourse-tags {
+  display: inline;
 }
 
 .topic-thumbnail {
@@ -52,7 +50,7 @@
     display: grid;
     gap: 4px;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    grid-auto-rows: 4px;
+    // grid-auto-rows: 4px;
     border-top: none;
   }
 
@@ -68,32 +66,31 @@
     grid-column-end: span 2;
   }
 
-  .tiles-grid-item {
+  .topic-list-item {
     box-sizing: border-box;
     cursor: pointer;
     border-radius: 3px;
-    grid-row-end: span 44;
-  }
-
-  .tiles-grid-item-content {
+    // grid-row-end: span 44;
     display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto auto;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto auto;
     grid-template-areas:
-      "photo"
-      "details";
-  }
-
-  .image {
-    grid-area: photo;
-    display: block;
+      "photo photo photo"
+      "title title title"
+      "excerpt excerpt excerpt"
+      "meta posters actions";
   }
 
   .topic-thumbnail {
-    padding: 0px;
-    z-index: -1;
-    width: 100%;
+    grid-area: photo;
     display: block;
+    padding: 0px;
+    // z-index: -1;
+    width: 100%;
+    img {
+      width: 100%;
+      height: auto;
+    }
   }
 
   //TODO add this back when mask functionality is added
@@ -111,37 +108,41 @@
     }
   }
 
-  .topic-details {
-    grid-area: details;
-    display: grid;
-    padding: 10px 10px 10px 10px;
-    z-index: 10;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto auto;
-    grid-template-areas:
-      "theader theader theader"
-      "excerpt excerpt excerpt"
-      "tfooter tfooter tfooter";
-  }
+  // .topic-details {
+  //   grid-area: details;
+  //   display: grid;
+  //   padding: 10px 10px 10px 10px;
+  //   z-index: 10;
+  //   grid-template-columns: auto auto auto;
+  //   grid-template-rows: auto auto auto;
+  //   grid-template-areas:
+  //     "theader theader theader"
+  //     "excerpt excerpt excerpt"
+  //     "tfooter tfooter tfooter";
+  // }
 
-  .topic-header-grid {
-    grid-area: theader;
-    z-index: 99;
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-    grid-template-areas:
-      "title"
-      "category";
-  }
+  // .topic-header-grid {
+  //   grid-area: theader;
+  //   z-index: 99;
+  //   display: grid;
+  //   grid-template-columns: auto;
+  //   grid-template-rows: auto;
+  //   grid-template-areas:
+  //     "title"
+  //     "category";
+  // }
 
   .show-more.has-topics {
     position: relative;
   }
 
+  .main-link {
+    grid-area: title;
+  }
+
   .topic-title {
     font-size: 1.143em;
-    grid-area: title;
+    // grid-area: title;
     padding: 0 0 0 0;
 
     .link-top-line {
@@ -171,18 +172,18 @@
     float: right;
   }
 
-  .topic-category {
-    grid-area: category;
-    display: inline-block;
-  }
+  // .topic-category {
+  //   grid-area: category;
+  //   display: inline-block;
+  // }
 
-  .topic-tags {
-    grid-area: tags;
+  // .topic-tags {
+  //   grid-area: tags;
 
-    .discourse-tags {
-      display: inline-block;
-    }
-  }
+  //   .discourse-tags {
+  //     display: inline-block;
+  //   }
+  // }
 
   .topic-excerpt {
     grid-area: excerpt;
@@ -206,18 +207,19 @@
     hyphens: auto;
   }
 
-  .topic-footer {
-    grid-area: tfooter;
-    vertical-align: middle;
-    display: grid;
-    z-index: 10;
-    grid-template-columns: 9fr 12fr 10fr;
+  // .topic-footer {
+  //   grid-area: tfooter;
+  //   vertical-align: middle;
+  //   display: grid;
+  //   z-index: 10;
+  //   grid-template-columns: 9fr 12fr 10fr;
 
-    grid-template-rows: 1;
-    grid-template-areas: "meta posters actions";
-  }
+  //   grid-template-rows: 1;
+  //   grid-template-areas: "meta posters actions";
+  // }
 
   .topic-meta {
+    grid-area: meta;
     display: flex;
 
     .container {
@@ -252,7 +254,7 @@
     font-size: 0.9em;
   }
 
-  .topic-users {
+  .topic-posters {
     grid-area: posters;
     display: flex;
 
