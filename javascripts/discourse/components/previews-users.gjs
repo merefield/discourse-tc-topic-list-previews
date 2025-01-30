@@ -23,7 +23,7 @@ export default class PreviewsUsers extends Component {
   }
 
   <template>
-    <div class="topic-posters topic-list-data">
+    {{!-- <div class="topic-posters topic-list-data"> --}}
       <div class='topic-users'>
         <div class="inline">
           {{#each this.abbrieviatedPosters as |poster|}}
@@ -37,6 +37,6 @@ export default class PreviewsUsers extends Component {
           {{/each}}
         </div>
       </div>
-    </div>
+    {{!-- </div> --}}
   </template>
 }

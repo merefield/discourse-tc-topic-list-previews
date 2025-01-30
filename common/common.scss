@@ -50,7 +50,7 @@
     display: grid;
     gap: 4px;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    // grid-auto-rows: 4px;
+    grid-auto-rows: 4px;
     border-top: none;
   }
 
@@ -71,14 +71,15 @@
     cursor: pointer;
     border-radius: 3px;
     // grid-row-end: span 44;
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto auto auto;
-    grid-template-areas:
-      "photo photo photo"
-      "title title title"
-      "excerpt excerpt excerpt"
-      "meta posters actions";
+    display: flex;
+    flex-direction: column;
+    // grid-template-columns: 9fr 12fr 10fr;
+    // grid-template-rows: auto auto auto auto;
+    // grid-template-areas:
+    //   "photo photo photo"
+    //   "title title title"
+    //   "excerpt excerpt excerpt"
+    //   "meta posters actions";
   }
 
   .topic-thumbnail {
@@ -192,7 +193,9 @@
     max-width: 100%;
     float: left;
     clear: both;
-    padding-right: 0px;
+    // padding-right: 0px;
+    padding-right: .67em;
+    padding-left: .67em;
 
     overflow-wrap: break-word;
     word-wrap: break-word;
@@ -218,8 +221,19 @@
   //   grid-template-areas: "meta posters actions";
   // }
 
+  .topic-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    padding-left: .67em;
+    padding-right: .67em;
+  }
+
   .topic-meta {
     grid-area: meta;
+    vertical-align: middle;
     display: flex;
 
     .container {
@@ -254,9 +268,10 @@
     font-size: 0.9em;
   }
 
-  .topic-posters {
+  .topic-users {
     grid-area: posters;
     display: flex;
+    vertical-align: middle;
 
     .inline {
       align-self: center;
@@ -313,18 +328,25 @@
         grid-template-columns: auto;
         grid-auto-rows: auto;
 
-        .tiles-grid-item {
+        .topic-list-item {
           box-sizing: border-box;
           cursor: pointer;
           border-radius: 3px;
           grid-row-end: span 1;
+          .topic-thumbnail {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100px;
+            height: auto;
+          }
         }
 
-        .tiles-grid-item-content {
-          grid-template-areas: "photo details";
-          grid-template-columns: 1fr 2fr;
-          grid-template-rows: auto;
-        }
+        // .tiles-grid-item-content {
+        //   grid-template-areas: "photo details";
+        //   grid-template-columns: 1fr 2fr;
+        //   grid-template-rows: auto;
+        // }
 
         .topic-details {
           grid-template-rows: auto auto 20px;

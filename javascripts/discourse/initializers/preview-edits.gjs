@@ -6,6 +6,7 @@ import PreviewsMeta from "./../components/previews-meta";
 import PreviewsUsers from "./../components/previews-users";
 import PreviewsExcerpt from "./../components/previews-excerpt";
 import PreviewsActions from "./../components/previews-actions";
+import PreviewsFooter from "./../components/previews-footer";
 import { resizeAllGridItems } from "../lib/gridupdate";
 import loadScript from "discourse/lib/load-script";
 
@@ -34,23 +35,27 @@ const previewsPosters = <template>
     <PreviewsUsers @topic={{@topic}}/>
 </template>;
 
+const previewsFooter = <template>
+    <PreviewsFooter @topic={{@topic}}/>
+</template>;
+
 
 export default apiInitializer("0.8", (api) => {
   const router = api.container.lookup("service:router");
   const currentUser = api.container.lookup("service:current-user");
   const topicListPreviewsService = api.container.lookup("service:topic-list-previews");
-    api.onPageChange(() => {
-    loadScript(
-      settings.theme_uploads.imagesloaded
-    ).then(() => {
-      if (document.querySelector(".tiles-style")) {
-        imagesLoaded(
-          document.querySelector(".tiles-style"),
-          resizeAllGridItems()
-        );
-      }
-    });
-  });
+  //   api.onPageChange(() => {
+  //   loadScript(
+  //     settings.theme_uploads.imagesloaded
+  //   ).then(() => {
+  //     if (document.querySelector(".tiles-style")) {
+  //       imagesLoaded(
+  //         document.querySelector(".tiles-style"),
+  //         resizeAllGridItems()
+  //       );
+  //     }
+  //   });
+  // });
   api.registerValueTransformer(
     "topic-list-columns",
     ({ value: columns }) => {
@@ -83,6 +88,9 @@ api.registerValueTransformer(
     if (topicListPreviewsService.displayThumbnails) {
       value.push("tiles-style");
     }
+    if (settings.topic_list_tiles_wide_format) {
+      value.push("side-by-side");
+    }
     return value;
   }
 )
@@ -102,18 +110,18 @@ api.registerValueTransformer(
           { after: "topic" }
         )
       };
-      columns.add("previews-meta",
-         { item: previewsMeta },
+      // columns.add("previews-meta",
+      //    { item: previewsMeta },
+      //     { after: "previews-excerpt" }
+      //   )
+      columns.add("previews-footer",
+         { item: previewsFooter },
           { after: "previews-excerpt" }
         )
-      columns.add("previews-posters",
-         { item: previewsPosters },
-          { after: "previews-meta" }
-        )
-        columns.add("previews-actions",
-         { item: previewsActions },
-          { after: "previews-posters" }
-        )
+        // columns.add("previews-actions",
+        //  { item: previewsActions },
+        //   { after: "previews-posters" }
+        // )
       // columns.add("previews-",
       //    { item: previewsPosters },
       //     { after: "topic" }
