@@ -1,6 +1,7 @@
 import { apiInitializer } from "discourse/lib/api";
 import SortableColumn from "discourse/components/topic-list/header/sortable-column";
 import { service } from "@ember/service";
+import { htmlSafe } from "@ember/template";
 import PreviewsThumbnail from "./../components/previews-thumbnail";
 import PreviewsTilesThumbnail from "./../components/previews-tiles-thumbnail";
 import PreviewsDetails from "./../components/previews-details";
@@ -24,20 +25,21 @@ const previewsDetails = <template>
 export default apiInitializer("0.8", (api) => {
   const router = api.container.lookup("service:router");
   const currentUser = api.container.lookup("service:current-user");
+  const siteSettings = api.container.lookup("service:site-settings");
   const topicListPreviewsService = api.container.lookup("service:topic-list-previews");
 
-       api.onPageChange(() => {
-        loadScript(
-          settings.theme_uploads.imagesloaded
-        ).then(() => {
-          if (document.querySelector(".tiles-style")) {
-            imagesLoaded(
-              document.querySelector(".tiles-style"),
-              resizeAllGridItems()
-            );
-          }
-        });
-      });
+  api.onPageChange(() => {
+  loadScript(
+    settings.theme_uploads.imagesloaded
+    ).then(() => {
+      if (document.querySelector(".tiles-style")) {
+        imagesLoaded(
+          document.querySelector(".tiles-style"),
+          resizeAllGridItems()
+        );
+      }
+    });
+  });
 
   api.registerValueTransformer(
     "topic-list-columns",
@@ -60,6 +62,45 @@ export default apiInitializer("0.8", (api) => {
       if (topicListPreviewsService.displayTiles) {
         value.push("tiles-style");
       }
+      let red = context.topic.dominant_colour?.red || 0;
+      let green = context.topic.dominant_colour?.green || 0;
+      let blue = context.topic.dominant_colour?.blue || 0;
+
+      //make 1 the minimum value to avoid total black
+      red =  red == 0 ? 1 : red;
+      green =  green == 0 ? 1 : green;
+      blue =  blue == 0 ? 1 : blue;
+
+      let newRgb = "rgb(" + red + "," + green + "," + blue + ")";
+
+      let averageIntensity =  context.topic.dominant_colour ? (red + green + blue) / 3 : null;
+
+      if (averageIntensity > 127) {
+        value.push("dark-text");
+      } else {
+        value.push("white-text");
+      }
+
+      return value;
+    }
+  )
+
+  api.registerValueTransformer(
+    "topic-list-item-style",
+    ({ value, context }) => {
+      let red = context.topic.dominant_colour?.red || 0;
+      let green = context.topic.dominant_colour?.green || 0;
+      let blue = context.topic.dominant_colour?.blue || 0;
+
+      //make 1 the minimum value to avoid total black
+      red =  red == 0 ? 1 : red;
+      green =  green == 0 ? 1 : green;
+      blue =  blue == 0 ? 1 : blue;
+
+      let newRgb = "rgb(" + red + "," + green + "," + blue + ")";
+
+      value.push(htmlSafe(`background: ${newRgb};`));
+
       return value;
     }
   )

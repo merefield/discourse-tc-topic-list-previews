@@ -12,8 +12,6 @@ export default class LayoutRefresh extends Component {
     const topicList = element.closest(".topic-list");
     const listArea = document.getElementById("list-area");
 
-
-
     if (!topicList) {
       console.error("topic-list-previews resize-observer must be inside a topic-list");
       return;
