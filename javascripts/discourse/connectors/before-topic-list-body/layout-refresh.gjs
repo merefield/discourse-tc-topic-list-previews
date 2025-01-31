@@ -12,10 +12,7 @@ export default class LayoutRefresh extends Component {
     const topicList = element.closest(".topic-list");
     const listArea = document.getElementById("list-area");
 
-    let isSideBySide = topicList?.classList.contains("side-by-side") &&
-                       listArea &&
-                       listArea.offsetWidth > 900;
-    console.log("isSideBySide", isSideBySide);
+
 
     if (!topicList) {
       console.error("topic-list-previews resize-observer must be inside a topic-list");
@@ -29,6 +26,9 @@ export default class LayoutRefresh extends Component {
       if (this.isResizing) return;
       requestAnimationFrame(() => {
         this.isResizing = true;
+        let isSideBySide = topicList?.classList.contains("side-by-side") &&
+                       listArea &&
+                       listArea.offsetWidth > 900;
         console.log("Resizing grid items");
         resizeAllGridItems(isSideBySide);
         this.isResizing = false;

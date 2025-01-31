@@ -1,18 +1,21 @@
+@import "variables";
+
 .topic-list .link-bottom-line {
   display: block;
 }
 
-.discourse-tags {
-  display: inline;
-}
-
 .topic-thumbnail {
   float: left;
-  padding-right: 15px;
+  margin-right: 15px;
 
   .no-thumbnail {
     display: none;
   }
+}
+
+img.non-tiles-thumbnail {
+  height: var(--thumbnail-height);
+  width: var(--thumbnail-width);
 }
 
 .topic-excerpt {
@@ -59,6 +62,10 @@
     border: none;
   }
 
+  .topic-list-data:first-of-type {
+    padding-left: 0;
+  }
+
   .tiles-grid-item-width2 {
     box-sizing: border-box;
     cursor: pointer;
@@ -70,16 +77,13 @@
     box-sizing: border-box;
     cursor: pointer;
     border-radius: 3px;
-    // grid-row-end: span 44;
+    grid-row-end: span 44;
     display: flex;
     flex-direction: column;
-    // grid-template-columns: 9fr 12fr 10fr;
-    // grid-template-rows: auto auto auto auto;
-    // grid-template-areas:
-    //   "photo photo photo"
-    //   "title title title"
-    //   "excerpt excerpt excerpt"
-    //   "meta posters actions";
+    
+    .main-link {
+      padding-left: 0.67em;
+    }
   }
 
   .topic-thumbnail {
@@ -173,27 +177,7 @@
     float: right;
   }
 
-  // .topic-category {
-  //   grid-area: category;
-  //   display: inline-block;
-  // }
-
-  // .topic-tags {
-  //   grid-area: tags;
-
-  //   .discourse-tags {
-  //     display: inline-block;
-  //   }
-  // }
-
   .topic-excerpt {
-    grid-area: excerpt;
-    line-height: 1.3;
-    max-height: 300px;
-    max-width: 100%;
-    float: left;
-    clear: both;
-    // padding-right: 0px;
     padding-right: .67em;
     padding-left: .67em;
 
@@ -210,17 +194,6 @@
     hyphens: auto;
   }
 
-  // .topic-footer {
-  //   grid-area: tfooter;
-  //   vertical-align: middle;
-  //   display: grid;
-  //   z-index: 10;
-  //   grid-template-columns: 9fr 12fr 10fr;
-
-  //   grid-template-rows: 1;
-  //   grid-template-areas: "meta posters actions";
-  // }
-
   .topic-footer {
     display: flex;
     flex-direction: row;
@@ -232,7 +205,7 @@
   }
 
   .topic-meta {
-    grid-area: meta;
+    flex: 1;
     vertical-align: middle;
     display: flex;
 
@@ -271,6 +244,7 @@
   .topic-users {
     grid-area: posters;
     display: flex;
+    flex: 1;
     vertical-align: middle;
 
     .inline {
@@ -288,7 +262,7 @@
   }
 
   .topic-actions {
-    grid-area: actions;
+    flex: 1;
     display: flex;
     justify-content: flex-end;
 
@@ -390,6 +364,10 @@
             transform: translate(-50%, -50%);
           }
         }
+
+        .topic-footer {
+          margin-bottom: 10px;
+        }
       }
     }
   }
@@ -472,10 +450,12 @@ img.thumbnail {
 
 .like-count,
 .list-vote-count {
+  z-index: 100;
   color: var(--primary-medium);
-  font-size: 13px;
   display: inline-block;
-  padding-right: 5px;
+  position: relative;
+  top: 0px;
+  line-height: 0.01em;
   vertical-align: 0.125em;
 
   .vote-count {
@@ -492,7 +472,6 @@ img.thumbnail {
 // }
 
 button.list-button {
-  font-size: 0.9em;
   background: transparent;
   border: none;
   padding: 2px 4px;
@@ -507,7 +486,7 @@ button.list-button {
     vertical-align: bottom;
   }
 
-  &.has-like,
+  &.has-liked svg,
   &.topic-like:not([disabled]):hover {
     color: var(--love);
   }

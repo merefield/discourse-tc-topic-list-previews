@@ -4,6 +4,8 @@ import { getOwner } from "@ember/application";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
+import { ajax } from "discourse/lib/ajax";
+import { popupAjaxError } from "discourse/lib/ajax-error";
 import concatClass from "discourse/helpers/concat-class";
 import DButton from "discourse/components/d-button";
 import icon from "discourse/helpers/d-icon";
@@ -13,7 +15,8 @@ export default class PreviewsActionsComponent extends Component {
   @service currentUser;
   @service modal;
   topicId = this.args.topic.id;
-  postId = this.args.topic_post_id;
+  postId = this.args.topic.topic_post_id;
+  @tracked canUnlike = this.args.topic.topic_post_can_unlike || !this.args.topic.topic_post_liked
   @tracked likeCount = this.args.topic.like_count;
   @tracked hasLiked = this.args.topic.topic_post_liked;
   @tracked bookmarked = this.args.topic.topic_post_bookmarked;
@@ -60,7 +63,7 @@ export default class PreviewsActionsComponent extends Component {
   };
 
   @action
-  toggledBookmark() {
+  toggleBookmark() {
     if (!this.bookmarked) {
       const data = {
         reminder_type: null,
@@ -222,14 +225,14 @@ export default class PreviewsActionsComponent extends Component {
     );
   }
 
-  get hasLike(){
-    return this.args.topic.hasLiked ? "has-like" : "";
+  get hasLike() {
+    return this.hasLiked ? "has-liked" : "";
   }
 
-  get likeDisabled(){
+  get likeDisabled() {
     let disabled = this.args.topic.topic_post_is_current_users;
-    if (this.args.topic.hasLiked) {
-      disabled = disabled ? true : !this.args.topic.canUnlike;
+    if (this.hasLiked) {
+      disabled = disabled ? true : !this.canUnlike;
     }
     return disabled;
   }
@@ -252,6 +255,9 @@ export default class PreviewsActionsComponent extends Component {
     <div class="topic-actions">
       <div class="inline">
         {{#if this.showLikeButton}}
+            {{#if this.likeCount}}
+              <span class="like-count">{{this.likeCount}}</span>
+            {{/if}}
           <DButton
             @action={{this.toggleLike}}
             class={{concatClass "list-button btn-transparent topic-like" this.hasLike}}
@@ -260,9 +266,6 @@ export default class PreviewsActionsComponent extends Component {
             data-topic_id={{@topic.id}}
             data-topic_post_id={{@topic_post_id}}
           >
-            {{#if @topic.like_count}}
-              <span class="like-count">{{@topic.like_count}}</span>
-            {{/if}}
             {{icon "heart"}}
           </DButton>
         {{/if}}

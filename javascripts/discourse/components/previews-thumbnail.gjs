@@ -6,14 +6,14 @@ import { action, computed } from "@ember/object";
 import { inject as service } from "@ember/service";
 import I18n from "I18n";
 
-export default class PreviewsThumbnailComponent extends Component {
+export default class PreviewsThumbnail extends Component {
   @service currentUser;
+  @service topicListPreviews;
 
   get getDefaultThumbnail() {
     const defaultThumbnail = settings.topic_list_default_thumbnail;
     return defaultThumbnail ? defaultThumbnail : false;
   };
-
 
   get previewUrl() {
     const preferLowRes =
@@ -38,11 +38,13 @@ export default class PreviewsThumbnailComponent extends Component {
     }
   };
 
+  get isTiles() {
+    return this.args.tiles ? "tiles-thumbnail" : "non-tiles-thumbnail";
+  };
+
   <template>
-    <div class="topic-thumbnail">
-      {{#if this.previewUrl}}
-        <img class="thumbnail" src="{{this.previewUrl}}" loading="lazy"/>
-      {{/if}}
-    </div>
+    {{#if this.previewUrl}}
+      <img class={{concatClass "thumbnail" this.isTiles}} src="{{this.previewUrl}}" loading="lazy"/>
+    {{/if}}
   </template>
 }

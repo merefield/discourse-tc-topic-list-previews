@@ -1,5 +1,6 @@
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
+import TopicExcerpt from "discourse/components/topic-list/topic-excerpt";
 
 export default class PreviewsExcerpt extends Component {
   @service topicListPreviews;
@@ -9,12 +10,8 @@ export default class PreviewsExcerpt extends Component {
   }
 
   <template>
-    {{!-- {{#if this.showExcerpt}} --}}
-    <div class="topic-excerpt">
-      <a href='{{@topic.url}}'>
-        {{@topic.excerpt}}
-      </a>
-    </div>
-    {{!-- {{/if}} --}}
+    {{#if this.showExcerpt}}
+      <TopicExcerpt @topic={{@topic}} />
+     {{/if}}
   </template>
 }
