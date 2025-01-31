@@ -44,7 +44,6 @@ export default apiInitializer("0.8", (api) => {
   api.registerValueTransformer(
     "topic-list-columns",
     ({ value: columns }) => {
-      console.log("topicListPreviewsService", topicListPreviewsService);
       if (topicListPreviewsService.displayTiles) {
         columns.delete("activity");
         columns.delete("replies");
@@ -55,6 +54,14 @@ export default apiInitializer("0.8", (api) => {
       return columns;
     }
   );
+
+  api.registerValueTransformer("topic-list-item-mobile-layout", ({ value }) => {
+    if (topicListPreviewsService.displayTiles) {
+      // Force the desktop layout
+      return false;
+    }
+    return value;
+  });
 
   api.registerValueTransformer(
     "topic-list-item-class",
