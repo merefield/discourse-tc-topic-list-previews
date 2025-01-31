@@ -33,6 +33,8 @@ export default class LayoutRefresh extends Component {
       });
     };
 
+    Window.triggerResize = triggerResize;
+
     // Observe width changes
     const onResize = () => {
         const newWidth = topicList.offsetWidth;
