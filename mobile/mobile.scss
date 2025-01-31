@@ -1,237 +1,241 @@
- .mobile-view .topic-list {
+//  .mobile-view .topic-list {
 
-  &.showThumbnail {
-    .right {
-    //TODO make this dependent on a mobile thumbnail width setting?
-      margin-left: 95px;
-    }
-  }
+//   &.showThumbnail {
+//     .right {
+//     //TODO make this dependent on a mobile thumbnail width setting?
+//       margin-left: 95px;
+//     }
+//   }
 
-  .right {
-    .topic-item-stats {
-        grid-template-columns: auto 50px;
-    }
-  }
+//   .right {
+//     .topic-item-stats {
+//         grid-template-columns: auto 50px;
+//     }
+//   }
 
-  &.showActions {
-    .right {
-      .topic-item-stats {
-        grid-template-columns: auto 150px;
-      }
-    }
-  }
+//   &.showActions {
+//     .right {
+//       .topic-item-stats {
+//         grid-template-columns: auto 150px;
+//       }
+//     }
+//   }
 
-  .right {
-    .topic-item-stats {
-      display:grid;
-      grid-template-areas:
-      "catandtags actionandmeta";
+//   .right {
+//     .topic-item-stats {
+//       display:grid;
+//       grid-template-areas:
+//       "catandtags actionandmeta";
 
-      .category-and-tags {
-        grid-area: catandtags;
-        display: flex-wrap;
-      }
+//       .category-and-tags {
+//         grid-area: catandtags;
+//         display: flex-wrap;
+//       }
 
-      .hang-right {
-        grid-area: actionandmeta;
-        align-self: end;
-        justify-self: right;
+//       .hang-right {
+//         grid-area: actionandmeta;
+//         align-self: end;
+//         justify-self: right;
 
-        .keep-in-line {
-          display: inline-block;
+//         .keep-in-line {
+//           display: inline-block;
 
-          .num {
-            text-align: right;
-            float: right;
-          }
-        }
-      }
-    }
+//           .num {
+//             text-align: right;
+//             float: right;
+//           }
+//         }
+//       }
+//     }
 
-    .main-link {
-      margin-bottom: 8px;
-    }
-  }
+//     .main-link {
+//       margin-bottom: 8px;
+//     }
+//   }
 
-  .topic-details {
-    max-height: initial;
-    position: relative;
-    padding-left: 10px;
-    min-height: 45px;
-    overflow: hidden;
-  }
+//   .topic-details {
+//     max-height: initial;
+//     position: relative;
+//     padding-left: 10px;
+//     min-height: 45px;
+//     overflow: hidden;
+//   }
 
-  .topic-excerpt {
-    max-height: initial;
-    width: 100%;
-  }
+//   .topic-excerpt {
+//     max-height: initial;
+//     width: 100%;
+//   }
 
-  .topic-category {
-    margin-top: 6px;
-    display: block;
-  }
+//   .topic-category {
+//     margin-top: 6px;
+//     display: block;
+//   }
 
-  .topic-actions {
-    float: left;
-    clear: both;
-    display: flex;
-    align-items: center;
-  }
+//   .topic-actions {
+//     float: left;
+//     clear: both;
+//     display: flex;
+//     align-items: center;
+//   }
 
-  .list-button {
-    font-size: 1em;
-    padding: 0 10px 0 0px;
-  }
+//   .list-button {
+//     font-size: 1em;
+//     padding: 0 10px 0 0px;
+//   }
 
-  .like-count {
-    float: left;
-  }
+//   .like-count {
+//     float: left;
+//   }
 
-  .list-button i {
-    vertical-align: top;
-  }
+//   .list-button i {
+//     vertical-align: top;
+//   }
 
-  img.thumbnail:not(.tiles-thumbnail) {
-    max-width: 80px;
-    max-height: 80px;
-  }
+//   img.thumbnail:not(.tiles-thumbnail) {
+//     max-width: 80px;
+//     max-height: 80px;
+//   }
 
-  .discourse-tags {
-    float: initial;
-    clear: initial;
-    flex-wrap: wrap;
-  }
-}
+//   .discourse-tags {
+//     float: initial;
+//     clear: initial;
+//     flex-wrap: wrap;
+//   }
+// }
 
 //tiles styling  specific styling
-.mobile-view .tiles-style {
-  tbody {
-    .topic-list-item-separator {
-      display: none;
-    }
-    display: grid;
-    grid-gap: 6px;
-    grid-auto-rows: 10px;
-  }
 
-  .tiles-grid-sizer,
-  .tiles-grid-item {
-    // 1 column on all phones
-    width: 100%;
-  }
-
-  .tiles-grid-item-width2 {
-    grid-column-end: span 1;
-  }
-
-  .tiles-gutter-sizer {
-    width: 6px;
-  }
-
-  .topic-title {
-    font-size: 1.143em;
-    grid-area: title;
-    padding: 0 0 0 0;
-
-    .link-top-line {
-      flex: 1 1 auto;
-    }
-
-    a.topic-featured-link {
-      display: block;
-      padding-left: 0;
-      padding-top: 3px;
-    }
-
-    .badge-notification.new-topic {
-      vertical-align: top;
-      display: inline-block;
-    }
-  }
-
-  .topic-statuses {
-    float: right;
-  }
-
-  .topic-category {
-    grid-area: category;
-    padding: 0 0 4px 0;
-    .badge-wrapper.box span {
-      border-radius: 3px;
-    }
-  }
-
-  .topic-thumbnail {
-    grid-area: photo;
-  }
-
-  .topic-thumbnail {
-    padding: 0px;
-    z-index: -1;
-    width: 100%;
-    display: block;
-  }
-
-  // .image-mask {
-  //   position: relative;
-  //   margin-bottom: -200px;
-  //   height: 100%;
-  //   width: 100%;
-  //   z-index: 1;
-  // }
-
-  .thumbnail {
-    .no-thumbnail {
-      display: none;
-    }
-  }
-
-  .topic-tags {
-    grid-area: tags;
-
-    .discourse-tags {
-      display: inline-block;
-    }
-
-    .discourse-tag.box {
-      border-radius: 3px;
-      background-color: var(--primary-medium);
-      color: var(--secondary);
-    }
-  }
-
-  .topic-poster-names a {
-    font-size: 0.9em;
-  }
-
-  div.sub,
-  span.sub {
-    padding: 0;
+  .topic-list.tiles-style .num.posts-map {
     font-size: 12px;
   }
 
-  .topic-list {
-    padding-top: 10px;
-  }
+//   tbody {
+//     .topic-list-item-separator {
+//       display: none;
+//     }
+//     display: grid;
+//     grid-gap: 6px;
+//     grid-auto-rows: 10px;
+//   }
 
-  a.topic-featured-link {
-    display: block;
-    padding-left: 0;
-    padding-top: 3px;
-  }
+//   .tiles-grid-sizer,
+//   .tiles-grid-item {
+//     // 1 column on all phones
+//     width: 100%;
+//   }
 
-  .topic-actions {
-    .like-count {
-      float: unset;
-    }
-  }
-}
+//   .tiles-grid-item-width2 {
+//     grid-column-end: span 1;
+//   }
 
-.topic-thumbnail {
-  float: left;
-  padding-right: 15px;
+//   .tiles-gutter-sizer {
+//     width: 6px;
+//   }
 
-  .no-thumbnail {
-    display: none;
-  }
-}
+//   .topic-title {
+//     font-size: 1.143em;
+//     grid-area: title;
+//     padding: 0 0 0 0;
+
+//     .link-top-line {
+//       flex: 1 1 auto;
+//     }
+
+//     a.topic-featured-link {
+//       display: block;
+//       padding-left: 0;
+//       padding-top: 3px;
+//     }
+
+//     .badge-notification.new-topic {
+//       vertical-align: top;
+//       display: inline-block;
+//     }
+//   }
+
+//   .topic-statuses {
+//     float: right;
+//   }
+
+//   .topic-category {
+//     grid-area: category;
+//     padding: 0 0 4px 0;
+//     .badge-wrapper.box span {
+//       border-radius: 3px;
+//     }
+//   }
+
+//   .topic-thumbnail {
+//     grid-area: photo;
+//   }
+
+//   .topic-thumbnail {
+//     padding: 0px;
+//     z-index: -1;
+//     width: 100%;
+//     display: block;
+//   }
+
+//   // .image-mask {
+//   //   position: relative;
+//   //   margin-bottom: -200px;
+//   //   height: 100%;
+//   //   width: 100%;
+//   //   z-index: 1;
+//   // }
+
+//   .thumbnail {
+//     .no-thumbnail {
+//       display: none;
+//     }
+//   }
+
+//   .topic-tags {
+//     grid-area: tags;
+
+//     .discourse-tags {
+//       display: inline-block;
+//     }
+
+//     .discourse-tag.box {
+//       border-radius: 3px;
+//       background-color: var(--primary-medium);
+//       color: var(--secondary);
+//     }
+//   }
+
+//   .topic-poster-names a {
+//     font-size: 0.9em;
+//   }
+
+//   div.sub,
+//   span.sub {
+//     padding: 0;
+//     font-size: 12px;
+//   }
+
+//   .topic-list {
+//     padding-top: 10px;
+//   }
+
+//   a.topic-featured-link {
+//     display: block;
+//     padding-left: 0;
+//     padding-top: 3px;
+//   }
+
+//   .topic-actions {
+//     .like-count {
+//       float: unset;
+//     }
+//   }
+// }
+
+// .topic-thumbnail {
+//   float: left;
+//   padding-right: 15px;
+
+//   .no-thumbnail {
+//     display: none;
+//   }
+// }
