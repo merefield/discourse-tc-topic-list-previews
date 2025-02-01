@@ -1,5 +1,69 @@
 @import "variables";
 
+.topic-list-item {
+  &.white-text {
+    .topic-details,
+    a.title,
+    a.title:not(.badge-notification),
+    .topic-featured-link,
+    .topic-excerpt,
+    .discourse-tag,
+    .topic-views,
+    .badge-posts,
+    button.list-button:not(.has-liked):not(.bookmarked) svg,
+    .like-count {
+      color: #ddd;
+    }
+
+    &.visited {
+      .topic-details,
+      a.title,
+      a.title:not(.badge-notification),
+      .topic-featured-link,
+      .topic-excerpt,
+      .discourse-tag,
+      .topic-views,
+      .badge-posts,
+      .like-count {
+        color: #ccc;
+      }
+    }
+  }
+
+  &.dark-text {
+    .discourse-tag.box {
+      background-color: #ccc;
+    }
+
+    .topic-details,
+    a.title,
+    a.title:not(.badge-notification),
+    .topic-featured-link,
+    .topic-excerpt,
+    .discourse-tag,
+    .topic-views,
+    .badge-posts,
+    button.list-button:not(.has-liked):not(.bookmarked) svg,
+    .like-count {
+      color: #333;
+    }
+
+    &.visited {
+      .topic-details,
+      a.title,
+      a.title:not(.badge-notification),
+      .topic-featured-link,
+      .topic-excerpt,
+      .discourse-tag,
+      .topic-views,
+      .badge-posts,
+      .like-count {
+        color: #444;
+      }
+    }
+  }
+}
+
 .topic-list .link-bottom-line {
   display: block;
 }
@@ -43,6 +107,10 @@ img.non-tiles-thumbnail {
 
 .tiles-style {
   th {
+    display: none;
+  }
+
+  .topic-statuses svg.d-icon-bookmark {
     display: none;
   }
 
@@ -345,68 +413,6 @@ img.non-tiles-thumbnail {
         .topic-footer {
           margin-bottom: 10px;
         }
-      }
-    }
-  }
-}
-
-.topic-list-item {
-  &.white-text {
-    .topic-details,
-    a.title,
-    a.title:not(.badge-notification),
-    .topic-featured-link,
-    .topic-excerpt,
-    .discourse-tag,
-    .topic-views,
-    .badge-posts,
-    .like-count {
-      color: #ddd;
-    }
-
-    &.visited {
-      .topic-details,
-      a.title,
-      a.title:not(.badge-notification),
-      .topic-featured-link,
-      .topic-excerpt,
-      .discourse-tag,
-      .topic-views,
-      .badge-posts,
-      .like-count {
-        color: #ccc;
-      }
-    }
-  }
-
-  &.dark-text {
-    .discourse-tag.box {
-      background-color: #ccc;
-    }
-
-    .topic-details,
-    a.title,
-    a.title:not(.badge-notification),
-    .topic-featured-link,
-    .topic-excerpt,
-    .discourse-tag,
-    .topic-views,
-    .badge-posts,
-    .like-count {
-      color: #333;
-    }
-
-    &.visited {
-      .topic-details,
-      a.title,
-      a.title:not(.badge-notification),
-      .topic-featured-link,
-      .topic-excerpt,
-      .discourse-tag,
-      .topic-views,
-      .badge-posts,
-      .like-count {
-        color: #444;
       }
     }
   }

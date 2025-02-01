@@ -81,8 +81,8 @@ export default apiInitializer("0.8", (api) => {
         let newRgb = "rgb(" + red + "," + green + "," + blue + ")";
 
         let averageIntensity =  context.topic.dominant_colour ? (red + green + blue) / 3 : null;
-
-        if (!context.topic?.dominant_colour) {
+        console.log(context.topic.dominant_colour);
+        if (Object.keys(context.topic?.dominant_colour).length === 0) {
           value.push("no-background-colour");
         } else if (averageIntensity > 127) {
           value.push("dark-text");
@@ -100,7 +100,8 @@ export default apiInitializer("0.8", (api) => {
   api.registerValueTransformer(
     "topic-list-item-style",
     ({ value, context }) => {
-      if (siteSettings.topic_list_enable_thumbnail_colour_determination) {
+      if (siteSettings.topic_list_enable_thumbnail_colour_determination &&
+           Object.keys(context.topic?.dominant_colour).length !== 0) {
         let red = context.topic.dominant_colour?.red || 0;
         let green = context.topic.dominant_colour?.green || 0;
         let blue = context.topic.dominant_colour?.blue || 0;
