@@ -11,11 +11,7 @@ import loadScript from "discourse/lib/load-script";
 const PLUGIN_ID = "topic-list-previews";
 
 const previewsTilesThumbnail = <template>
-    <PreviewsTilesThumbnail @thumbnails={{@topic.thumbnails}}/>
-</template>;
-
-const previewsThumbnailHeader = <template>
-  <th>blah</th>
+  <PreviewsTilesThumbnail @thumbnails={{@topic.thumbnails}}/>
 </template>;
 
 const previewsDetails = <template>
@@ -29,16 +25,16 @@ export default apiInitializer("0.8", (api) => {
   const topicListPreviewsService = api.container.lookup("service:topic-list-previews");
 
   api.onPageChange(() => {
-  loadScript(
-    settings.theme_uploads.imagesloaded
-    ).then(() => {
-      if (document.querySelector(".tiles-style")) {
-        imagesLoaded(
-          document.querySelector(".tiles-style"),
-          resizeAllGridItems()
-        );
-      }
-    });
+    loadScript(
+      settings.theme_uploads.imagesloaded
+      ).then(() => {
+        if (document.querySelector(".tiles-style")) {
+          imagesLoaded(
+            document.querySelector(".tiles-style"),
+            resizeAllGridItems()
+          );
+        }
+      });
   });
 
   api.registerValueTransformer(
@@ -138,16 +134,6 @@ export default apiInitializer("0.8", (api) => {
   api.registerValueTransformer(
       "topic-list-item-expand-pinned",
       ({ value, context }) => {
-        // const overrideEverywhere =
-        //   enabledCategories.length === 0 && enabledTags.length === 0;
-        // const overrideInCategory = enabledCategories.includes(
-        //   discovery.category?.id
-        // );
-        // const overrideInTag = enabledTags.includes(discovery.tag?.id);
-        // const overrideOnDevice = context.mobileView
-        //   ? settings.show_excerpts_mobile
-        //   : settings.show_excerpts_desktop;
-
         if (!topicListPreviewsService.displayTiles && topicListPreviewsService.displayExcerpts) {
           return true;
         }
