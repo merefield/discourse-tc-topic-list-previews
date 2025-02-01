@@ -135,11 +135,11 @@ topic_list_thumbnail_height:
   description:
     en: "Height of image that can be previewed."
 topic_list_thumbnail_width_mobile:
-  default: 55
+  default: 50
   description:
     en: "Width of image that can be previewed on mobile."
 topic_list_thumbnail_height_mobile:
-  default: 55
+  default: 60
   description:
     en: "Height of image that can be previewed on mobile."
 topic_list_thumbnail_first_x_rows:
