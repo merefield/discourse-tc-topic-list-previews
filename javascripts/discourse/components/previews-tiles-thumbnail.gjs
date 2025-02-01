@@ -10,7 +10,7 @@ import PreviewsThumbnail from "./previews-thumbnail";
 export default class PreviewsTilesThumbnail extends Component {
   <template>
     <div class="topic-thumbnail">
-      <PreviewsThumbnail @thumbnails={{@thumbnails}} @tiles={{true}} />
+      <PreviewsThumbnail @url={{@url}} @thumbnails={{@thumbnails}} @tiles={{true}} />
     </div>
   </template>
 }

@@ -1,4 +1,19 @@
-//  .mobile-view .topic-list {
+.topic-list {
+  .has-thumbnail .right {
+    margin-left: 0px;
+  }
+  .has-thumbnail .pull-left {
+    display: none;
+  }
+
+  .has-thumbnail .topic-thumbnail {
+    float: left;
+  }
+
+  img.non-tiles-thumbnail {
+    height: var(--thumbnail-height-mobile);
+    width: var(--thumbnail-width-mobile);
+  }
 
 //   &.showThumbnail {
 //     .right {
@@ -61,10 +76,6 @@
 //     overflow: hidden;
 //   }
 
-  .topic-list .topic-excerpt {
-    max-height: initial;
-    width: 95%;
-  }
 
 //   .topic-category {
 //     margin-top: 6px;
@@ -101,12 +112,17 @@
 //     clear: initial;
 //     flex-wrap: wrap;
 //   }
-// }
+}
 
 //tiles styling  specific styling
 
   .topic-list.tiles-style .num.posts-map {
     font-size: 12px;
+  }
+
+  .topic-list .topic-excerpt {
+    max-height: initial;
+    width: 95%;
   }
 
 //   tbody {

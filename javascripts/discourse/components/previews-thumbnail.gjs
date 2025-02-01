@@ -44,7 +44,9 @@ export default class PreviewsThumbnail extends Component {
 
   <template>
     {{#if this.previewUrl}}
-      <img class={{concatClass "thumbnail" this.isTiles}} src="{{this.previewUrl}}" loading="lazy"/>
+      <a href="{{@url}}">
+        <img class={{concatClass "thumbnail" this.isTiles}} src="{{this.previewUrl}}" loading="lazy"/>
+      </a>
     {{/if}}
   </template>
 }

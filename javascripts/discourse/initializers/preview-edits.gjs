@@ -11,7 +11,7 @@ import loadScript from "discourse/lib/load-script";
 const PLUGIN_ID = "topic-list-previews";
 
 const previewsTilesThumbnail = <template>
-  <PreviewsTilesThumbnail @thumbnails={{@topic.thumbnails}}/>
+  <PreviewsTilesThumbnail @url={{@topic.url}} @thumbnails={{@topic.thumbnails}}/>
 </template>;
 
 const previewsDetails = <template>
@@ -64,6 +64,9 @@ export default apiInitializer("0.8", (api) => {
     ({ value, context }) => {
       if (topicListPreviewsService.displayTiles) {
         value.push("tiles-style");
+      }
+      if (topicListPreviewsService.displayThumbnails && context.topic.thumbnails?.length > 0) {
+        value.push("has-thumbnail");
       }
       if (siteSettings.topic_list_enable_thumbnail_colour_determination) {
         let red = context.topic.dominant_colour?.red || 0;
