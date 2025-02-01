@@ -65,23 +65,29 @@ export default apiInitializer("0.8", (api) => {
       if (topicListPreviewsService.displayTiles) {
         value.push("tiles-style");
       }
-      let red = context.topic.dominant_colour?.red || 0;
-      let green = context.topic.dominant_colour?.green || 0;
-      let blue = context.topic.dominant_colour?.blue || 0;
+      if (siteSettings.topic_list_enable_thumbnail_colour_determination) {
+        let red = context.topic.dominant_colour?.red || 0;
+        let green = context.topic.dominant_colour?.green || 0;
+        let blue = context.topic.dominant_colour?.blue || 0;
 
-      //make 1 the minimum value to avoid total black
-      red =  red == 0 ? 1 : red;
-      green =  green == 0 ? 1 : green;
-      blue =  blue == 0 ? 1 : blue;
+        //make 1 the minimum value to avoid total black
+        red =  red == 0 ? 1 : red;
+        green =  green == 0 ? 1 : green;
+        blue =  blue == 0 ? 1 : blue;
 
-      let newRgb = "rgb(" + red + "," + green + "," + blue + ")";
+        let newRgb = "rgb(" + red + "," + green + "," + blue + ")";
 
-      let averageIntensity =  context.topic.dominant_colour ? (red + green + blue) / 3 : null;
+        let averageIntensity =  context.topic.dominant_colour ? (red + green + blue) / 3 : null;
 
-      if (averageIntensity > 127) {
-        value.push("dark-text");
+        if (!context.topic?.dominant_colour) {
+          value.push("no-background-colour");
+        } else if (averageIntensity > 127) {
+          value.push("dark-text");
+        } else {
+          value.push("white-text");
+        }
       } else {
-        value.push("white-text");
+        value.push("no-background-colour");
       }
 
       return value;
@@ -91,19 +97,20 @@ export default apiInitializer("0.8", (api) => {
   api.registerValueTransformer(
     "topic-list-item-style",
     ({ value, context }) => {
-      let red = context.topic.dominant_colour?.red || 0;
-      let green = context.topic.dominant_colour?.green || 0;
-      let blue = context.topic.dominant_colour?.blue || 0;
+      if (siteSettings.topic_list_enable_thumbnail_colour_determination) {
+        let red = context.topic.dominant_colour?.red || 0;
+        let green = context.topic.dominant_colour?.green || 0;
+        let blue = context.topic.dominant_colour?.blue || 0;
 
-      //make 1 the minimum value to avoid total black
-      red =  red == 0 ? 1 : red;
-      green =  green == 0 ? 1 : green;
-      blue =  blue == 0 ? 1 : blue;
+        //make 1 the minimum value to avoid total black
+        red =  red == 0 ? 1 : red;
+        green =  green == 0 ? 1 : green;
+        blue =  blue == 0 ? 1 : blue;
 
-      let newRgb = "rgb(" + red + "," + green + "," + blue + ")";
+        let newRgb = "rgb(" + red + "," + green + "," + blue + ")";
 
-      value.push(htmlSafe(`background: ${newRgb};`));
-
+        value.push(htmlSafe(`background: ${newRgb};`));
+      }
       return value;
     }
   )

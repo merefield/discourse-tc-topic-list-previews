@@ -80,6 +80,10 @@ img.non-tiles-thumbnail {
     grid-row-end: span 44;
     display: flex;
     flex-direction: column;
+
+    &.no-background-colour {
+      border: 1px solid var(--primary-low);
+    }
     
     .main-link {
       padding-left: 0.67em;
