@@ -1,4 +1,4 @@
-{{#if thumbnailGrid}}
+{{#if this.thumbnailGrid}}
   <div class="fps-result fps-grid-item">
     <div class="fps-topic-header">
       {{#if this.bulkSelectEnabled}}
@@ -41,19 +41,13 @@
       </span>
     </div>
     <div class="fps-topic-thumbnail">
-      {{#if post.topic.thumbnails}}
+      {{#if this.post.topic.thumbnails}}
         <a
           href={{this.post.url}}
           {{on "click" (fn this.logClick this.post.topic_id)}}
           class="search-link"
         >
-          {{raw
-            "list/topic-thumbnail"
-            topic=post.topic
-            thumbnails=post.topic.thumbnails
-            category=post.topic.category
-            opts=thumbnailOpts
-          }}
+          <PreviewsThumbnail @thumbnails={{this.post.topic.thumbnails}} @tiles={{true}} />
         </a>
       {{else}}
         <a href={{this.post.userPath}} data-user-card={{this.post.username}}>

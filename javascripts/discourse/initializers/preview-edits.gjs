@@ -6,6 +6,8 @@ import PreviewsDetails from "./../components/previews-details";
 import PreviewsThumbnail from "./../components/previews-thumbnail";
 import PreviewsTilesThumbnail from "./../components/previews-tiles-thumbnail";
 
+const PLUGIN_ID = "discourse-tc-topic-list-previews";
+
 const previewsTilesThumbnail = <template>
   <PreviewsTilesThumbnail
     @url={{@topic.url}}
@@ -168,5 +170,25 @@ export default apiInitializer("0.8", (api) => {
       );
     }
     return columns;
+  });
+
+  api.modifyClass("component:search-result-entries", {
+    pluginId: PLUGIN_ID,
+    tagName: "div",
+    classNameBindings: ["thumbnailGrid:thumbnail-grid"],
+
+    thumbnailGrid() {
+      const siteSettings = container.lookup("service:site-settings");
+      return siteSettings.topic_list_search_previews_enabled
+    },
+  });
+
+  api.modifyClass("component:search-result-entry", {
+    pluginId: PLUGIN_ID,
+
+    thumbnailGrid() {
+      const siteSettings = container.lookup("service:site-settings");
+      return siteSettings.topic_list_search_previews_enabled
+    }
   });
 });

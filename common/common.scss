@@ -722,9 +722,13 @@ img.select-thumbnail-preview {
     padding: 0 0 4px 0;
   }
 
-  .topic-thumbnail {
+  .fps-topic-thumbnail {
     grid-area: fpsphoto;
     padding: 0 0 4px 0;
+    img.thumbnail {
+      width: 100%;
+      height: auto;
+    }
   }
 
   .thumbnail {
