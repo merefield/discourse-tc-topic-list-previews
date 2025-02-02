@@ -1,7 +1,7 @@
-import { inject as service } from "@ember/service";
 import Component from "@glimmer/component";
-import PreviewsThumbnail from "./previews-thumbnail";
+import { service } from "@ember/service";
 import avatar from "discourse/helpers/avatar";
+import PreviewsThumbnail from "./previews-thumbnail";
 
 export default class TlpFeaturedTopicComponent extends Component {
   @service currentUser;

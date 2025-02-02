@@ -1,8 +1,8 @@
 import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
 import { service } from "@ember/service";
 import { modifier } from "ember-modifier";
 import { resizeAllGridItems } from "../../lib/gridupdate";
-import { tracked } from "@glimmer/tracking";
 
 export default class LayoutRefresh extends Component {
   @service topicListPreviews;
@@ -13,6 +13,7 @@ export default class LayoutRefresh extends Component {
     const listArea = document.getElementById("list-area");
 
     if (!topicList) {
+      // eslint-disable-next-line no-console
       console.error(
         "topic-list-previews resize-observer must be inside a topic-list"
       );
@@ -23,14 +24,13 @@ export default class LayoutRefresh extends Component {
 
     // Function to trigger resize
     const triggerResize = () => {
-      if (this.isResizing) return;
+      if (this.isResizing) {return;}
       requestAnimationFrame(() => {
         this.isResizing = true;
         let isSideBySide =
           topicList?.classList.contains("side-by-side") &&
           listArea &&
           listArea.offsetWidth > 900;
-        console.log("Resizing grid items");
         resizeAllGridItems(isSideBySide);
         this.isResizing = false;
       });

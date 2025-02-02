@@ -1,26 +1,26 @@
-import ShareTopicModal from "discourse/components/modal/share-topic";
 import Component from "@glimmer/component";
-import { getOwner } from "@ember/application";
+import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
-import { tracked } from "@glimmer/tracking";
+import DButton from "discourse/components/d-button";
+import ShareTopicModal from "discourse/components/modal/share-topic";
+import concatClass from "discourse/helpers/concat-class";
+import icon from "discourse/helpers/d-icon";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
-import concatClass from "discourse/helpers/concat-class";
-import DButton from "discourse/components/d-button";
-import icon from "discourse/helpers/d-icon";
 import i18n from "discourse-common/helpers/i18n";
 
 export default class PreviewsActionsComponent extends Component {
   @service currentUser;
   @service modal;
-  topicId = this.args.topic.id;
-  postId = this.args.topic.topic_post_id;
-  @tracked canUnlike =
+  @tracked
+  canUnlike =
     this.args.topic.topic_post_can_unlike || !this.args.topic.topic_post_liked;
   @tracked likeCount = this.args.topic.like_count;
   @tracked hasLiked = this.args.topic.topic_post_liked;
   @tracked bookmarked = this.args.topic.topic_post_bookmarked;
+  topicId = this.args.topic.id;
+    postId = this.args.topic.topic_post_id;
 
   @action
   shareTopic() {

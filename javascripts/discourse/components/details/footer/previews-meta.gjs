@@ -1,12 +1,11 @@
-import icon from "discourse-common/helpers/d-icon";
-import concatClass from "discourse/helpers/concat-class";
-import { number } from "discourse/lib/formatter";
-import { service } from "@ember/service";
-import formatDate from "discourse/helpers/format-date";
 import Component from "@glimmer/component";
+import { service } from "@ember/service";
 import { htmlSafe } from "@ember/template";
-import PluginOutlet from "discourse/components/plugin-outlet";
 import coldAgeClass from "discourse/helpers/cold-age-class";
+import concatClass from "discourse/helpers/concat-class";
+import formatDate from "discourse/helpers/format-date";
+import { number } from "discourse/lib/formatter";
+import icon from "discourse-common/helpers/d-icon";
 
 export default class PreviewsMeta extends Component {
   @service siteSettings;

@@ -1,5 +1,5 @@
-import { action } from "@ember/object";
 import Component from "@ember/component";
+import { action } from "@ember/object";
 import { bufferedProperty } from "discourse/mixins/buffered-content";
 
 export default Component.extend(bufferedProperty("model"), {

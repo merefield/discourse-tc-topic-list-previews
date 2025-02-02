@@ -1,14 +1,13 @@
-import { cook } from "discourse/lib/text";
-import { action, computed, create } from "@ember/object";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import { inject as service } from "@ember/service";
+import EmberObject, { action, computed } from "@ember/object";
 import didInsert from "@ember/render-modifiers/modifiers/did-insert";
 import didUpdate from "@ember/render-modifiers/modifiers/did-update";
-import { findOrResetCachedTopicList } from "discourse/lib/cached-topic-list";
-import EmberObject from "@ember/object";
-import TlpFeaturedTopic from "./tlp-featured-topic";
+import { service } from "@ember/service";
 import discourseTag from "discourse/helpers/discourse-tag";
+import { findOrResetCachedTopicList } from "discourse/lib/cached-topic-list";
+import { cook } from "discourse/lib/text";
+import TlpFeaturedTopic from "./tlp-featured-topic";
 
 export default class TlpFeaturedTopicsComponent extends Component {
   @service appEvents;
@@ -33,7 +32,7 @@ export default class TlpFeaturedTopicsComponent extends Component {
 
     if (settings.topic_list_featured_images_tag !== "") {
       let filter = `tag/${settings.topic_list_featured_images_tag}`;
-      let lastTopicList = findOrResetCachedTopicList(this.session, filter);
+      findOrResetCachedTopicList(this.session, filter);
       let list = await this.store.findFiltered("topicList", { filter });
 
       if (typeof list !== "undefined") {
@@ -44,23 +43,23 @@ export default class TlpFeaturedTopicsComponent extends Component {
           settings.topic_list_featured_images_from_current_category_only
         ) {
           topics = topics.filter(
-            (topic) => topic.category_id == this.args.category.id
+            (topic) => topic.category_id === this.args.category.id
           );
         }
 
         const reducedTopics = topics
-          ? settings.topic_list_featured_images_count == 0
+          ? settings.topic_list_featured_images_count === 0
             ? topics
             : topics.slice(0, settings.topic_list_featured_images_count)
           : [];
 
         if (settings.topic_list_featured_images_created_order) {
           reducedTopics.sort((a, b) => {
-            var keyA = new Date(a.created_at),
+            let keyA = new Date(a.created_at),
               keyB = new Date(b.created_at);
             // Compare the 2 dates
-            if (keyA < keyB) return 1;
-            if (keyA > keyB) return -1;
+            if (keyA < keyB) {return 1;}
+            if (keyA > keyB) {return -1;}
             return 0;
           });
         }

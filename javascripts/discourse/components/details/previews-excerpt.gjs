@@ -1,5 +1,5 @@
-import { service } from "@ember/service";
 import Component from "@glimmer/component";
+import { service } from "@ember/service";
 import TopicExcerpt from "discourse/components/topic-list/topic-excerpt";
 
 export default class PreviewsExcerpt extends Component {
