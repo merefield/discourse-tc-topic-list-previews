@@ -1,4 +1,3 @@
-
 import concatClass from "discourse/helpers/concat-class";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
@@ -10,7 +9,11 @@ import PreviewsThumbnail from "./previews-thumbnail";
 export default class PreviewsTilesThumbnail extends Component {
   <template>
     <div class="topic-thumbnail">
-      <PreviewsThumbnail @url={{@url}} @thumbnails={{@thumbnails}} @tiles={{true}} />
+      <PreviewsThumbnail
+        @url={{@url}}
+        @thumbnails={{@thumbnails}}
+        @tiles={{true}}
+      />
     </div>
   </template>
 }

@@ -49,7 +49,12 @@ export default class PreviewsMeta extends Component {
             {{icon "far-eye"}}
             {{number @topic.views numberKey="views_long"}}
           </div>
-          <div class={{concatClass "topic-replies num posts-map inline sub" this.likesHeat}}>
+          <div
+            class={{concatClass
+              "topic-replies num posts-map inline sub"
+              this.likesHeat
+            }}
+          >
             <span class="middot inline sub"></span>
             <a href={{@topic.firstPostUrl}} class="badge-posts">
               {{icon "far-comment"}}
@@ -58,40 +63,45 @@ export default class PreviewsMeta extends Component {
           </div>
         </div>
         <div class="bottom-line">
-          <div  class={{concatClass
-                  "topic-timing activity num inline sub topic-list-data"
-                  (coldAgeClass @topic.createdAt startDate=@topic.bumpedAt class="")
-                }}
-              title={{htmlSafe @topic.bumpedAtTitle}}>
+          <div
+            class={{concatClass
+              "topic-timing activity num inline sub topic-list-data"
+              (coldAgeClass @topic.createdAt startDate=@topic.bumpedAt class="")
+            }}
+            title={{htmlSafe @topic.bumpedAtTitle}}
+          >
             <span class="middot inline sub"></span>
             <a href="{{@topic.lastPostUrl}}">
               {{icon "far-clock"}}
-              {{formatDate @topic.bumpedAt format="medium-with-ago" noTitle="true"}}
+              {{formatDate
+                @topic.bumpedAt
+                format="medium-with-ago"
+                noTitle="true"
+              }}
             </a>
           </div>
         </div>
       </div>
     </div>
   </template>
-
 }
-  //     class="num posts-map posts {{this.likesHeat}} topic-list-data"
-  //   >
-  //     <a href={{@topic.firstPostUrl}} class="badge-posts">
-  //       <PluginOutlet
-  //         @name="topic-list-before-reply-count"
-  //         @outletArgs={{hash topic=@topic}}
-  //       />
-  //       {{number @topic.replyCount noTitle="true"}}
-  //     </a>
+//     class="num posts-map posts {{this.likesHeat}} topic-list-data"
+//   >
+//     <a href={{@topic.firstPostUrl}} class="badge-posts">
+//       <PluginOutlet
+//         @name="topic-list-before-reply-count"
+//         @outletArgs={{hash topic=@topic}}
+//       />
+//       {{number @topic.replyCount noTitle="true"}}
+//     </a>
 
-  //       <td class={{concatClass "num views topic-list-data" @topic.viewsHeat}}>
-  //   <PluginOutlet
-  //     @name="topic-list-before-view-count"
-  //     @outletArgs={{hash topic=@topic}}
-  //   />
-  //   {{number @topic.views numberKey="views_long"}}
-  // </td>
+//       <td class={{concatClass "num views topic-list-data" @topic.viewsHeat}}>
+//   <PluginOutlet
+//     @name="topic-list-before-view-count"
+//     @outletArgs={{hash topic=@topic}}
+//   />
+//   {{number @topic.views numberKey="views_long"}}
+// </td>
 
 //   import { htmlSafe } from "@ember/template";
 // import PluginOutlet from "discourse/components/plugin-outlet";

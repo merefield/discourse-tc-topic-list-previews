@@ -12,6 +12,6 @@ export default class PreviewsExcerpt extends Component {
   <template>
     {{#if this.showExcerpt}}
       <TopicExcerpt @topic={{@topic}} />
-     {{/if}}
+    {{/if}}
   </template>
 }
