@@ -142,18 +142,15 @@ export default apiInitializer("0.8", (api) => {
     {{/unless}}
   </template>);
 
-  api.registerValueTransformer(
-    "topic-list-item-expand-pinned",
-    ({ value }) => {
-      if (
-        !topicListPreviewsService.displayTiles &&
-        topicListPreviewsService.displayExcerpts
-      ) {
-        return true;
-      }
-      return value; // Return default value
+  api.registerValueTransformer("topic-list-item-expand-pinned", ({ value }) => {
+    if (
+      !topicListPreviewsService.displayTiles &&
+      topicListPreviewsService.displayExcerpts
+    ) {
+      return true;
     }
-  );
+    return value; // Return default value
+  });
 
   api.registerValueTransformer("topic-list-columns", ({ value: columns }) => {
     if (topicListPreviewsService.displayTiles) {

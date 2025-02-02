@@ -77,12 +77,15 @@ export default class TopicListPreviewsService extends Service {
 
     let currentTopicListRoute = this.currentTopicListRoute;
 
-    if (currentTopicListRoute === "userActivity.portfolio")
-      {currentTopicListRoute = "activity-portfolio";}
-    if (currentTopicListRoute === "userActivity.topics")
-      {currentTopicListRoute = "activity-topics";}
-    if (currentTopicListRoute.indexOf("topic") > -1)
-      {currentTopicListRoute = "suggested";}
+    if (currentTopicListRoute === "userActivity.portfolio") {
+      currentTopicListRoute = "activity-portfolio";
+    }
+    if (currentTopicListRoute === "userActivity.topics") {
+      currentTopicListRoute = "activity-topics";
+    }
+    if (currentTopicListRoute.indexOf("topic") > -1) {
+      currentTopicListRoute = "suggested";
+    }
 
     let onMobile = Site.current().mobileView;
 

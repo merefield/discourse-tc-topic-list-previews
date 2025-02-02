@@ -24,7 +24,9 @@ export default class LayoutRefresh extends Component {
 
     // Function to trigger resize
     const triggerResize = () => {
-      if (this.isResizing) {return;}
+      if (this.isResizing) {
+        return;
+      }
       requestAnimationFrame(() => {
         this.isResizing = true;
         let isSideBySide =

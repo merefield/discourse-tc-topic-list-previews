@@ -58,8 +58,12 @@ export default class TlpFeaturedTopicsComponent extends Component {
             let keyA = new Date(a.created_at),
               keyB = new Date(b.created_at);
             // Compare the 2 dates
-            if (keyA < keyB) {return 1;}
-            if (keyA > keyB) {return -1;}
+            if (keyA < keyB) {
+              return 1;
+            }
+            if (keyA > keyB) {
+              return -1;
+            }
             return 0;
           });
         }

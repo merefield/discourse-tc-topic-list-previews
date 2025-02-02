@@ -20,7 +20,7 @@ export default class PreviewsActionsComponent extends Component {
   @tracked hasLiked = this.args.topic.topic_post_liked;
   @tracked bookmarked = this.args.topic.topic_post_bookmarked;
   topicId = this.args.topic.id;
-    postId = this.args.topic.topic_post_id;
+  postId = this.args.topic.topic_post_id;
 
   @action
   shareTopic() {
