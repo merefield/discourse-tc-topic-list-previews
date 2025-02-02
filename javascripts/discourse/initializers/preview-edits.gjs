@@ -81,7 +81,7 @@ export default apiInitializer("0.8", (api) => {
         let newRgb = "rgb(" + red + "," + green + "," + blue + ")";
 
         let averageIntensity =  context.topic.dominant_colour ? (red + green + blue) / 3 : null;
-        console.log(context.topic.dominant_colour);
+
         if (Object.keys(context.topic?.dominant_colour).length === 0) {
           value.push("no-background-colour");
         } else if (averageIntensity > 127) {

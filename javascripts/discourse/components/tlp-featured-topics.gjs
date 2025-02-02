@@ -3,8 +3,12 @@ import { action, computed, create } from "@ember/object";
 import Component from '@glimmer/component';
 import { tracked } from "@glimmer/tracking";
 import { inject as service } from "@ember/service";
+import didInsert from "@ember/render-modifiers/modifiers/did-insert";
+import didUpdate from "@ember/render-modifiers/modifiers/did-update";
 import {findOrResetCachedTopicList} from 'discourse/lib/cached-topic-list';
 import EmberObject from '@ember/object';
+import TlpFeaturedTopic from './tlp-featured-topic';
+import discourseTag from 'discourse/helpers/discourse-tag';
 
 export default class TlpFeaturedTopicsComponent extends Component {
   @service appEvents;
@@ -26,6 +30,7 @@ export default class TlpFeaturedTopicsComponent extends Component {
   @action
   async getFeaturedTopics() {
     let topics = [];
+
     if (settings.topic_list_featured_images_tag !== "") {
       let filter = `tag/${settings.topic_list_featured_images_tag}`;
       let lastTopicList = findOrResetCachedTopicList (this.session, filter);
@@ -78,4 +83,32 @@ export default class TlpFeaturedTopicsComponent extends Component {
     return this.featuredTags &&
            settings.topic_list_featured_images_tag_show;
   };
+
+  <template>
+    <div
+      {{didInsert this.getFeaturedTopics}}
+      {{didUpdate this.getFeaturedTopics}}
+      class="tlp-featured-topics {{if this.showFeatured 'has-topics'}}"
+    >
+    {{#if this.showFeatured}}
+      {{#if this.showFeaturedTitle}}
+        <div class="featured-title">
+          {{this.featuredTitle}}
+        </div>
+      {{/if}}
+      <div class="topics">
+        {{#each this.featuredTopics as |t|}}
+          <TlpFeaturedTopic @topic={{t}}/>
+        {{/each}}
+      </div>
+      {{#if this.showFeaturedTags}}
+        <div class="featured-tags">
+          {{#each this.featuredTags as |tag|}}
+            {{discourseTag tag}}
+          {{/each}}
+        </div>
+      {{/if}}
+      {{/if}}
+    </div>
+  </template>
 };
