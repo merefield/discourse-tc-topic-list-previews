@@ -178,8 +178,7 @@ export default apiInitializer("0.8", (api) => {
     classNameBindings: ["thumbnailGrid:thumbnail-grid"],
 
     thumbnailGrid() {
-      const siteSettings = container.lookup("service:site-settings");
-      return siteSettings.topic_list_search_previews_enabled
+      return siteSettings.topic_list_search_previews_enabled;
     },
   });
 
@@ -187,8 +186,7 @@ export default apiInitializer("0.8", (api) => {
     pluginId: PLUGIN_ID,
 
     thumbnailGrid() {
-      const siteSettings = container.lookup("service:site-settings");
-      return siteSettings.topic_list_search_previews_enabled
-    }
+      return siteSettings.topic_list_search_previews_enabled;
+    },
   });
 });

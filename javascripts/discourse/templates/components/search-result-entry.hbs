@@ -47,7 +47,10 @@
           {{on "click" (fn this.logClick this.post.topic_id)}}
           class="search-link"
         >
-          <PreviewsThumbnail @thumbnails={{this.post.topic.thumbnails}} @tiles={{true}} />
+          <PreviewsThumbnail
+            @thumbnails={{this.post.topic.thumbnails}}
+            @tiles={{true}}
+          />
         </a>
       {{else}}
         <a href={{this.post.userPath}} data-user-card={{this.post.username}}>
