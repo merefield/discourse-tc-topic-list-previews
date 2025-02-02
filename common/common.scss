@@ -359,10 +359,14 @@ img.non-tiles-thumbnail {
           cursor: pointer;
           border-radius: 3px;
           grid-row-end: span 1;
+          min-height: 190px;
         }
 
         .topic-details {
           flex: 2;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
 
           .topic-users {
             justify-content: center;
