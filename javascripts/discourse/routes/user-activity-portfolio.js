@@ -1,5 +1,5 @@
-import UserTopicListRoute from "discourse/routes/user-topic-list";
 import UserAction from "discourse/models/user-action";
+import UserTopicListRoute from "discourse/routes/user-topic-list";
 
 export default UserTopicListRoute.extend({
   userActionType: UserAction.TYPES.topics,
@@ -8,7 +8,7 @@ export default UserTopicListRoute.extend({
     let filter_type = settings.topic_list_portfolio_filter_type;
     const filter_parameter = settings.topic_list_portfolio_filter_parameter;
 
-    if (filter_type == "tag") {
+    if (filter_type === "tag") {
       filter_type = "tags";
     }
 

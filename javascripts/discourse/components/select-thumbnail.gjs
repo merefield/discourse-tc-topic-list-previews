@@ -4,7 +4,6 @@ import { service } from "@ember/service";
 import DButton from "discourse/components/d-button";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
-import { i18n } from "discourse-i18n";
 import TlpThumbnailSelectorModalComponent from "../components/modal/tlp-thumbnail-selector";
 
 export default class SelectThumbnailComponent extends Component {

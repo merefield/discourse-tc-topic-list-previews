@@ -1,14 +1,10 @@
-import { apiInitializer } from "discourse/lib/api";
-import SortableColumn from "discourse/components/topic-list/header/sortable-column";
-import { service } from "@ember/service";
 import { htmlSafe } from "@ember/template";
+import { apiInitializer } from "discourse/lib/api";
+import loadScript from "discourse/lib/load-script";
+import { resizeAllGridItems } from "../lib/gridupdate";
+import PreviewsDetails from "./../components/previews-details";
 import PreviewsThumbnail from "./../components/previews-thumbnail";
 import PreviewsTilesThumbnail from "./../components/previews-tiles-thumbnail";
-import PreviewsDetails from "./../components/previews-details";
-import { resizeAllGridItems } from "../lib/gridupdate";
-import loadScript from "discourse/lib/load-script";
-
-const PLUGIN_ID = "topic-list-previews";
 
 const previewsTilesThumbnail = <template>
   <PreviewsTilesThumbnail
@@ -22,8 +18,6 @@ const previewsDetails = <template>
 </template>;
 
 export default apiInitializer("0.8", (api) => {
-  const router = api.container.lookup("service:router");
-  const currentUser = api.container.lookup("service:current-user");
   const siteSettings = api.container.lookup("service:site-settings");
   const topicListPreviewsService = api.container.lookup(
     "service:topic-list-previews"
@@ -32,6 +26,7 @@ export default apiInitializer("0.8", (api) => {
   api.onPageChange(() => {
     loadScript(settings.theme_uploads.imagesloaded).then(() => {
       if (document.querySelector(".tiles-style")) {
+        //eslint-disable-next-line no-undef
         imagesLoaded(
           document.querySelector(".tiles-style"),
           resizeAllGridItems()
@@ -77,11 +72,9 @@ export default apiInitializer("0.8", (api) => {
         let blue = context.topic.dominant_colour?.blue || 0;
 
         //make 1 the minimum value to avoid total black
-        red = red == 0 ? 1 : red;
-        green = green == 0 ? 1 : green;
-        blue = blue == 0 ? 1 : blue;
-
-        let newRgb = "rgb(" + red + "," + green + "," + blue + ")";
+        red = red === 0 ? 1 : red;
+        green = green === 0 ? 1 : green;
+        blue = blue === 0 ? 1 : blue;
 
         let averageIntensity = context.topic.dominant_colour
           ? (red + green + blue) / 3
@@ -114,9 +107,9 @@ export default apiInitializer("0.8", (api) => {
         let blue = context.topic.dominant_colour?.blue || 0;
 
         //make 1 the minimum value to avoid total black
-        red = red == 0 ? 1 : red;
-        green = green == 0 ? 1 : green;
-        blue = blue == 0 ? 1 : blue;
+        red = red === 0 ? 1 : red;
+        green = green === 0 ? 1 : green;
+        blue = blue === 0 ? 1 : blue;
 
         let newRgb = "rgb(" + red + "," + green + "," + blue + ")";
 
@@ -126,7 +119,7 @@ export default apiInitializer("0.8", (api) => {
     }
   );
 
-  api.registerValueTransformer("topic-list-class", ({ value, context }) => {
+  api.registerValueTransformer("topic-list-class", ({ value }) => {
     if (topicListPreviewsService.displayTiles) {
       value.push("tiles-style");
       if (settings.topic_list_tiles_wide_format) {
@@ -151,7 +144,7 @@ export default apiInitializer("0.8", (api) => {
 
   api.registerValueTransformer(
     "topic-list-item-expand-pinned",
-    ({ value, context }) => {
+    ({ value }) => {
       if (
         !topicListPreviewsService.displayTiles &&
         topicListPreviewsService.displayExcerpts

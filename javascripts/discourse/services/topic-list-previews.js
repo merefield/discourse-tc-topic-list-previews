@@ -1,8 +1,7 @@
-import Service, { inject as service } from "@ember/service";
-import discourseComputed from "discourse-common/utils/decorators";
-import Site from "discourse/models/site";
-import { action, computed } from "@ember/object";
+import { computed } from "@ember/object";
 import { dependentKeyCompat } from "@ember/object/compat";
+import Service, { service } from "@ember/service";
+import Site from "discourse/models/site";
 
 const thumbnailsTopicLists =
   settings.topic_list_thumbnails_topic_lists.split("|");
@@ -78,12 +77,12 @@ export default class TopicListPreviewsService extends Service {
 
     let currentTopicListRoute = this.currentTopicListRoute;
 
-    if (currentTopicListRoute == "userActivity.portfolio")
-      currentTopicListRoute = "activity-portfolio";
-    if (currentTopicListRoute == "userActivity.topics")
-      currentTopicListRoute = "activity-topics";
+    if (currentTopicListRoute === "userActivity.portfolio")
+      {currentTopicListRoute = "activity-portfolio";}
+    if (currentTopicListRoute === "userActivity.topics")
+      {currentTopicListRoute = "activity-topics";}
     if (currentTopicListRoute.indexOf("topic") > -1)
-      currentTopicListRoute = "suggested";
+      {currentTopicListRoute = "suggested";}
 
     let onMobile = Site.current().mobileView;
 
@@ -103,7 +102,7 @@ export default class TopicListPreviewsService extends Service {
             currentTopicListRoute.indexOf("Category")
           );
         } else {
-          if (currentTopicListRoute == "discovery.category") {
+          if (currentTopicListRoute === "discovery.category") {
             currentTopicListRoute = "discovery.latest";
           }
         }

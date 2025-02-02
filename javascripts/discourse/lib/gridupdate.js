@@ -2,6 +2,7 @@ import loadScript from "discourse/lib/load-script";
 
 function resizeGridItem(item, isSideBySide, rowHeight, rowGap) {
   loadScript(settings.theme_uploads.imagesloaded).then(() => {
+    //eslint-disable-next-line no-undef
     imagesLoaded(item, function () {
       let contentHeight = 0;
 
@@ -37,12 +38,14 @@ function resizeAllGridItems(isSideBySide) {
     return;
   }
   const rowHeight = parseInt(
-    window.getComputedStyle(grid).getPropertyValue("grid-auto-rows")
+    window.getComputedStyle(grid).getPropertyValue("grid-auto-rows"),
+    10
   );
   const rowGap = parseInt(
-    window.getComputedStyle(grid).getPropertyValue("grid-row-gap")
+    window.getComputedStyle(grid).getPropertyValue("grid-row-gap"),
+    10
   );
-  for (var x = 0; x < allItems.length; x++) {
+  for (let x = 0; x < allItems.length; x++) {
     resizeGridItem(allItems[x], isSideBySide, rowHeight, rowGap);
   }
 }
