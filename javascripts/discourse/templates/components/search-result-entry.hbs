@@ -2,24 +2,34 @@
   <div class="fps-result fps-grid-item">
     <div class="fps-topic-header">
       {{#if this.bulkSelectEnabled}}
-        <TrackSelected @selectedList={{this.selected}} @selectedId={{this.post.topic}} @class="bulk-select" />
+        <TrackSelected
+          @selectedList={{this.selected}}
+          @selectedId={{this.post.topic}}
+          @class="bulk-select"
+        />
       {{/if}}
-      <a href={{this.post.url}} {{on "click" (fn this.logClick this.post.topic_id)}} class="search-link{{if this.post.topic.visited " visited"}}" role="heading" aria-level="2">
-      {{raw "topic-status" topic=this.post.topic showPrivateMessageIcon=true}}
-      <span class="topic-title">
-        {{#if this.post.useTopicTitleHeadline}}
-          {{html-safe this.post.topicTitleHeadline}}
-        {{else}}
-          <HighlightSearch @highlight={{this.highlightQuery}}>
-            {{html-safe this.post.topic.fancyTitle}}
-          </HighlightSearch>
-        {{/if}}
-      </span>
+      <a
+        href={{this.post.url}}
+        {{on "click" (fn this.logClick this.post.topic_id)}}
+        class="search-link{{if this.post.topic.visited ' visited'}}"
+        role="heading"
+        aria-level="2"
+      >
+        {{raw "topic-status" topic=this.post.topic showPrivateMessageIcon=true}}
+        <span class="topic-title">
+          {{#if this.post.useTopicTitleHeadline}}
+            {{html-safe this.post.topicTitleHeadline}}
+          {{else}}
+            <HighlightSearch @highlight={{this.highlightQuery}}>
+              {{html-safe this.post.topic.fancyTitle}}
+            </HighlightSearch>
+          {{/if}}
+        </span>
       </a>
     </div>
     <div class="fps-topic-category">
       {{#if this.post.topic.category.parentCategory}}
-      {{category-link this.post.topic.category.parentCategory}}
+        {{category-link this.post.topic.category.parentCategory}}
       {{/if}}
       {{category-link this.post.topic.category hideParent=true}}
       <span>
@@ -32,19 +42,28 @@
     </div>
     <div class="fps-topic-thumbnail">
       {{#if post.topic.thumbnails}}
-      <a href={{this.post.url}} {{on "click" (fn this.logClick this.post.topic_id)}} class="search-link">
-        {{raw "list/topic-thumbnail" topic=post.topic thumbnails=post.topic.thumbnails category=post.topic.category
-        opts=thumbnailOpts}}
-      </a>
+        <a
+          href={{this.post.url}}
+          {{on "click" (fn this.logClick this.post.topic_id)}}
+          class="search-link"
+        >
+          {{raw
+            "list/topic-thumbnail"
+            topic=post.topic
+            thumbnails=post.topic.thumbnails
+            category=post.topic.category
+            opts=thumbnailOpts
+          }}
+        </a>
       {{else}}
-      <a href={{this.post.userPath}} data-user-card={{this.post.username}}>
-        {{avatar this.post imageSize="large"}}
-      </a>
+        <a href={{this.post.userPath}} data-user-card={{this.post.username}}>
+          {{avatar this.post imageSize="large"}}
+        </a>
       {{/if}}
     </div>
-    <div class='fps-topic-tags'>
+    <div class="fps-topic-tags">
       {{#if this.post.topic}}
-      {{discourse-tags this.post.topic}}
+        {{discourse-tags this.post.topic}}
       {{/if}}
     </div>
   </div>
@@ -58,10 +77,20 @@
   <div class="fps-topic">
     <div class="topic">
       {{#if this.bulkSelectEnabled}}
-        <TrackSelected @selectedList={{this.selected}} @selectedId={{this.post.topic}} @class="bulk-select" />
+        <TrackSelected
+          @selectedList={{this.selected}}
+          @selectedId={{this.post.topic}}
+          @class="bulk-select"
+        />
       {{/if}}
 
-      <a href={{this.post.url}} {{on "click" (fn this.logClick this.post.topic_id)}} class="search-link{{if this.post.topic.visited " visited"}}" role="heading" aria-level="2">
+      <a
+        href={{this.post.url}}
+        {{on "click" (fn this.logClick this.post.topic_id)}}
+        class="search-link{{if this.post.topic.visited ' visited'}}"
+        role="heading"
+        aria-level="2"
+      >
         {{raw "topic-status" topic=this.post.topic showPrivateMessageIcon=true}}
         <span class="topic-title">
           {{#if this.post.useTopicTitleHeadline}}
@@ -82,13 +111,13 @@
         {{#if this.post.topic}}
           {{discourse-tags this.post.topic}}
         {{/if}}
-      <span>
-        <PluginOutlet
-          @name="full-page-search-category"
-          @connectorTagName="div"
-          @outletArgs={{hash post=this.post}}
-        />
-      </span>
+        <span>
+          <PluginOutlet
+            @name="full-page-search-category"
+            @connectorTagName="div"
+            @outletArgs={{hash post=this.post}}
+          />
+        </span>
       </div>
     </div>
 
@@ -114,7 +143,8 @@
     {{#if this.showLikeCount}}
       {{#if this.post.like_count}}
         <span class="like-count">
-          <span class="value">{{this.post.like_count}}</span> {{d-icon "heart"}}
+          <span class="value">{{this.post.like_count}}</span>
+          {{d-icon "heart"}}
         </span>
       {{/if}}
     {{/if}}

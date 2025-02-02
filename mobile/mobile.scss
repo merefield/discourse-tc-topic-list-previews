@@ -81,7 +81,6 @@
 //     overflow: hidden;
 //   }
 
-
 //   .topic-category {
 //     margin-top: 6px;
 //     display: block;
@@ -118,17 +117,16 @@
 //     flex-wrap: wrap;
 //   }
 
-
 //tiles styling  specific styling
 
-  .topic-list.tiles-style .num.posts-map {
-    font-size: 12px;
-  }
+.topic-list.tiles-style .num.posts-map {
+  font-size: 12px;
+}
 
-  .topic-list .topic-excerpt {
-    max-height: initial;
-    width: 95%;
-  }
+.topic-list .topic-excerpt {
+  max-height: initial;
+  width: 95%;
+}
 
 //   tbody {
 //     .topic-list-item-separator {

@@ -4,11 +4,12 @@ import Site from "discourse/models/site";
 import { action, computed } from "@ember/object";
 import { dependentKeyCompat } from "@ember/object/compat";
 
-const thumbnailsTopicLists = settings.topic_list_thumbnails_topic_lists.split("|");
+const thumbnailsTopicLists =
+  settings.topic_list_thumbnails_topic_lists.split("|");
 const tilesTopicLists = settings.topic_list_tiles_topic_lists.split("|");
 const excerptsTopicLists = settings.topic_list_excerpts_topic_lists.split("|");
 const actionsTopicLists = settings.topic_list_actions_topic_lists.split("|");
-  
+
 const thumbnailCategories = settings.topic_list_thumbnails_categories
   .split("|")
   .map((id) => parseInt(id, 10));
@@ -61,8 +62,7 @@ export default class TopicListPreviewsService extends Service {
   enabledForCurrentTopicListRouteType(infoType) {
     let checkList = [];
 
-    switch(infoType)
-    {
+    switch (infoType) {
       case "thumbnails":
         checkList = thumbnailsTopicLists;
         break;
@@ -78,44 +78,51 @@ export default class TopicListPreviewsService extends Service {
 
     let currentTopicListRoute = this.currentTopicListRoute;
 
-    if (currentTopicListRoute == 'userActivity.portfolio') currentTopicListRoute = 'activity-portfolio';
-    if (currentTopicListRoute == 'userActivity.topics') currentTopicListRoute = 'activity-topics';
-    if (currentTopicListRoute.indexOf("topic") > -1) currentTopicListRoute = 'suggested';
+    if (currentTopicListRoute == "userActivity.portfolio")
+      currentTopicListRoute = "activity-portfolio";
+    if (currentTopicListRoute == "userActivity.topics")
+      currentTopicListRoute = "activity-topics";
+    if (currentTopicListRoute.indexOf("topic") > -1)
+      currentTopicListRoute = "suggested";
 
     let onMobile = Site.current().mobileView;
 
-    let found_item = checkList.find(item => {
+    let found_item = checkList.find((item) => {
       let mobileSetting = false;
-      let itemShortRouteName = item
-    
+      let itemShortRouteName = item;
+
       if (item.indexOf("-mobile") > -1) {
-        mobileSetting = true
-        itemShortRouteName = item.substring(0,item.indexOf("-mobile"))
+        mobileSetting = true;
+        itemShortRouteName = item.substring(0, item.indexOf("-mobile"));
       }
 
       if (settings.topic_list_set_category_defaults) {
         if (currentTopicListRoute.indexOf("Category") > -1) {
-          currentTopicListRoute = currentTopicListRoute.substring(0,currentTopicListRoute.indexOf("Category"))
+          currentTopicListRoute = currentTopicListRoute.substring(
+            0,
+            currentTopicListRoute.indexOf("Category")
+          );
         } else {
-          if (currentTopicListRoute == 'discovery.category') {
-            currentTopicListRoute = 'discovery.latest'
+          if (currentTopicListRoute == "discovery.category") {
+            currentTopicListRoute = "discovery.latest";
           }
         }
       }
 
-      if (currentTopicListRoute.indexOf(itemShortRouteName) > -1 && ((onMobile && mobileSetting) || (!onMobile && !mobileSetting))) {
+      if (
+        currentTopicListRoute.indexOf(itemShortRouteName) > -1 &&
+        ((onMobile && mobileSetting) || (!onMobile && !mobileSetting))
+      ) {
         return true;
       }
       return false;
-    })
-    return (found_item && found_item.length > 0)
+    });
+    return found_item && found_item.length > 0;
   }
 
-  @computed(
-   "router.currentRouteName"
-  )
+  @computed("router.currentRouteName")
   get currentTopicListRoute() {
-    return this.router.currentRouteName
+    return this.router.currentRouteName;
   }
 
   @computed(
@@ -127,16 +134,32 @@ export default class TopicListPreviewsService extends Service {
   get displayMode() {
     let displayMode = [];
 
-    if (thumbnailCategories.includes(this.viewingCategoryId) || thumbnailTags.includes(this.viewingTagId) || this.enabledForCurrentTopicListRouteType("thumbnails")) {
+    if (
+      thumbnailCategories.includes(this.viewingCategoryId) ||
+      thumbnailTags.includes(this.viewingTagId) ||
+      this.enabledForCurrentTopicListRouteType("thumbnails")
+    ) {
       displayMode.push("thumbnails");
     }
-    if (tilesCategories.includes(this.viewingCategoryId) || tilesTags.includes(this.viewingTagId) || this.enabledForCurrentTopicListRouteType("tiles")) {
+    if (
+      tilesCategories.includes(this.viewingCategoryId) ||
+      tilesTags.includes(this.viewingTagId) ||
+      this.enabledForCurrentTopicListRouteType("tiles")
+    ) {
       displayMode.push("tiles");
     }
-    if (excerptCategories.includes(this.viewingCategoryId) || excerptTags.includes(this.viewingTagId) || this.enabledForCurrentTopicListRouteType("excerpts")) {
+    if (
+      excerptCategories.includes(this.viewingCategoryId) ||
+      excerptTags.includes(this.viewingTagId) ||
+      this.enabledForCurrentTopicListRouteType("excerpts")
+    ) {
       displayMode.push("excerpts");
     }
-    if (actionCategories.includes(this.viewingCategoryId) || actionTags.includes(this.viewingTagId) || this.enabledForCurrentTopicListRouteType("actions")) {
+    if (
+      actionCategories.includes(this.viewingCategoryId) ||
+      actionTags.includes(this.viewingTagId) ||
+      this.enabledForCurrentTopicListRouteType("actions")
+    ) {
       displayMode.push("actions");
     }
 
@@ -167,4 +190,4 @@ export default class TopicListPreviewsService extends Service {
   get displayActions() {
     return this.enabledForRoute && this.displayMode.includes("actions");
   }
-};
+}
