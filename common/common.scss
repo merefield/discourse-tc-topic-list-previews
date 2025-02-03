@@ -699,6 +699,12 @@ img.select-thumbnail-preview {
       display: none;
     }
   }
+
+  @if $topic_list_fps_search_author == "false" {
+    .author {
+      display: none;
+    }
+  }
 }
 
 .fps-result .topic .search-link {

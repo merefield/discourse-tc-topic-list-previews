@@ -224,4 +224,10 @@ topic_list_fps_search_blurb:
   type: bool
   description:
     en: "Enable search blurb for full page search"
+topic_list_fps_search_author:
+  default: true
+  type: bool
+  description:
+    en: "Enable search author for full page search"
+
 
