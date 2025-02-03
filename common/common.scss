@@ -684,12 +684,12 @@ img.select-thumbnail-preview {
 
 @if $topic_list_fps_search_grid == "true" {
   .fps-result-entries {
-      margin-top: 15px;
-      padding: 0 10px 0 10px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      grid-gap: 15px;
-      grid-template-rows: auto;
+    margin-top: 15px;
+    padding: 0 10px 0 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 15px;
+    grid-template-rows: auto;
   }
 }
 
@@ -702,13 +702,12 @@ img.select-thumbnail-preview {
 }
 
 .fps-result .topic .search-link {
-  
   display: grid;
   grid-template-columns: 1fr;
   grid-template-areas:
-  "fpsthumbnail"
-  "fpstitle";
-  
+    "fpsthumbnail"
+    "fpstitle";
+
   a {
     grid-area: fpsthumbnail;
     img {
@@ -716,6 +715,4 @@ img.select-thumbnail-preview {
       height: auto;
     }
   }
-
-
 }
