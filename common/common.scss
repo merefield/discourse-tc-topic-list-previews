@@ -682,74 +682,40 @@ img.select-thumbnail-preview {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 0 0 0 rgba(0, 0, 0, 0.12);
 }
 
-// .tiles-grid-item:hover {
-//   background-color: var(--blend-primary-secondary-5);
-// }
-
-// Advanced Search
-.thumbnail-grid .fps-result-entries {
-  margin-top: 15px;
-  padding: 0 10px 0 10px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 15px;
-  grid-template-rows: auto;
-
-  .fps-grid-item {
-    box-sizing: border-box;
-    cursor: pointer;
-    float: top;
-    margin-bottom: 6px;
-    border-radius: 3px;
-    padding: 10px;
-    display: grid;
-    grid-template-columns: 1;
-    grid-template-rows: auto auto auto;
-    grid-template-areas:
-      "fpsphoto"
-      "fpsheader"
-      "fpscategory";
+@if $topic_list_fps_search_grid == "true" {
+  .fps-result-entries {
+      margin-top: 15px;
+      padding: 0 10px 0 10px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-gap: 15px;
+      grid-template-rows: auto;
   }
+}
 
-  .fps-topic-header {
-    grid-area: fpsheader;
-    padding: 0 0 4px 0;
-
-    .topic-title {
-      font-size: 1em;
-      line-height: 1;
+.fps-result {
+  @if $topic_list_fps_search_blurb == "false" {
+    .blurb {
+      display: none;
     }
   }
+}
 
-  .fps-topic-category {
-    grid-area: fpscategory;
-    padding: 0 0 4px 0;
-  }
-
-  .fps-topic-thumbnail {
-    grid-area: fpsphoto;
-    padding: 0 0 4px 0;
-    img.thumbnail {
+.fps-result .topic .search-link {
+  
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+  "fpsthumbnail"
+  "fpstitle";
+  
+  a {
+    grid-area: fpsthumbnail;
+    img {
       width: 100%;
       height: auto;
     }
   }
 
-  .thumbnail {
-    .no-thumbnail {
-      display: none;
-    }
-  }
 
-  .topic-tags {
-    grid-area: tags;
-
-    .discourse-tags {
-      display: inline-block;
-    }
-  }
-
-  .list-tags {
-    padding-right: 10px;
-  }
 }

@@ -214,3 +214,14 @@ topic_list_test_image_url_timeout:
   type: integer
   description:
     en: "Timeout for testing image url"
+topic_list_fps_search_grid:
+  default: true
+  type: bool
+  description:
+    en: "Enable search grid for full page search"
+topic_list_fps_search_blurb:
+  default: true
+  type: bool
+  description:
+    en: "Enable search blurb for full page search"
+
