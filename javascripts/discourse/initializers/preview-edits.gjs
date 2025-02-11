@@ -64,7 +64,9 @@ export default apiInitializer("0.8", (api) => {
       }
       if (
         topicListPreviewsService.displayThumbnails &&
-        context.topic.thumbnails?.length > 0
+        (context.topic.thumbnails?.length > 0 ||
+          (settings.topic_list_default_thumbnail_fallback &&
+            settings.topic_list_default_thumbnail !== ""))
       ) {
         value.push("has-thumbnail");
       }
