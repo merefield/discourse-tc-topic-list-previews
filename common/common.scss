@@ -1,6 +1,68 @@
+@import "variables";
+
 .topic-list-item {
-  .discourse-tags {
-    display: inline;
+  &.white-text {
+    .topic-details,
+    a.title,
+    a.title:not(.badge-notification),
+    .topic-featured-link,
+    .badge-category__name,
+    .topic-excerpt,
+    .discourse-tag,
+    .topic-views,
+    .badge-posts,
+    button.list-button:not(.has-liked):not(.bookmarked) svg,
+    .like-count {
+      color: #ddd;
+    }
+
+    &.visited {
+      .topic-details,
+      a.title,
+      a.title:not(.badge-notification),
+      .topic-featured-link,
+      .topic-excerpt,
+      .discourse-tag,
+      .topic-views,
+      .badge-posts,
+      .like-count {
+        color: #ccc;
+      }
+    }
+  }
+
+  &.dark-text {
+    .discourse-tag.box {
+      background-color: #ccc;
+    }
+
+    .topic-details,
+    a.title,
+    a.title:not(.badge-notification),
+    .topic-featured-link,
+    .badge-category__name,
+    .topic-excerpt,
+    .discourse-tag,
+    .topic-views,
+    .badge-posts,
+    button.list-button:not(.has-liked):not(.bookmarked) svg,
+    .like-count {
+      color: #333;
+    }
+
+    &.visited {
+      .topic-details,
+      a.title,
+      a.title:not(.badge-notification),
+      .topic-featured-link,
+      .topic-excerpt,
+      .discourse-tag,
+      .topic-views,
+      .badge-posts,
+      .like-count {
+        color: #444;
+      }
+    }
   }
 }
 
@@ -10,11 +72,16 @@
 
 .topic-thumbnail {
   float: left;
-  padding-right: 15px;
+  margin-right: 15px;
 
   .no-thumbnail {
     display: none;
   }
+}
+
+img.non-tiles-thumbnail {
+  height: var(--thumbnail-height);
+  width: var(--thumbnail-width);
 }
 
 .topic-excerpt {
@@ -45,6 +112,10 @@
     display: none;
   }
 
+  .topic-statuses svg.d-icon-bookmark {
+    display: none;
+  }
+
   tbody {
     .topic-list-item-separator {
       display: none;
@@ -61,6 +132,10 @@
     border: none;
   }
 
+  .topic-list-data:first-of-type {
+    padding-left: 0;
+  }
+
   .tiles-grid-item-width2 {
     box-sizing: border-box;
     cursor: pointer;
@@ -68,32 +143,33 @@
     grid-column-end: span 2;
   }
 
-  .tiles-grid-item {
+  .topic-list-item {
     box-sizing: border-box;
     cursor: pointer;
     border-radius: 3px;
     grid-row-end: span 44;
-  }
+    display: flex;
+    flex-direction: column;
 
-  .tiles-grid-item-content {
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto auto;
-    grid-template-areas:
-      "photo"
-      "details";
-  }
+    &.no-background-colour {
+      border: 1px solid var(--primary-low);
+    }
 
-  .image {
-    grid-area: photo;
-    display: block;
+    .main-link {
+      padding-left: 0.67em;
+    }
   }
 
   .topic-thumbnail {
-    padding: 0px;
-    z-index: -1;
-    width: 100%;
+    grid-area: photo;
     display: block;
+    padding: 0px;
+    // z-index: -1;
+    width: 100%;
+    img {
+      width: 100%;
+      height: auto;
+    }
   }
 
   //TODO add this back when mask functionality is added
@@ -111,37 +187,20 @@
     }
   }
 
-  .topic-details {
-    grid-area: details;
-    display: grid;
-    padding: 10px 10px 10px 10px;
-    z-index: 10;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto auto;
-    grid-template-areas:
-      "theader theader theader"
-      "excerpt excerpt excerpt"
-      "tfooter tfooter tfooter";
-  }
-
-  .topic-header-grid {
-    grid-area: theader;
-    z-index: 99;
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-    grid-template-areas:
-      "title"
-      "category";
+  .topic-list-item.selected .topic-details {
+    box-shadow: inset 5px 0 0 var(--d-nav-color--active);
   }
 
   .show-more.has-topics {
     position: relative;
   }
 
+  .main-link {
+    grid-area: title;
+  }
+
   .topic-title {
     font-size: 1.143em;
-    grid-area: title;
     padding: 0 0 0 0;
 
     .link-top-line {
@@ -171,27 +230,9 @@
     float: right;
   }
 
-  .topic-category {
-    grid-area: category;
-    display: inline-block;
-  }
-
-  .topic-tags {
-    grid-area: tags;
-
-    .discourse-tags {
-      display: inline-block;
-    }
-  }
-
   .topic-excerpt {
-    grid-area: excerpt;
-    line-height: 1.3;
-    max-height: 300px;
-    max-width: 100%;
-    float: left;
-    clear: both;
-    padding-right: 0px;
+    padding-right: 0.67em;
+    padding-left: 0.67em;
 
     overflow-wrap: break-word;
     word-wrap: break-word;
@@ -207,17 +248,18 @@
   }
 
   .topic-footer {
-    grid-area: tfooter;
-    vertical-align: middle;
-    display: grid;
-    z-index: 10;
-    grid-template-columns: 9fr 12fr 10fr;
-
-    grid-template-rows: 1;
-    grid-template-areas: "meta posters actions";
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    padding-left: 0.67em;
+    padding-right: 0.67em;
   }
 
   .topic-meta {
+    flex: 1;
+    vertical-align: middle;
     display: flex;
 
     .container {
@@ -255,6 +297,8 @@
   .topic-users {
     grid-area: posters;
     display: flex;
+    flex: 1;
+    vertical-align: middle;
 
     .inline {
       align-self: center;
@@ -271,7 +315,7 @@
   }
 
   .topic-actions {
-    grid-area: actions;
+    flex: 1;
     display: flex;
     justify-content: flex-end;
 
@@ -311,21 +355,20 @@
         grid-template-columns: auto;
         grid-auto-rows: auto;
 
-        .tiles-grid-item {
+        .topic-list-item {
+          flex-direction: row;
           box-sizing: border-box;
           cursor: pointer;
           border-radius: 3px;
           grid-row-end: span 1;
-        }
-
-        .tiles-grid-item-content {
-          grid-template-areas: "photo details";
-          grid-template-columns: 1fr 2fr;
-          grid-template-rows: auto;
+          min-height: 190px;
         }
 
         .topic-details {
-          grid-template-rows: auto auto 20px;
+          flex: 2;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
 
           .topic-users {
             justify-content: center;
@@ -355,10 +398,11 @@
         }
 
         .topic-thumbnail {
+          flex: 1;
           width: 100%;
           overflow: hidden;
           margin: 0;
-          padding-top: 56.25%;
+          // padding-top: 56.25%;
           position: relative;
           z-index: 100;
           img {
@@ -369,68 +413,10 @@
             transform: translate(-50%, -50%);
           }
         }
-      }
-    }
-  }
-}
 
-.topic-list-item {
-  &.white-text {
-    .topic-details,
-    a.title,
-    a.title:not(.badge-notification),
-    .topic-featured-link,
-    .topic-excerpt,
-    .discourse-tag,
-    .topic-views,
-    .badge-posts,
-    .like-count {
-      color: #ddd;
-    }
-
-    &.visited {
-      .topic-details,
-      a.title,
-      a.title:not(.badge-notification),
-      .topic-featured-link,
-      .topic-excerpt,
-      .discourse-tag,
-      .topic-views,
-      .badge-posts,
-      .like-count {
-        color: #ccc;
-      }
-    }
-  }
-
-  &.black-text {
-    .discourse-tag.box {
-      background-color: #ccc;
-    }
-
-    .topic-details,
-    a.title,
-    a.title:not(.badge-notification),
-    .topic-featured-link,
-    .topic-excerpt,
-    .discourse-tag,
-    .topic-views,
-    .badge-posts,
-    .like-count {
-      color: #333;
-    }
-
-    &.visited {
-      .topic-details,
-      a.title,
-      a.title:not(.badge-notification),
-      .topic-featured-link,
-      .topic-excerpt,
-      .discourse-tag,
-      .topic-views,
-      .badge-posts,
-      .like-count {
-        color: #444;
+        .topic-footer {
+          margin-bottom: 10px;
+        }
       }
     }
   }
@@ -451,10 +437,12 @@ img.thumbnail {
 
 .like-count,
 .list-vote-count {
+  z-index: 100;
   color: var(--primary-medium);
-  font-size: 13px;
   display: inline-block;
-  padding-right: 5px;
+  position: relative;
+  top: 0px;
+  line-height: 0.01em;
   vertical-align: 0.125em;
 
   .vote-count {
@@ -471,7 +459,6 @@ img.thumbnail {
 // }
 
 button.list-button {
-  font-size: 0.9em;
   background: transparent;
   border: none;
   padding: 2px 4px;
@@ -486,7 +473,7 @@ button.list-button {
     vertical-align: bottom;
   }
 
-  &.has-like,
+  &.has-liked svg,
   &.topic-like:not([disabled]):hover {
     color: var(--love);
   }
@@ -697,70 +684,43 @@ img.select-thumbnail-preview {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 0 0 0 rgba(0, 0, 0, 0.12);
 }
 
-// .tiles-grid-item:hover {
-//   background-color: var(--blend-primary-secondary-5);
-// }
-
-// Advanced Search
-.thumbnail-grid .fps-result-entries {
-  margin-top: 15px;
-  padding: 0 10px 0 10px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 15px;
-  grid-template-rows: auto;
-
-  .fps-grid-item {
-    box-sizing: border-box;
-    cursor: pointer;
-    float: top;
-    margin-bottom: 6px;
-    border-radius: 3px;
-    padding: 10px;
+@if $topic_list_fps_search_grid == "true" {
+  .fps-result-entries {
+    margin-top: 15px;
+    padding: 0 10px 0 10px;
     display: grid;
-    grid-template-columns: 1;
-    grid-template-rows: auto auto auto;
-    grid-template-areas:
-      "fpsphoto"
-      "fpsheader"
-      "fpscategory";
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 15px;
+    grid-template-rows: auto;
   }
+}
 
-  .fps-topic-header {
-    grid-area: fpsheader;
-    padding: 0 0 4px 0;
-
-    .topic-title {
-      font-size: 1em;
-      line-height: 1;
-    }
-  }
-
-  .fps-topic-category {
-    grid-area: fpscategory;
-    padding: 0 0 4px 0;
-  }
-
-  .topic-thumbnail {
-    grid-area: fpsphoto;
-    padding: 0 0 4px 0;
-  }
-
-  .thumbnail {
-    .no-thumbnail {
+.fps-result {
+  @if $topic_list_fps_search_blurb == "false" {
+    .blurb {
       display: none;
     }
   }
 
-  .topic-tags {
-    grid-area: tags;
-
-    .discourse-tags {
-      display: inline-block;
+  @if $topic_list_fps_search_author == "false" {
+    .author {
+      display: none;
     }
   }
+}
 
-  .list-tags {
-    padding-right: 10px;
+.fps-result .topic .search-link {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "fpsthumbnail"
+    "fpstitle";
+
+  a {
+    grid-area: fpsthumbnail;
+    img {
+      width: 100%;
+      height: auto;
+    }
   }
 }

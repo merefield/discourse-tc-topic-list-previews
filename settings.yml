@@ -135,11 +135,11 @@ topic_list_thumbnail_height:
   description:
     en: "Height of image that can be previewed."
 topic_list_thumbnail_width_mobile:
-  default: 150
+  default: 50
   description:
     en: "Width of image that can be previewed on mobile."
 topic_list_thumbnail_height_mobile:
-  default: 100
+  default: 60
   description:
     en: "Height of image that can be previewed on mobile."
 topic_list_thumbnail_first_x_rows:
@@ -214,3 +214,20 @@ topic_list_test_image_url_timeout:
   type: integer
   description:
     en: "Timeout for testing image url"
+topic_list_fps_search_grid:
+  default: true
+  type: bool
+  description:
+    en: "Enable search grid for full page search"
+topic_list_fps_search_blurb:
+  default: true
+  type: bool
+  description:
+    en: "Enable search blurb for full page search"
+topic_list_fps_search_author:
+  default: true
+  type: bool
+  description:
+    en: "Enable search author for full page search"
+
+
