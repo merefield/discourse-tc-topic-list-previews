@@ -18,5 +18,5 @@
     "assets": {
       "imagesloaded": "assets/imagesloaded.js"
     },
-    "minimum_discourse_version": "2.5.0.beta4"
+    "minimum_discourse_version": "3.4.0.beta4"
 }
