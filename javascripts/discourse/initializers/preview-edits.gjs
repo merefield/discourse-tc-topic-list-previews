@@ -1,11 +1,11 @@
 import { htmlSafe } from "@ember/template";
 import { apiInitializer } from "discourse/lib/api";
+import { withSilencedDeprecations } from "discourse/lib/deprecated";
 import loadScript from "discourse/lib/load-script";
 import { resizeAllGridItems } from "../lib/gridupdate";
 import PreviewsDetails from "./../components/previews-details";
 import PreviewsThumbnail from "./../components/previews-thumbnail";
 import PreviewsTilesThumbnail from "./../components/previews-tiles-thumbnail";
-import { withSilencedDeprecations } from "discourse/lib/deprecated";
 
 const PLUGIN_ID = "discourse-tc-topic-list-previews";
 
@@ -30,6 +30,7 @@ export default apiInitializer("0.8", (api) => {
     api.modifyClass("component:topic-list", {
       pluginId: PLUGIN_ID,
       init() {
+        //eslint-disable-next-line no-alert
         alert(
           "topic-list-previews cannot be run alongside other themes/plugins which are incompatible with the glimmer topic list. See https://meta.discourse.org/t/209973/521 for details"
         );
