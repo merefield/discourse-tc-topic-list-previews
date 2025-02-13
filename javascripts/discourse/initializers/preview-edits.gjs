@@ -32,7 +32,7 @@ export default apiInitializer("0.8", (api) => {
       init() {
         //eslint-disable-next-line no-alert
         alert(
-          "topic-list-previews cannot be run alongside other themes/plugins which are not yet compatible with the new glimmer topic list. See https://meta.discourse.org/t/209973/521 for details"
+          "topic-list-previews cannot be run alongside other themes/plugins which are not yet compatible with the new glimmer topic list. See https://meta.discourse.org/t/209973/521 for details.  Set 'glimmer topic list mode' to 'enabled' or 'auto' and make sure all Components that modify the Topic List work with the new glimmer topic list system."
         );
         return this._super(...arguments);
       },
