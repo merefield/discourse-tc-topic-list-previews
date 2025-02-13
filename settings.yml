@@ -90,7 +90,7 @@ topic_list_tiles_wide_format:
   default: false
   type: bool
   description:
-    en: "EXPERIMENTAL: Use wide format (places image on left instead of top) for tiles when list area is wide enough"
+    en: "Use wide format (places image on left instead of top) for tiles when list area is wide enough"
 topic_list_portfolio:
   default: true
   type: bool
