@@ -39,3 +39,15 @@ td .main-link {
   max-width: 100%;
   padding-right: 0.67em;
 }
+
+.tlp-featured-topics.has-topics {
+  .topics {
+    .tlp-featured-topic {
+      .featured-details {
+        img.thumbnail {
+          height: var(--featured-thumbnail-height-mobile);
+        }
+      }
+    }
+  }
+}

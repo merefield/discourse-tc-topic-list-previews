@@ -195,10 +195,15 @@ topic_list_featured_width:
   description:
     en: "Featured image width.  Setting this to zero will make it responsive to image aspect ratio."
 topic_list_featured_height:
-  default: 150
+  default: 250
   type: integer
   description:
     en: "Featured image height."
+topic_list_featured_height_mobile:
+  default: 150
+  type: integer
+  description:
+    en: "Featured image height on mobile."
 topic_list_featured_title:
   default: ''
   type: string
