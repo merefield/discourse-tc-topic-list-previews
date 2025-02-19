@@ -84,6 +84,13 @@ img.non-tiles-thumbnail {
   width: var(--thumbnail-width);
 }
 
+.discourse-tags {
+  display: flex;
+  a {
+    margin-bottom: 3px;
+  }
+}
+
 .topic-excerpt {
   display: block;
   word-break: break-word;
@@ -551,7 +558,7 @@ button.list-button {
         position: relative;
 
         img.thumbnail {
-          height: var(--featured-thumbnail-height);
+          min-height: var(--featured-thumbnail-height);
           width: auto;
           z-index: 0;
         }
