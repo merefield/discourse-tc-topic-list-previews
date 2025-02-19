@@ -37,7 +37,9 @@ export default class TlpFeaturedTopicComponent extends Component {
   }
 
   get alwaysShowDetails() {
-    return settings.topic_list_featured_details_always_show === "always" || this.site.mobileView && settings.topic_list_featured_details_always_show === "mobile device"
+    return settings.topic_list_featured_details_always_show === "always" ||
+      (this.site.mobileView &&
+        settings.topic_list_featured_details_always_show === "mobile device")
       ? "always-show"
       : "";
   }
