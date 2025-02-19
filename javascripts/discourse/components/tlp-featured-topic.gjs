@@ -1,10 +1,12 @@
 import Component from "@glimmer/component";
 import { service } from "@ember/service";
 import avatar from "discourse/helpers/avatar";
+import concatClass from "discourse/helpers/concat-class";
 import PreviewsThumbnail from "./previews-thumbnail";
 
 export default class TlpFeaturedTopicComponent extends Component {
   @service currentUser;
+  @service site;
 
   get featuredUser() {
     return this.args.topic.posters[0].user;
@@ -34,9 +36,16 @@ export default class TlpFeaturedTopicComponent extends Component {
     return `/t/${this.args.topic.id}`;
   }
 
+  get alwaysShowDetails() {
+    return settings.topic_list_featured_details_always_show === "always" || this.site.mobileView && settings.topic_list_featured_details_always_show === "mobile device"
+      ? "always-show"
+      : "";
+  }
+
   <template>
     <a href="{{this.href}}" class="tlp-featured-topic {{this.featuredTag}}">
-      <div class="featured-details">
+      <div class={{concatClass "featured-details" this.alwaysShowDetails}}>
+        {{log this.site}}
         <PreviewsThumbnail
           @url={{this.href}}
           @thumbnails={{@topic.thumbnails}}

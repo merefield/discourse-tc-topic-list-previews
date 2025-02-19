@@ -214,6 +214,15 @@ topic_list_featured_excerpt:
   type: integer
   description:
     en: "Include topic excerpt in featured image and determine its length.  Set it to 0 for don't include"
+topic_list_featured_details_always_show:
+  default: only on hover
+  type: enum
+  choices:
+    - only on hover
+    - mobile device
+    - always
+  description:
+    en: "Always show details in featured image"
 topic_list_test_image_url_timeout:
   default: 5000
   type: integer

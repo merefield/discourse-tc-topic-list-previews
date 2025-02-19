@@ -582,9 +582,9 @@ button.list-button {
         }
       }
 
-      .featured-details:hover {
+      .featured-details:hover, .featured-details.always-show {
         img {
-          -webkit-filter: brightness(35%);
+          -webkit-filter: brightness(55%);
           transition: background-color 200ms linear;
         }
 
@@ -603,7 +603,7 @@ button.list-button {
           }
 
           img {
-            -webkit-filter: brightness(150%);
+            -webkit-filter: brightness(100%);
             visibility: visible;
           }
         }
