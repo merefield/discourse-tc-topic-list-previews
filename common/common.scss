@@ -96,6 +96,10 @@ img.non-tiles-thumbnail {
   }
 }
 
+.more-topics__container .more-topics__list .topic-list-body .topic-list-item:first-child td {
+  padding-top: 6px;
+}
+
 // tiles specific styling
 
 .contents.has-more > .topic-list.tiles-style tbody {
