@@ -11,6 +11,7 @@ import { popupAjaxError } from "discourse/lib/ajax-error";
 import i18n from "discourse-common/helpers/i18n";
 
 export default class PreviewsActionsComponent extends Component {
+  @service siteSettings;
   @service currentUser;
   @service modal;
   @tracked
@@ -100,7 +101,15 @@ export default class PreviewsActionsComponent extends Component {
     }
   }
 
+  get sidecarInstalled() {
+    return this.siteSettings.topic_list_previews_enabled;
+  }
+
   get showLikeButton() {
+    if (!this.sidecarInstalled) {
+      return false;
+    }
+
     return (
       this.args.topic.like_count ||
       this.args.topic.topic_post_can_like ||
@@ -130,6 +139,10 @@ export default class PreviewsActionsComponent extends Component {
   }
 
   get showBookmarkButton() {
+    if (!this.sidecarInstalled) {
+      return false;
+    }
+
     return this.currentUser;
   }
 
