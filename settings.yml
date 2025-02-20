@@ -36,7 +36,7 @@ topic_list_excerpts_topic_lists:
   type: list
   default: latest|new|unread|top|tag|suggested|agenda|activity-topics|activity-portfolio|latest-mobile|new-mobile|unread-mobile|top-mobile|tag-mobile|agenda-mobile|activity-topics-mobile|activity-portfolio-mobile
   description:
-    en:  "The lists that will include excerpts.  Can be one of latest|new|unread|top|tag|suggested|agenda|activity-topics|activity-portfolio|latest-mobile|new-mobile|unread-mobile|top-mobile|tag-mobile|agenda-mobile|activity-topics-mobile|activity-portfolio-mobile"
+    en: "The lists that will include excerpts.  Can be one of latest|new|unread|top|tag|suggested|agenda|activity-topics|activity-portfolio|latest-mobile|new-mobile|unread-mobile|top-mobile|tag-mobile|agenda-mobile|activity-topics-mobile|activity-portfolio-mobile"
 topic_list_excerpts_categories:
   type: list
   list_type: category
@@ -70,17 +70,21 @@ topic_list_set_category_defaults:
   default: false
   type: bool
   description:
-    en:  "Set site topic list display settings as defaults for category topic lists."
+    en: "Set site topic list display settings as defaults for category topic lists."
+topic_list_dominant_color_background:
+  default: tiles only
+  type: enum
+  choices:
+    - never
+    - tiles only
+    - always
+  description:
+    en: "Use dominant color for background of topic list items."
 topic_list_show_like_on_current_users_posts:
   type: bool
   default: true
   description:
-    en:  "Show an inactive like button in topic list items previewing a post created by the current user (non-default Discourse behavior)."
-topic_list_tiles_transition_time:
-  default: 0.5
-  type: float
-  description:
-    en:  "Number of seconds for tiles layout transition on view change (desktop only)"
+    en: "Show an inactive like button in topic list items previewing a post created by the current user (non-default Discourse behavior)."
 topic_list_tiles_larger_featured_tiles:
   default: true
   type: bool
@@ -97,35 +101,35 @@ topic_list_portfolio:
   description:
     en: "Enable additional User Activity view for User Portfolio"
 topic_list_portfolio_filter_type:
-  default: 'tag'
-  type: 'enum'
+  default: "tag"
+  type: "enum"
   description:
     en: "Which type of filter should be used to limit Activity Portfolio Topics"
   choices:
     - tag
     - category
 topic_list_portfolio_filter_parameter:
-  default: ''
+  default: ""
   type: string
   description:
-    en:  "Enter the tag or category slug (depending of value of filter type setting)"
+    en: "Enter the tag or category slug (depending of value of filter type setting)"
 topic_list_default_thumbnail:
-  default: ''
+  default: ""
   type: string
   description:
-    en:  "Image URL for default thumbnail if topic thumbnail is inaccessible."
+    en: "Image URL for default thumbnail if topic thumbnail is inaccessible."
 topic_list_default_thumbnail_fallback:
   default: false
   type: bool
   description:
-    en:  "Use the default thumbnail when a topic has no previewed image."
+    en: "Use the default thumbnail when a topic has no previewed image."
 topic_list_thumbnail_resolution_level:
   default: 3
   max: 6
   min: 0
   type: integer
   description:
-    en:  "Resolution level of thumbnail used in the Topic List: 0 is original, 1 is next highest, up to 6 lowest. Actual resolution will depend on number of thumbnails available for any one image. Experiment for best setting for your site, but 2 is recommended for Tiles"
+    en: "Resolution level of thumbnail used in the Topic List: 0 is original, 1 is next highest, up to 6 lowest. Actual resolution will depend on number of thumbnails available for any one image. Experiment for best setting for your site, but 2 is recommended for Tiles"
 topic_list_thumbnail_width:
   default: 150
   description:
@@ -158,7 +162,7 @@ topic_list_featured_images_resolution_level:
   min: 0
   type: integer
   description:
-    en:  "Resolution level of thumbnail used in Featured Images: 0 is original, 1 is next highest, up to 6 lowest. Actual resolution will depend on number of thumbnails available for any one image. Experiment for best setting for your site."
+    en: "Resolution level of thumbnail used in Featured Images: 0 is original, 1 is next highest, up to 6 lowest. Actual resolution will depend on number of thumbnails available for any one image. Experiment for best setting for your site."
 topic_list_featured_images_category:
   default: false
   type: bool
@@ -172,7 +176,7 @@ topic_list_featured_images_from_current_category_only:
 topic_list_featured_images_tag:
   type: list
   list_type: tag
-  default: ''
+  default: ""
   description:
     en: "Featured images tag."
 topic_list_featured_images_tag_show:
@@ -205,7 +209,7 @@ topic_list_featured_height_mobile:
   description:
     en: "Featured image height on mobile."
 topic_list_featured_title:
-  default: ''
+  default: ""
   type: string
   description:
     en: "Featured images title. Supports Markdown."
@@ -243,5 +247,3 @@ topic_list_fps_search_author:
   type: bool
   description:
     en: "Enable search author for full page search"
-
-
