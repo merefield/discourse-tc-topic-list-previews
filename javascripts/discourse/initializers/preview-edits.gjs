@@ -98,7 +98,14 @@ export default apiInitializer("0.8", (api) => {
           ? (red + green + blue) / 3
           : null;
 
-        if (Object.keys(context.topic?.dominant_colour).length === 0) {
+        if (
+          Object.keys(context.topic?.dominant_colour).length === 0 ||
+          !(
+            settings.topic_list_dominant_color_background === "always" ||
+            (topicListPreviewsService.displayTiles &&
+              settings.topic_list_dominant_color_background === "tiles only")
+          )
+        ) {
           value.push("no-background-colour");
         } else if (averageIntensity > 127) {
           value.push("dark-text");
@@ -118,6 +125,9 @@ export default apiInitializer("0.8", (api) => {
     ({ value, context }) => {
       if (
         siteSettings.topic_list_enable_thumbnail_colour_determination &&
+        (settings.topic_list_dominant_color_background === "always" ||
+          (topicListPreviewsService.displayTiles &&
+            settings.topic_list_dominant_color_background === "tiles only")) &&
         Object.keys(context.topic?.dominant_colour).length !== 0
       ) {
         let red = context.topic.dominant_colour?.red || 0;
