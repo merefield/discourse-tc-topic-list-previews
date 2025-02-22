@@ -53,7 +53,7 @@ export default class TlpFeaturedTopicsComponent extends Component {
             : topics.slice(0, settings.topic_list_featured_images_count)
           : [];
 
-        if (settings.topic_list_featured_images_created_order) {
+        if (settings.topic_list_featured_images_order === "created") {
           reducedTopics.sort((a, b) => {
             let keyA = new Date(a.created_at),
               keyB = new Date(b.created_at);
@@ -66,6 +66,8 @@ export default class TlpFeaturedTopicsComponent extends Component {
             }
             return 0;
           });
+        } else if (settings.topic_list_featured_images_order === "random") {
+          reducedTopics.sort(() => Math.random() - 0.5);
         }
         this.featuredTopics = reducedTopics;
       }
