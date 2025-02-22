@@ -84,7 +84,10 @@ export default apiInitializer("0.8", (api) => {
       ) {
         value.push("has-thumbnail");
       }
-      if (siteSettings.topic_list_enable_thumbnail_colour_determination) {
+      if (
+        siteSettings.topic_list_enable_thumbnail_colour_determination &&
+        topicListPreviewsService.displayThumbnails
+      ) {
         let red = context.topic.dominant_colour?.red || 0;
         let green = context.topic.dominant_colour?.green || 0;
         let blue = context.topic.dominant_colour?.blue || 0;
@@ -182,7 +185,10 @@ export default apiInitializer("0.8", (api) => {
   });
 
   api.registerValueTransformer("topic-list-columns", ({ value: columns }) => {
-    if (topicListPreviewsService.displayTiles) {
+    if (
+      topicListPreviewsService.displayTiles &&
+      topicListPreviewsService.displayThumbnails
+    ) {
       columns.add(
         "previews-thumbnail",
         { item: previewsTilesThumbnail },
