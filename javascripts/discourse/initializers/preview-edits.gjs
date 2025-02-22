@@ -51,6 +51,24 @@ export default apiInitializer("0.8", (api) => {
     });
   });
 
+  // Keep track of the last "step" of 400 pixels.
+  let lastIndex = 0;
+
+  // Firefox does some strange things with off-screen images,
+  // so we need to resize the grid items when we scroll.
+  if (navigator.userAgent.indexOf("Firefox") > 0) {
+    // Listen for scroll events.
+    window.addEventListener("scroll", () => {
+      // Calculate the current index (which 400-pixel block we are in)
+      const currentIndex = Math.floor(window.scrollY / 400);
+      // If we've moved into a new block, call the function.
+      if (currentIndex !== lastIndex) {
+        lastIndex = currentIndex;
+        resizeAllGridItems();
+      }
+    });
+  }
+
   api.registerValueTransformer("topic-list-columns", ({ value: columns }) => {
     if (topicListPreviewsService.displayTiles) {
       columns.delete("activity");
