@@ -125,6 +125,7 @@ export default apiInitializer("0.8", (api) => {
     ({ value, context }) => {
       if (
         siteSettings.topic_list_enable_thumbnail_colour_determination &&
+        topicListPreviewsService.displayThumbnails &&
         (settings.topic_list_dominant_color_background === "always" ||
           (topicListPreviewsService.displayTiles &&
             settings.topic_list_dominant_color_background === "tiles only")) &&
