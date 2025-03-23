@@ -7,7 +7,7 @@ export default class PreviewsThumbnail extends Component {
   @service topicListPreviews;
 
   get getDefaultThumbnail() {
-    const defaultThumbnail = settings.topic_list_default_thumbnail_fallback
+    const defaultThumbnail = settings.topic_list_default_thumbnail_fallback;
     return defaultThumbnail ? settings.topic_list_default_thumbnail : false;
   }
 
