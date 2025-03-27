@@ -36,9 +36,9 @@ export default class SelectThumbnailComponent extends Component {
         @icon="id-card"
         @label={{themePrefix "tlp.thumbnail_selector.select_preview_button"}}
       />
-      {{#if this.args.buffered.user_chosen_thumbnail_url}}
+      {{#if @buffered.user_chosen_thumbnail_url}}
         <br /><img
-          src={{this.args.buffered.user_chosen_thumbnail_url}}
+          src={{@buffered.user_chosen_thumbnail_url}}
           class="select-thumbnail-preview"
         />
       {{/if}}

@@ -8,15 +8,13 @@
     "{{this.model.topic_title}}"</h3>
   <span class="select-thumbnail">
     {{#each this.model.thumbnails as |thumbnail|}}
-      <img
+      <button
+        type="button"
         class="select-thumbnail-options"
-        src={{thumbnail.image_url}}
-        onclick={{action
-          this.selectThumbnail
-          thumbnail.image_url
-          thumbnail.upload_id
-        }}
-      />
+        onclick={{fn this.selectThumbnail thumbnail.image_url thumbnail.upload_id}}
+      >
+        <img src={{thumbnail.image_url}} alt="Thumbnail" />
+      </button>
     {{/each}}
   </span>
 </DModal>

@@ -3,6 +3,7 @@ import { service } from "@ember/service";
 import avatar from "discourse/helpers/avatar";
 import concatClass from "discourse/helpers/concat-class";
 import PreviewsThumbnail from "./previews-thumbnail";
+import htmlSafe from "@ember/template/modifiers/html-safe";
 
 export default class TlpFeaturedTopicComponent extends Component {
   @service currentUser;
@@ -45,7 +46,7 @@ export default class TlpFeaturedTopicComponent extends Component {
   }
 
   <template>
-    <a href="{{this.href}}" class="tlp-featured-topic {{this.featuredTag}}">
+    <a href={{this.href}} class="tlp-featured-topic {{this.featuredTag}}">
       <div class={{concatClass "featured-details" this.alwaysShowDetails}}>
         <PreviewsThumbnail
           @url={{this.href}}
@@ -54,11 +55,11 @@ export default class TlpFeaturedTopicComponent extends Component {
         />
         <div class="content">
           <div class="title">
-            {{this.args.topic.title}}
+            {{@topic.title}}
           </div>
           {{#if this.featuredExcerpt}}
             <div class="excerpt">
-              {{{this.featuredExcerpt}}}
+              {{htmlSafe this.featuredExcerpt}}
             </div>
           {{/if}}
           <span class="user">
