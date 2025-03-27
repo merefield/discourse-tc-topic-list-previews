@@ -3,9 +3,9 @@ import { service } from "@ember/service";
 import { htmlSafe } from "@ember/template";
 import coldAgeClass from "discourse/helpers/cold-age-class";
 import concatClass from "discourse/helpers/concat-class";
+import icon from "discourse/helpers/d-icon";
 import formatDate from "discourse/helpers/format-date";
 import { number } from "discourse/lib/formatter";
-import icon from "discourse-common/helpers/d-icon";
 
 export default class PreviewsMeta extends Component {
   @service siteSettings;
