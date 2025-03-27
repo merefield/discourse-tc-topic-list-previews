@@ -1,6 +1,6 @@
-{{#if portfolioEnabled}}
+{{#if this.portfolioEnabled}}
   <div class="portfolio-button-inner">
-    <LinkTo @route="userActivity.portfolio" @model={{user}}>
+    <LinkTo @route="userActivity.portfolio" @model={{this.user}}>
       <svg
         class="fa d-icon d-icon-images svg-icon svg-string"
         xmlns="http://www.w3.org/2000/svg"
