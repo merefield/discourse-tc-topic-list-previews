@@ -8,12 +8,13 @@ import concatClass from "discourse/helpers/concat-class";
 import icon from "discourse/helpers/d-icon";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
-import i18n from "discourse-common/helpers/i18n";
+import { i18n } from "discourse-i18n";
 
 export default class PreviewsActionsComponent extends Component {
   @service siteSettings;
   @service currentUser;
   @service modal;
+
   @tracked
   canUnlike =
     this.args.topic.topic_post_can_unlike || !this.args.topic.topic_post_liked;

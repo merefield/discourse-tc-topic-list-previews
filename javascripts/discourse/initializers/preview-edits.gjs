@@ -179,18 +179,21 @@ export default apiInitializer("0.8", (api) => {
     return value;
   });
 
-  api.renderInOutlet("topic-list-before-link", <template>
-    {{#unless topicListPreviewsService.displayTiles}}
-      {{#if topicListPreviewsService.displayThumbnails}}
-        <div class="topic-thumbnail">
-          <PreviewsThumbnail
-            @thumbnails={{@outletArgs.topic.thumbnails}}
-            @tiles={{false}}
-          />
-        </div>
-      {{/if}}
-    {{/unless}}
-  </template>);
+  api.renderInOutlet(
+    "topic-list-before-link",
+    <template>
+      {{#unless topicListPreviewsService.displayTiles}}
+        {{#if topicListPreviewsService.displayThumbnails}}
+          <div class="topic-thumbnail">
+            <PreviewsThumbnail
+              @thumbnails={{@outletArgs.topic.thumbnails}}
+              @tiles={{false}}
+            />
+          </div>
+        {{/if}}
+      {{/unless}}
+    </template>
+  );
 
   api.registerValueTransformer("topic-list-item-expand-pinned", ({ value }) => {
     if (

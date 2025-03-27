@@ -1,10 +1,12 @@
 {
   "private": true,
   "devDependencies": {
-    "@discourse/lint-configs": "2.2.2",
-    "ember-template-lint": "6.0.0",
-    "eslint": "9.15.0",
-    "prettier": "2.8.8"
+    "@discourse/lint-configs": "2.12.0",
+    "ember-template-lint": "7.0.1",
+    "eslint": "9.22.0",
+    "prettier": "3.5.3",
+    "prettier-plugin-ember-template-tag": "^2.0.4",
+    "stylelint": "16.16.0"
   },
   "engines": {
     "node": ">= 18",

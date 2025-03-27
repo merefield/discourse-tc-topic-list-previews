@@ -13,6 +13,7 @@ export default class TlpFeaturedTopicsComponent extends Component {
   @service appEvents;
   @service store;
   @service session;
+
   @tracked featuredTitle = "";
   @tracked featuredTopics = [];
 

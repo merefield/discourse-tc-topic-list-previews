@@ -11,7 +11,7 @@
     .discourse-tag,
     .topic-views,
     .badge-posts,
-    button.list-button:not(.has-liked):not(.bookmarked) svg,
+    button.list-button:not(.has-liked, .bookmarked) svg,
     .like-count {
       color: #ddd;
     }
@@ -45,7 +45,7 @@
     .discourse-tag,
     .topic-views,
     .badge-posts,
-    button.list-button:not(.has-liked):not(.bookmarked) svg,
+    button.list-button:not(.has-liked, .bookmarked) svg,
     .like-count {
       color: #333;
     }
@@ -86,6 +86,7 @@ img.non-tiles-thumbnail {
 
 .discourse-tags {
   display: flex;
+
   a {
     margin-bottom: 3px;
   }
@@ -98,6 +99,7 @@ img.non-tiles-thumbnail {
 
 .topic-actions {
   display: block;
+
   .like-count:empty {
     margin-right: 0;
   }
@@ -112,7 +114,6 @@ img.non-tiles-thumbnail {
 }
 
 // tiles specific styling
-
 .contents.has-more > .topic-list.tiles-style tbody {
   margin-top: 60px;
 }
@@ -178,16 +179,18 @@ img.non-tiles-thumbnail {
   .topic-thumbnail {
     grid-area: photo;
     display: block;
-    padding: 0px;
+    padding: 0;
+
     // z-index: -1;
     width: 100%;
+
     img {
       width: 100%;
       height: auto;
     }
   }
 
-  //TODO add this back when mask functionality is added
+  // TODO add this back when mask functionality is added
   // .image-mask {
   //   position: relative;
   //   margin-bottom: -200px;
@@ -195,7 +198,6 @@ img.non-tiles-thumbnail {
   //   width: 100%;
   //   z-index: 1;
   // }
-
   .thumbnail {
     .no-thumbnail {
       display: none;
@@ -248,17 +250,11 @@ img.non-tiles-thumbnail {
   .topic-excerpt {
     padding-right: 0.67em;
     padding-left: 0.67em;
-
     overflow-wrap: break-word;
     word-wrap: break-word;
-
     -ms-word-break: break-all;
     word-break: break-all;
     word-break: break-word;
-
-    -ms-hyphens: auto;
-    -moz-hyphens: auto;
-    -webkit-hyphens: auto;
     hyphens: auto;
   }
 
@@ -279,6 +275,7 @@ img.non-tiles-thumbnail {
 
     .container {
       align-self: center;
+
       a {
         display: inline-block;
       }
@@ -289,15 +286,19 @@ img.non-tiles-thumbnail {
         .topic-views {
           color: var(--primary-medium);
         }
+
         .topic-replies {
           padding-left: 3px;
         }
       }
+
       .bottom-line {
         align-self: start;
+
         .middot {
           display: none;
         }
+
         .topic-timing {
           vertical-align: top;
         }
@@ -321,7 +322,7 @@ img.non-tiles-thumbnail {
       color: var(--primary-med-or-secondary-med);
 
       .avatar {
-        padding: 0 0 0 0px;
+        padding: 0 0 0 0;
         margin-right: -2px;
         width: 22px;
         height: 22px;
@@ -340,7 +341,7 @@ img.non-tiles-thumbnail {
     }
   }
 
-  .middot:after {
+  .middot::after {
     content: "\00B7";
   }
 
@@ -401,9 +402,11 @@ img.non-tiles-thumbnail {
                 padding-top: 1px;
                 align-self: center;
                 display: inline;
+
                 .middot {
                   display: inline-block;
                 }
+
                 .topic-timing {
                   vertical-align: middle;
                 }
@@ -417,9 +420,11 @@ img.non-tiles-thumbnail {
           width: 100%;
           overflow: hidden;
           margin: 0;
+
           // padding-top: 56.25%;
           position: relative;
           z-index: 100;
+
           img {
             position: absolute;
             top: 50%;
@@ -456,7 +461,7 @@ img.thumbnail {
   color: var(--primary-medium);
   display: inline-block;
   position: relative;
-  top: 0px;
+  top: 0;
   line-height: 0.01em;
   vertical-align: 0.125em;
 
@@ -472,7 +477,6 @@ img.thumbnail {
 //   padding-right: 3px;
 //   margin-top: 5px;
 // }
-
 button.list-button {
   background: transparent;
   border: none;
@@ -570,7 +574,6 @@ button.list-button {
           background-color: transparent;
           transition: background-color 200ms linear;
           transition: color 200ms linear;
-          padding-bottom: 15px;
           padding: 15px;
           position: absolute;
           top: 0;
@@ -600,7 +603,7 @@ button.list-button {
       .featured-details:hover,
       .featured-details.always-show {
         img {
-          -webkit-filter: brightness(55%);
+          filter: brightness(55%);
           transition: background-color 200ms linear;
         }
 
@@ -619,7 +622,7 @@ button.list-button {
           }
 
           img {
-            -webkit-filter: brightness(100%);
+            filter: brightness(100%);
             visibility: visible;
           }
         }
@@ -653,7 +656,7 @@ button.select-thumbnail-options img {
   width: 80px;
   height: 80px;
   padding: 1px;
-  box-shadow: 2px 2px 2px 2px #888888;
+  box-shadow: 2px 2px 2px 2px #888;
   cursor: pointer;
 }
 
@@ -662,18 +665,16 @@ button.select-thumbnail-options img:hover {
 }
 
 button.select-thumbnail-options img:active {
-  -webkit-transform: translateY(+2px);
-  -ms-transform: translateY(+2px);
   transform: translateY(+2px);
-  -webkit-transform: translateX(+2px);
-  -ms-transform: translateX(+2px);
   transform: translateX(+2px);
-  box-shadow: 1px 1px 1px 1px #888888;
+  transform: translateX(+2px);
+  transform: translateX(+2px);
+  box-shadow: 1px 1px 1px 1px #888;
 }
 
 img.select-thumbnail-preview {
   border: solid 1px var(--primary-medium);
-  margin: 5px 0px 5px 0px;
+  margin: 5px 0 5px 0;
   padding: 5px;
   width: 148px;
   max-height: 148px;
@@ -690,7 +691,6 @@ img.select-thumbnail-preview {
   margin-bottom: 5px;
   display: inline-flex;
   cursor: pointer;
-
   background-color: var(--tertiary);
 
   label {
@@ -698,6 +698,7 @@ img.select-thumbnail-preview {
     display: inline-block;
     cursor: pointer;
   }
+
   svg {
     color: var(--secondary);
     display: inline-block;
@@ -709,7 +710,9 @@ img.select-thumbnail-preview {
 }
 
 .tiles-grid-item {
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 0 0 0 rgba(0, 0, 0, 0.12);
+  box-shadow:
+    0 2px 5px 0 rgba(0, 0, 0, 0.16),
+    0 0 0 0 rgba(0, 0, 0, 0.12);
 }
 
 @if $topic_list_fps_search_grid == "true" {
@@ -746,6 +749,7 @@ img.select-thumbnail-preview {
 
   a {
     grid-area: fpsthumbnail;
+
     img {
       width: 100%;
       height: auto;

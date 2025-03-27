@@ -6,6 +6,7 @@ import { resizeAllGridItems } from "../../lib/gridupdate";
 
 export default class LayoutRefresh extends Component {
   @service topicListPreviews;
+
   @tracked isResizing = false; // Prevent infinite loops
 
   attachResizeObserver = modifier((element) => {
