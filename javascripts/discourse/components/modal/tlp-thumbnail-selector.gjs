@@ -14,8 +14,8 @@ export default class TlpThumbnailSelectorComponent extends Component {
 
   @action
   selectThumbnail(imageUrl, uploadId) {
-    this.buffered.set("user_chosen_thumbnail_url", imageUrl);
-    this.buffered.set("image_upload_id", uploadId);
+    this.args.model.buffered.set("user_chosen_thumbnail_url", imageUrl);
+    this.args.model.buffered.set("image_upload_id", uploadId);
     this.args.closeModal();
   }
 
