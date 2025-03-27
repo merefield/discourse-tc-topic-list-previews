@@ -1,7 +1,8 @@
 .topic-list {
   .has-thumbnail .right {
-    margin-left: 0px;
+    margin-left: 0;
   }
+
   .has-thumbnail .pull-left {
     display: none;
   }
@@ -24,8 +25,7 @@ td .main-link {
   padding: 6px;
 }
 
-//tiles styling  specific styling
-
+// tiles styling  specific styling
 .topic-list.tiles-style .num.posts-map {
   font-size: 12px;
 }
