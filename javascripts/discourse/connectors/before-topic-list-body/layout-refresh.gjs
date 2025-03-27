@@ -72,7 +72,7 @@ export default class LayoutRefresh extends Component {
 
   <template>
     {{#if this.topicListPreviews.displayTiles}}
-      <style {{this.attachResizeObserver}}></style>
+      <div class="resize-watcher" {{this.attachResizeObserver}}></div>
     {{/if}}
   </template>
 }

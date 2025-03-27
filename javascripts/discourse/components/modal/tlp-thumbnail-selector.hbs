@@ -11,7 +11,11 @@
       <button
         type="button"
         class="select-thumbnail-options"
-        onclick={{fn this.selectThumbnail thumbnail.image_url thumbnail.upload_id}}
+        onclick={{fn
+          this.selectThumbnail
+          thumbnail.image_url
+          thumbnail.upload_id
+        }}
       >
         <img src={{thumbnail.image_url}} alt="Thumbnail" />
       </button>
