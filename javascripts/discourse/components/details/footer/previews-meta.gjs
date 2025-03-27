@@ -70,7 +70,7 @@ export default class PreviewsMeta extends Component {
             title={{htmlSafe @topic.bumpedAtTitle}}
           >
             <span class="middot inline sub"></span>
-            <a href="{{@topic.lastPostUrl}}">
+            <a href={{@topic.lastPostUrl}}>
               {{icon "far-clock"}}
               {{formatDate
                 @topic.bumpedAt
@@ -84,43 +84,3 @@ export default class PreviewsMeta extends Component {
     </div>
   </template>
 }
-//     class="num posts-map posts {{this.likesHeat}} topic-list-data"
-//   >
-//     <a href={{@topic.firstPostUrl}} class="badge-posts">
-//       <PluginOutlet
-//         @name="topic-list-before-reply-count"
-//         @outletArgs={{hash topic=@topic}}
-//       />
-//       {{number @topic.replyCount noTitle="true"}}
-//     </a>
-
-//       <td class={{concatClass "num views topic-list-data" @topic.viewsHeat}}>
-//   <PluginOutlet
-//     @name="topic-list-before-view-count"
-//     @outletArgs={{hash topic=@topic}}
-//   />
-//   {{number @topic.views numberKey="views_long"}}
-// </td>
-
-//   import { htmlSafe } from "@ember/template";
-// import PluginOutlet from "discourse/components/plugin-outlet";
-// import coldAgeClass from "discourse/helpers/cold-age-class";
-// import concatClass from "discourse/helpers/concat-class";
-// import formatDate from "discourse/helpers/format-date";
-
-// const ActivityCell = <template>
-//   <td
-//     title={{htmlSafe @topic.bumpedAtTitle}}
-//     class={{concatClass
-//       "activity num topic-list-data"
-//       (coldAgeClass @topic.createdAt startDate=@topic.bumpedAt class="")
-//     }}
-//   >
-//     <a href={{@topic.lastPostUrl}} class="post-activity">
-//       {{~! no whitespace ~}}
-//       <PluginOutlet
-//         @name="topic-list-before-relative-date"
-//         @outletArgs={{hash topic=@topic}}
-//       />
-//       {{~formatDate @topic.bumpedAt format="tiny" noTitle="true"~}}
-//     </a>

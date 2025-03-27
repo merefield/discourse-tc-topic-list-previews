@@ -1,7 +1,7 @@
-{{#if this.args.model.sidecar_installed}}
+{{#if @model.sidecar_installed}}
   <SelectThumbnail
-    @topic_id={{this.args.model.id}}
-    @topic_title={{this.args.model.title}}
-    @buffered={{this.args.buffered}}
+    @topic_id={{@model.id}}
+    @topic_title={{@model.title}}
+    @buffered={{@buffered}}
   />
 {{/if}}

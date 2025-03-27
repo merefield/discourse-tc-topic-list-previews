@@ -26,15 +26,16 @@ export default class PreviewsUsers extends Component {
   }
 
   <template>
-    {{! <div class="topic-posters topic-list-data"> }}
     <div class="topic-users">
       <div class="inline">
         {{#each this.abbrieviatedPosters as |poster|}}
-          {{#unless poster.count}}
+          {{#if poster.count}}
+            ({{poster.count}})
+          {{else}}
             <a
-              href="{{poster.user.path}}"
-              data-user-card="{{poster.user.username}}"
-              class="{{poster.extras}}"
+              href={{poster.user.path}}
+              data-user-card={{poster.user.username}}
+              class={{poster.extras}}
             >
               {{avatar
                 poster
@@ -43,12 +44,9 @@ export default class PreviewsUsers extends Component {
                 imageSize="small"
               }}
             </a>
-          {{else}}
-            ({{poster.count}})
-          {{/unless}}
+          {{/if}}
         {{/each}}
       </div>
     </div>
-    {{! </div> }}
   </template>
 }

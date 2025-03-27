@@ -639,7 +639,17 @@ div.select-thumbnail-connector {
   padding: 0 0 10px 0;
 }
 
-img.select-thumbnail-options {
+button.select-thumbnail-options {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+button.select-thumbnail-options img {
   width: 80px;
   height: 80px;
   padding: 1px;
@@ -647,11 +657,11 @@ img.select-thumbnail-options {
   cursor: pointer;
 }
 
-img.select-thumbnail-options:hover {
+button.select-thumbnail-options img:hover {
   filter: brightness(120%);
 }
 
-img.select-thumbnail-options:active {
+button.select-thumbnail-options img:active {
   -webkit-transform: translateY(+2px);
   -ms-transform: translateY(+2px);
   transform: translateY(+2px);
