@@ -1,9 +1,9 @@
 import Component from "@glimmer/component";
 import { service } from "@ember/service";
+import { htmlSafe } from "@ember/template";
 import avatar from "discourse/helpers/avatar";
 import concatClass from "discourse/helpers/concat-class";
 import PreviewsThumbnail from "./previews-thumbnail";
-import htmlSafe from "@ember/template/modifiers/html-safe";
 
 export default class TlpFeaturedTopicComponent extends Component {
   @service currentUser;
