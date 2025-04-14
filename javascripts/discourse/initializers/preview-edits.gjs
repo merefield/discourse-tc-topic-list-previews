@@ -188,6 +188,7 @@ export default apiInitializer("0.8", (api) => {
             <PreviewsThumbnail
               @thumbnails={{@outletArgs.topic.thumbnails}}
               @tiles={{false}}
+              @url={{@outletArgs.topic.url}}
             />
           </div>
         {{/if}}
