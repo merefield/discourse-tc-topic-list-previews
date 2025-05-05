@@ -1,6 +1,5 @@
 import { htmlSafe } from "@ember/template";
 import { apiInitializer } from "discourse/lib/api";
-import { withSilencedDeprecations } from "discourse/lib/deprecated";
 import loadScript from "discourse/lib/load-script";
 import { resizeAllGridItems } from "../lib/gridupdate";
 import PreviewsDetails from "./../components/previews-details";
@@ -25,19 +24,6 @@ export default apiInitializer("0.8", (api) => {
   const topicListPreviewsService = api.container.lookup(
     "service:topic-list-previews"
   );
-
-  withSilencedDeprecations("discourse.hbr-topic-list-overrides", () => {
-    api.modifyClass("component:topic-list", {
-      pluginId: PLUGIN_ID,
-      init() {
-        //eslint-disable-next-line no-alert
-        alert(
-          "topic-list-previews cannot be run alongside other themes/plugins which are not yet compatible with the new glimmer topic list. See https://meta.discourse.org/t/209973/521 for details.  Set 'glimmer topic list mode' to 'enabled' or 'auto' and make sure all Components that modify the Topic List work with the new glimmer topic list system."
-        );
-        return this._super(...arguments);
-      },
-    });
-  });
 
   api.onPageChange(() => {
     loadScript(settings.theme_uploads.imagesloaded).then(() => {
