@@ -679,35 +679,6 @@ img.select-thumbnail-preview {
   max-height: 148px;
 }
 
-.portfolio-button-inner {
-  min-width: 150px;
-  padding: 0.5em 0.65em;
-  overflow: hidden;
-  height: 20px;
-  vertical-align: middle;
-  justify-content: center;
-  white-space: nowrap;
-  margin-bottom: 5px;
-  display: inline-flex;
-  cursor: pointer;
-  background-color: var(--tertiary);
-
-  label {
-    color: var(--secondary);
-    display: inline-block;
-    cursor: pointer;
-  }
-
-  svg {
-    color: var(--secondary);
-    display: inline-block;
-  }
-
-  &:hover {
-    background-color: var(--tertiary-hover);
-  }
-}
-
 .tiles-grid-item {
   box-shadow:
     0 2px 5px 0 rgba(0, 0, 0, 0.16),
