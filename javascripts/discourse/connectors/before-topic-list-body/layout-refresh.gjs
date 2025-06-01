@@ -11,6 +11,7 @@ export default class LayoutRefresh extends Component {
 
   attachResizeObserver = modifier((element) => {
     const topicList = element.closest(".topic-list");
+    const topicListBody = element.nextElementSibling;
     const listArea = document.getElementById("list-area");
 
     if (!topicList) {
@@ -22,6 +23,7 @@ export default class LayoutRefresh extends Component {
     }
 
     let lastWidth = topicList.offsetWidth;
+    let lastCount = topicListBody.children.length;
 
     // Function to trigger resize
     const triggerResize = () => {
@@ -41,11 +43,14 @@ export default class LayoutRefresh extends Component {
 
     Window.triggerResize = triggerResize;
 
+
     // Observe width changes
     const onResize = () => {
       const newWidth = topicList.offsetWidth;
-      if (newWidth !== lastWidth) {
+      const newCount = topicListBody.children.length;
+      if (newWidth !== lastWidth  || newCount !== lastCount) {
         lastWidth = newWidth;
+        lastCount = newCount;
         triggerResize();
       }
     };
