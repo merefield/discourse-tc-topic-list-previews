@@ -1,8 +1,8 @@
 import UserAction from "discourse/models/user-action";
 import UserTopicListRoute from "discourse/routes/user-topic-list";
 
-export default UserTopicListRoute.extend({
-  userActionType: UserAction.TYPES.topics,
+export default class UserActivityVotes extends UserTopicListRoute {
+  userActionType = UserAction.TYPES.topics;
 
   model() {
     let filter_type = settings.topic_list_portfolio_filter_type;
@@ -17,5 +17,5 @@ export default UserTopicListRoute.extend({
         "topics/created-by/" + this.modelFor("user").get("username_lower"),
       params: { [filter_type]: filter_parameter },
     });
-  },
-});
+  }
+}
