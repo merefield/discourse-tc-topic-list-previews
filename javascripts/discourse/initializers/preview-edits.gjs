@@ -25,17 +25,17 @@ export default apiInitializer("0.8", (api) => {
     "service:topic-list-previews"
   );
 
-  api.onPageChange(() => {
-    loadScript(settings.theme_uploads.imagesloaded).then(() => {
-      if (document.querySelector(".tiles-style")) {
-        //eslint-disable-next-line no-undef
-        imagesLoaded(
-          document.querySelector(".tiles-style"),
-          resizeAllGridItems()
-        );
-      }
-    });
-  });
+  // api.onPageChange(() => {
+  //   loadScript(settings.theme_uploads.imagesloaded).then(() => {
+  //     if (document.querySelector(".tiles-style")) {
+  //       //eslint-disable-next-line no-undef
+  //       imagesLoaded(
+  //         document.querySelector(".tiles-style"),
+  //         resizeAllGridItems()
+  //       );
+  //     }
+  //   });
+  // });
 
   // Keep track of the last "step" of 400 pixels.
   let lastIndex = 0;
@@ -43,15 +43,15 @@ export default apiInitializer("0.8", (api) => {
   // Some browsers do some strange things with off-screen images,
   // so we need to resize the grid items when we scroll.
   // Listen for scroll events.
-  window.addEventListener("scroll", () => {
-    // Calculate the current index (which 400-pixel block we are in)
-    const currentIndex = Math.floor(window.scrollY / 400);
-    // If we've moved into a new block, call the function.
-    if (currentIndex !== lastIndex) {
-      lastIndex = currentIndex;
-      resizeAllGridItems();
-    }
-  });
+  // window.addEventListener("scroll", () => {
+  //   // Calculate the current index (which 400-pixel block we are in)
+  //   const currentIndex = Math.floor(window.scrollY / 400);
+  //   // If we've moved into a new block, call the function.
+  //   if (currentIndex !== lastIndex) {
+  //     lastIndex = currentIndex;
+  //     resizeAllGridItems();
+  //   }
+  // });
 
   api.registerValueTransformer("topic-list-columns", ({ value: columns }) => {
     if (topicListPreviewsService.displayTiles) {
@@ -85,6 +85,16 @@ export default apiInitializer("0.8", (api) => {
             settings.topic_list_default_thumbnail !== ""))
       ) {
         value.push("has-thumbnail");
+      }
+      if (settings.topic_list_tiles_larger_featured_tiles) {
+        console.log("Checking for featured topic", context.topic?.tags);
+        console.log(
+          "Featured tags are",
+          settings.topic_list_featured_tags
+        );
+        if (context.topic?.tags.some((t) => settings.topic_list_featured_images_tag.includes(t))) {
+          value.push("featured-topic");
+        }
       }
       if (
         siteSettings.topic_list_enable_thumbnail_colour_determination &&
