@@ -9,10 +9,7 @@ import PreviewsTilesThumbnail from "./../components/previews-tiles-thumbnail";
 const PLUGIN_ID = "discourse-tc-topic-list-previews";
 
 const previewsTilesThumbnail = <template>
-  <PreviewsTilesThumbnail
-    @url={{@topic.url}}
-    @thumbnails={{@topic.thumbnails}}
-  />
+  <PreviewsTilesThumbnail @topic={{@topic}} />
 </template>;
 
 const previewsDetails = <template>
@@ -169,11 +166,7 @@ export default apiInitializer("0.8", (api) => {
       {{#unless topicListPreviewsService.displayTiles}}
         {{#if topicListPreviewsService.displayThumbnails}}
           <div class="topic-thumbnail">
-            <PreviewsThumbnail
-              @thumbnails={{@outletArgs.topic.thumbnails}}
-              @tiles={{false}}
-              @url={{@outletArgs.topic.url}}
-            />
+            <PreviewsThumbnail @tiles={{false}} @topic={{@outletArgs.topic}} />
           </div>
         {{/if}}
       {{/unless}}

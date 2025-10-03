@@ -640,6 +640,16 @@ button.list-button {
   }
 }
 
+div.select-thumbnail {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  button {
+    align-self: start;
+    width: 200px;
+  }
+}
+
 // formats for thumbnail selector functionality
 div.select-thumbnail-connector {
   padding: 0 0 10px 0;

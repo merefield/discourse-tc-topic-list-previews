@@ -5,6 +5,8 @@ en:
       select_preview_button: "Select thumbnail"
       title: "Select the desired preview thumbnail"
       topic_title_prefix: "Topic:"
+      force_latest_post_nav: "Always navigate to latest post on this Topic, no matter if you click the thumbnail, title or excerpt"
+      show_latest_post_excerpt: "Show excerpt of latest post in topic list preview"
     user_prefs:
       title: "Topic List Previews"
-      prefer_low_res_thumnbails: "User lower resolution thumbnails for topic lists"
+      prefer_low_res_thumbnails: "User lower resolution thumbnails for topic lists"
