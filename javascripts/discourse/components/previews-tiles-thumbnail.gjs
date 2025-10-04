@@ -1,11 +1,9 @@
 import PreviewsThumbnail from "./previews-thumbnail";
 
-<template>
-  <div class="topic-thumbnail">
-    <PreviewsThumbnail
-      @url={{@url}}
-      @thumbnails={{@thumbnails}}
-      @tiles={{true}}
-    />
-  </div>
-</template>
+export default class PreviewsTilesThumbnail extends PreviewsThumbnail {
+  <template>
+    <div class="topic-thumbnail">
+      <PreviewsThumbnail @topic={{@topic}} @tiles={{true}} />
+    </div>
+  </template>
+}
