@@ -20,7 +20,7 @@ export default class PreviewsActionsComponent extends Component {
     this.args.topic.topic_post_can_unlike || !this.args.topic.topic_post_liked;
   @tracked likeCount = this.args.topic.like_count;
   @tracked hasLiked = this.args.topic.topic_post_liked;
-  @tracked bookmarked = this.args.topic.topic_post_bookmarked;
+  @tracked bookmarked = this.args.topic.bookmarked;
   topicId = this.args.topic.id;
   postId = this.args.topic.topic_post_id;
 
@@ -152,8 +152,9 @@ export default class PreviewsActionsComponent extends Component {
   }
 
   get bookmarkTitle() {
-    const suffix = this.bookmarked ? "remove" : "not_bookmarked";
-    return `bookmarks.${suffix}`;
+    return this.bookmarked
+      ? "bookmarks.bookmarked_success"
+      : "bookmarks.not_bookmarked";
   }
 
   <template>
