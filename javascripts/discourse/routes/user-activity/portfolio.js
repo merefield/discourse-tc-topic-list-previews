@@ -1,7 +1,7 @@
 import UserAction from "discourse/models/user-action";
 import UserTopicListRoute from "discourse/routes/user-topic-list";
 
-export default class UserActivityVotes extends UserTopicListRoute {
+export default class UserActivityPortfolioRoute extends UserTopicListRoute {
   userActionType = UserAction.TYPES.topics;
 
   model() {
