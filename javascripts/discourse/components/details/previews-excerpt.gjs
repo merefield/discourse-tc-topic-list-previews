@@ -1,6 +1,6 @@
 import Component from "@glimmer/component";
 import { service } from "@ember/service";
-import { htmlSafe } from "@ember/template";
+import { trustHTML } from "@ember/template";
 
 export default class PreviewsExcerpt extends Component {
   @service topicListPreviews;
@@ -19,8 +19,8 @@ export default class PreviewsExcerpt extends Component {
 
   get excerpt() {
     return this.args.topic.show_latest_post_excerpt
-      ? htmlSafe(this.args.topic.last_post_excerpt)
-      : htmlSafe(this.args.topic.excerpt);
+      ? trustHTML(this.args.topic.last_post_excerpt)
+      : trustHTML(this.args.topic.excerpt);
   }
 
   <template>
