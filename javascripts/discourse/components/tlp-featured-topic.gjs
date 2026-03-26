@@ -1,6 +1,6 @@
 import Component from "@glimmer/component";
 import { service } from "@ember/service";
-import { htmlSafe } from "@ember/template";
+import { trustHTML } from "@ember/template";
 import avatar from "discourse/helpers/avatar";
 import concatClass from "discourse/helpers/concat-class";
 import PreviewsThumbnail from "./previews-thumbnail";
@@ -55,7 +55,7 @@ export default class TlpFeaturedTopicComponent extends Component {
           </div>
           {{#if this.featuredExcerpt}}
             <div class="excerpt">
-              {{htmlSafe this.featuredExcerpt}}
+              {{trustHTML this.featuredExcerpt}}
             </div>
           {{/if}}
           <span class="user">

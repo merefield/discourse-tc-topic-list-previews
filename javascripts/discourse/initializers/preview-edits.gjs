@@ -1,4 +1,4 @@
-import { htmlSafe } from "@ember/template";
+import { trustHTML } from "@ember/template";
 import { apiInitializer } from "discourse/lib/api";
 import { getURLWithCDN } from "discourse/lib/get-url";
 import loadScript from "discourse/lib/load-script";
@@ -145,7 +145,7 @@ export default apiInitializer("0.8", (api) => {
 
         let newRgb = "rgb(" + red + "," + green + "," + blue + ")";
 
-        value.push(htmlSafe(`background: ${newRgb};`));
+        value.push(trustHTML(`background: ${newRgb};`));
       }
       return value;
     }

@@ -1,6 +1,6 @@
 import Component from "@glimmer/component";
 import { service } from "@ember/service";
-import { htmlSafe } from "@ember/template";
+import { trustHTML } from "@ember/template";
 import coldAgeClass from "discourse/helpers/cold-age-class";
 import concatClass from "discourse/helpers/concat-class";
 import icon from "discourse/helpers/d-icon";
@@ -67,7 +67,7 @@ export default class PreviewsMeta extends Component {
               "topic-timing activity num inline sub topic-list-data"
               (coldAgeClass @topic.createdAt startDate=@topic.bumpedAt class="")
             }}
-            title={{htmlSafe @topic.bumpedAtTitle}}
+            title={{trustHTML @topic.bumpedAtTitle}}
           >
             <span class="middot inline sub"></span>
             <a href={{@topic.lastPostUrl}}>
