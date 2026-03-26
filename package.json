@@ -8,10 +8,23 @@
     "prettier-plugin-ember-template-tag": "^2.0.4",
     "stylelint": "16.16.0"
   },
+  "scripts": {
+    "lint": "pnpm lint:css && pnpm lint:js && pnpm lint:hbs && pnpm lint:prettier",
+    "lint:fix": "pnpm lint:css:fix && pnpm lint:js:fix && pnpm lint:hbs:fix && pnpm lint:prettier:fix",
+    "lint:css": "pnpm stylelint '{javascripts,desktop,mobile,common,scss,stylesheets}/**/*.scss' --allow-empty-input",
+    "lint:css:fix": "pnpm stylelint '{javascripts,desktop,mobile,common,scss,stylesheets}/**/*.scss' --fix --allow-empty-input",
+    "lint:js": "eslint {javascripts,test} --cache --no-error-on-unmatched-pattern",
+    "lint:js:fix": "eslint {javascripts,test} --fix --no-error-on-unmatched-pattern",
+    "lint:hbs": "ember-template-lint 'javascripts/**/*.gjs' --no-error-on-unmatched-pattern",
+    "lint:hbs:fix": "ember-template-lint 'javascripts/**/*.gjs' --fix --no-error-on-unmatched-pattern",
+    "lint:prettier": "pnpm prettier '{javascripts,desktop,mobile,common,scss,stylesheets}/**/*.scss' '{javascripts,test}/**/*.{js,gjs}' --check --no-error-on-unmatched-pattern",
+    "lint:prettier:fix": "pnpm prettier '{javascripts,desktop,mobile,common,scss,stylesheets}/**/*.scss' '{javascripts,test}/**/*.{js,gjs}' -w --no-error-on-unmatched-pattern"
+  },
   "engines": {
-    "node": ">= 18",
+    "node": ">= 22",
     "npm": "please-use-pnpm",
     "yarn": "please-use-pnpm",
-    "pnpm": ">= 9"
-  }
+    "pnpm": "^10"
+  },
+  "packageManager": "pnpm@10.28.0"
 }
