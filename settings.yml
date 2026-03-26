@@ -101,7 +101,7 @@ topic_list_portfolio:
   description:
     en: "Enable additional User Activity view for User Portfolio"
 topic_list_portfolio_icons:
-  default: 'images'
+  default: "images"
   description:
     en: "The icon you wish to use for the Portfolio button and Portfolio label"
 topic_list_portfolio_filter_type:
