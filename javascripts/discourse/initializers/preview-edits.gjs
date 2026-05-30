@@ -41,9 +41,14 @@ const previewsDetails = <template>
 </template>;
 
 function destinationUrl(topic) {
-  const topicUrl = topic.linked_post_number
-    ? topic.urlForPostNumber(topic.linked_post_number)
-    : topic.lastUnreadUrl;
+  if (topic.force_latest_post_nav && topic.last_post_id) {
+    return `/t/${topic.slug}/${topic.id}/${topic.last_post_id}`;
+  }
+
+  const topicUrl =
+    topic.linked_post_number && typeof topic.urlForPostNumber === "function"
+      ? topic.urlForPostNumber(topic.linked_post_number)
+      : topic.lastUnreadUrl;
 
   return topicUrl || topic.url;
 }
@@ -245,12 +250,14 @@ export default apiInitializer("0.8", (api) => {
 
       const result = next();
       const { event, navigateToTopic, topic } = context;
-      const target = event.target;
+      const target = event
+        .composedPath()
+        .find((element) => element instanceof Element);
 
       if (
         event.defaultPrevented ||
         wantsNewWindow(event) ||
-        !(target instanceof Element) ||
+        !target ||
         typeof navigateToTopic !== "function" ||
         target.closest(INTERACTIVE_TILE_SELECTOR)
       ) {
