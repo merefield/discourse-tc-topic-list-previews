@@ -11,9 +11,15 @@ export default class PreviewsExcerpt extends Component {
 
   get destinationUrl() {
     const topic = this.args.topic;
-    const topicUrl = topic.linked_post_number
-      ? topic.urlForPostNumber(topic.linked_post_number)
-      : topic.lastUnreadUrl;
+
+    if (topic.force_latest_post_nav && topic.last_post_id) {
+      return `/t/${topic.slug}/${topic.id}/${topic.last_post_id}`;
+    }
+
+    const topicUrl =
+      topic.linked_post_number && typeof topic.urlForPostNumber === "function"
+        ? topic.urlForPostNumber(topic.linked_post_number)
+        : topic.lastUnreadUrl;
 
     return topicUrl || topic.url;
   }
