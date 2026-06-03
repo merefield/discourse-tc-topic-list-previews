@@ -304,6 +304,12 @@ img.non-tiles-thumbnail {
 
         .topic-timing {
           vertical-align: top;
+
+          a {
+            display: inline-flex;
+            align-items: center;
+            white-space: nowrap;
+          }
         }
       }
     }
