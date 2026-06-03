@@ -323,6 +323,7 @@ img.non-tiles-thumbnail {
       align-self: center;
       text-align: right;
       color: var(--primary-med-or-secondary-med);
+      white-space: nowrap;
 
       .avatar {
         padding: 0 0 0 0;
