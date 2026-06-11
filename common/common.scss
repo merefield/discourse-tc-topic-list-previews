@@ -303,7 +303,7 @@ img.non-tiles-thumbnail {
         }
 
         .topic-list-data.num {
-          font-size: 12px;
+          font-size: var(--topic-list-preview-metadata-font-size);
         }
 
         .topic-timing {
@@ -363,7 +363,7 @@ img.non-tiles-thumbnail {
   div.sub,
   span.sub {
     padding: 0;
-    font-size: 12px;
+    font-size: var(--topic-list-preview-metadata-font-size);
   }
 
   .topic-list {

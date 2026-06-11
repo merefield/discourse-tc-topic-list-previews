@@ -27,7 +27,7 @@ td .main-link {
 
 // tiles styling  specific styling
 .topic-list.tiles-style .num.posts-map {
-  font-size: 12px;
+  font-size: var(--topic-list-preview-metadata-font-size);
 }
 
 .topic-list .topic-excerpt {

@@ -216,6 +216,11 @@ topic_list_featured_height_mobile:
   type: integer
   description:
     en: "Featured image height on mobile."
+topic_list_preview_metadata_font_size:
+  default: 12
+  type: integer
+  description:
+    en: "Font size in pixels for topic list preview metadata."
 topic_list_featured_title:
   default: ""
   type: string
