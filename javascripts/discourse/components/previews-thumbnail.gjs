@@ -41,11 +41,18 @@ export default class PreviewsThumbnail extends Component {
   }
 
   get destinationUrl() {
-    if (this.args.topic.force_latest_post_nav && this.args.topic.last_post_id) {
-      return `/t/${this.args.topic.slug}/${this.args.topic.id}/${this.args.topic.last_post_id}`;
-    } else {
-      return this.args.topic.url;
+    const topic = this.args.topic;
+
+    if (topic.force_latest_post_nav && topic.last_post_id) {
+      return `/t/${topic.slug}/${topic.id}/${topic.last_post_id}`;
     }
+
+    const topicUrl =
+      topic.linked_post_number && typeof topic.urlForPostNumber === "function"
+        ? topic.urlForPostNumber(topic.linked_post_number)
+        : topic.lastUnreadUrl;
+
+    return topicUrl || topic.url;
   }
 
   <template>
