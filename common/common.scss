@@ -136,10 +136,18 @@ img.non-tiles-thumbnail {
     .topic-list-item-separator {
       display: none;
     }
-    display: masonry;
+
+    @supports not (display: grid-lanes) {
+      display: grid;
+      grid-auto-rows: 4px;
+    }
+
+    @supports (display: grid-lanes) {
+      display: grid-lanes;
+    }
+
     gap: 4px;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    // grid-auto-rows: 4px;
     border-top: none;
   }
 
@@ -255,7 +263,6 @@ img.non-tiles-thumbnail {
     padding-right: 0.67em;
     padding-left: 0.67em;
     overflow-wrap: break-word;
-    word-wrap: break-word;
     -ms-word-break: break-all;
     word-break: break-all;
     word-break: break-word;
@@ -303,8 +310,19 @@ img.non-tiles-thumbnail {
           display: none;
         }
 
+        .topic-list-data.num {
+          font-size: var(--topic-list-preview-metadata-font-size);
+        }
+
         .topic-timing {
           vertical-align: top;
+
+          a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25em;
+            white-space: nowrap;
+          }
         }
       }
     }
@@ -324,6 +342,7 @@ img.non-tiles-thumbnail {
       align-self: center;
       text-align: right;
       color: var(--primary-med-or-secondary-med);
+      white-space: nowrap;
 
       .avatar {
         padding: 0 0 0 0;
@@ -352,7 +371,7 @@ img.non-tiles-thumbnail {
   div.sub,
   span.sub {
     padding: 0;
-    font-size: 12px;
+    font-size: var(--topic-list-preview-metadata-font-size);
   }
 
   .topic-list {
@@ -640,6 +659,17 @@ button.list-button {
   }
 }
 
+div.select-thumbnail {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  button {
+    align-self: start;
+    width: 200px;
+  }
+}
+
 // formats for thumbnail selector functionality
 div.select-thumbnail-connector {
   padding: 0 0 10px 0;
@@ -685,8 +715,8 @@ img.select-thumbnail-preview {
 
 .tiles-grid-item {
   box-shadow:
-    0 2px 5px 0 rgba(0, 0, 0, 0.16),
-    0 0 0 0 rgba(0, 0, 0, 0.12);
+    0 2px 5px 0 rgb(0, 0, 0, 0.16),
+    0 0 0 0 rgb(0, 0, 0, 0.12);
 }
 
 @if $topic_list_fps_search_grid == "true" {
@@ -695,7 +725,7 @@ img.select-thumbnail-preview {
     padding: 0 10px 0 10px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: 15px;
+    gap: 15px;
     grid-template-rows: auto;
   }
 }

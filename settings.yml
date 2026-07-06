@@ -101,7 +101,7 @@ topic_list_portfolio:
   description:
     en: "Enable additional User Activity view for User Portfolio"
 topic_list_portfolio_icons:
-  default: 'images'
+  default: "images"
   description:
     en: "The icon you wish to use for the Portfolio button and Portfolio label"
 topic_list_portfolio_filter_type:
@@ -216,6 +216,11 @@ topic_list_featured_height_mobile:
   type: integer
   description:
     en: "Featured image height on mobile."
+topic_list_preview_metadata_font_size:
+  default: 12
+  type: integer
+  description:
+    en: "Font size in pixels for topic list preview metadata."
 topic_list_featured_title:
   default: ""
   type: string

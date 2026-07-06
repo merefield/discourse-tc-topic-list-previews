@@ -1,5 +1,7 @@
-import { htmlSafe } from "@ember/template";
+import { trustHTML } from "@ember/template";
 import { apiInitializer } from "discourse/lib/api";
+import { getURLWithCDN } from "discourse/lib/get-url";
+import { wantsNewWindow } from "discourse/lib/intercept-click";
 import loadScript from "discourse/lib/load-script";
 import { resizeAllGridItems } from "../lib/gridupdate";
 import PreviewsDetails from "./../components/previews-details";
@@ -7,51 +9,90 @@ import PreviewsThumbnail from "./../components/previews-thumbnail";
 import PreviewsTilesThumbnail from "./../components/previews-tiles-thumbnail";
 
 const PLUGIN_ID = "discourse-tc-topic-list-previews";
+const INTERACTIVE_TILE_SELECTOR = [
+  "a",
+  "button",
+  "input",
+  "label",
+  "select",
+  "textarea",
+  "[role='button']",
+  "[role='link']",
+  ".avatar",
+  ".badge-category",
+  ".badge-category__wrapper",
+  ".badge-notification",
+  ".badge-posts",
+  ".badge-wrapper",
+  ".discourse-tag",
+  ".discourse-tags",
+  ".topic-actions",
+  ".topic-category",
+  ".topic-status",
+  ".topic-statuses",
+].join(",");
 
 const previewsTilesThumbnail = <template>
-  <PreviewsTilesThumbnail
-    @url={{@topic.url}}
-    @thumbnails={{@topic.thumbnails}}
-  />
+  <PreviewsTilesThumbnail @topic={{@topic}} />
 </template>;
 
 const previewsDetails = <template>
   <PreviewsDetails @topic={{@topic}} />
 </template>;
 
+function destinationUrl(topic) {
+  if (topic.force_latest_post_nav && topic.last_post_id) {
+    return `/t/${topic.slug}/${topic.id}/${topic.last_post_id}`;
+  }
+
+  const topicUrl =
+    topic.linked_post_number && typeof topic.urlForPostNumber === "function"
+      ? topic.urlForPostNumber(topic.linked_post_number)
+      : topic.lastUnreadUrl;
+
+  return topicUrl || topic.url;
+}
+
 export default apiInitializer("0.8", (api) => {
   const siteSettings = api.container.lookup("service:site-settings");
   const topicListPreviewsService = api.container.lookup(
     "service:topic-list-previews"
   );
+  const supportsGridLanes = CSS.supports('display: grid-lanes');
 
-  // api.onPageChange(() => {
-  //   loadScript(settings.theme_uploads.imagesloaded).then(() => {
-  //     if (document.querySelector(".tiles-style")) {
-  //       //eslint-disable-next-line no-undef
-  //       imagesLoaded(
-  //         document.querySelector(".tiles-style"),
-  //         resizeAllGridItems()
-  //       );
-  //     }
-  //   });
-  // });
+  if (!supportsGridLanes) {
+    console.warn(
+      "TLP: your browser does not support CSS Grid Lanes. Topic List Previews will fall back to a standard grid layout approximation for masonry. Please consider updating your browser for the best experience."
+    );
 
-  // Keep track of the last "step" of 400 pixels.
-  let lastIndex = 0;
+    api.onPageChange(() => {
+      loadScript(getURLWithCDN(settings.theme_uploads.imagesloaded)).then(() => {
+        if (document.querySelector(".tiles-style")) {
+          //eslint-disable-next-line no-undef
+          imagesLoaded(
+            document.querySelector(".tiles-style"),
+            resizeAllGridItems()
+          );
+        }
+      });
+    });
 
-  // Some browsers do some strange things with off-screen images,
-  // so we need to resize the grid items when we scroll.
-  // Listen for scroll events.
-  // window.addEventListener("scroll", () => {
-  //   // Calculate the current index (which 400-pixel block we are in)
-  //   const currentIndex = Math.floor(window.scrollY / 400);
-  //   // If we've moved into a new block, call the function.
-  //   if (currentIndex !== lastIndex) {
-  //     lastIndex = currentIndex;
-  //     resizeAllGridItems();
-  //   }
-  // });
+    // Keep track of the last "step" of 400 pixels.
+    let lastIndex = 0;
+
+    // Some browsers do some strange things with off-screen images,
+    // so we need to resize the grid items when we scroll.
+    // Listen for scroll events.
+    window.addEventListener("scroll", () => {
+      // Calculate the current index (which 400-pixel block we are in)
+      const currentIndex = Math.floor(window.scrollY / 400);
+      // If we've moved into a new block, call the function.
+      if (currentIndex !== lastIndex) {
+        lastIndex = currentIndex;
+        resizeAllGridItems();
+      }
+    });
+  }
 
   api.registerValueTransformer("topic-list-columns", ({ value: columns }) => {
     if (topicListPreviewsService.displayTiles) {
@@ -157,7 +198,7 @@ export default apiInitializer("0.8", (api) => {
 
         let newRgb = "rgb(" + red + "," + green + "," + blue + ")";
 
-        value.push(htmlSafe(`background: ${newRgb};`));
+        value.push(trustHTML(`background: ${newRgb};`));
       }
       return value;
     }
@@ -179,11 +220,7 @@ export default apiInitializer("0.8", (api) => {
       {{#unless topicListPreviewsService.displayTiles}}
         {{#if topicListPreviewsService.displayThumbnails}}
           <div class="topic-thumbnail">
-            <PreviewsThumbnail
-              @thumbnails={{@outletArgs.topic.thumbnails}}
-              @tiles={{false}}
-              @url={{@outletArgs.topic.url}}
-            />
+            <PreviewsThumbnail @tiles={{false}} @topic={{@outletArgs.topic}} />
           </div>
         {{/if}}
       {{/unless}}
@@ -220,6 +257,36 @@ export default apiInitializer("0.8", (api) => {
     }
     return columns;
   });
+
+  api.registerBehaviorTransformer(
+    "topic-list-item-click",
+    ({ next, context }) => {
+      if (!topicListPreviewsService.displayTiles) {
+        return next();
+      }
+
+      const result = next();
+      const { event, navigateToTopic, topic } = context;
+      const target = event
+        .composedPath()
+        .find((element) => element instanceof Element);
+
+      if (
+        event.defaultPrevented ||
+        wantsNewWindow(event) ||
+        !target ||
+        typeof navigateToTopic !== "function" ||
+        target.closest(INTERACTIVE_TILE_SELECTOR)
+      ) {
+        return result;
+      }
+
+      event.preventDefault();
+      navigateToTopic(topic, destinationUrl(topic));
+
+      return result;
+    }
+  );
 
   api.modifyClass("component:search-result-entries", {
     pluginId: PLUGIN_ID,

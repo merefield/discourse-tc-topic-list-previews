@@ -50,8 +50,8 @@ export default class TopicListPreviewsService extends Service {
   }
 
   @dependentKeyCompat
-  get viewingTagId() {
-    return this.discovery.tag?.id;
+  get viewingTagName() {
+    return this.discovery.tag?.name;
   }
 
   get wideFormat() {
@@ -129,7 +129,7 @@ export default class TopicListPreviewsService extends Service {
 
   @computed(
     "viewingCategoryId",
-    "viewingTagId",
+    "viewingTagName",
     "router.currentRoute.metadata.customThumbnailMode",
     "currentTopicListRoute"
   )
@@ -138,28 +138,28 @@ export default class TopicListPreviewsService extends Service {
 
     if (
       thumbnailCategories.includes(this.viewingCategoryId) ||
-      thumbnailTags.includes(this.viewingTagId) ||
+      thumbnailTags.includes(this.viewingTagName) ||
       this.enabledForCurrentTopicListRouteType("thumbnails")
     ) {
       displayMode.push("thumbnails");
     }
     if (
       tilesCategories.includes(this.viewingCategoryId) ||
-      tilesTags.includes(this.viewingTagId) ||
+      tilesTags.includes(this.viewingTagName) ||
       this.enabledForCurrentTopicListRouteType("tiles")
     ) {
       displayMode.push("tiles");
     }
     if (
       excerptCategories.includes(this.viewingCategoryId) ||
-      excerptTags.includes(this.viewingTagId) ||
+      excerptTags.includes(this.viewingTagName) ||
       this.enabledForCurrentTopicListRouteType("excerpts")
     ) {
       displayMode.push("excerpts");
     }
     if (
       actionCategories.includes(this.viewingCategoryId) ||
-      actionTags.includes(this.viewingTagId) ||
+      actionTags.includes(this.viewingTagName) ||
       this.enabledForCurrentTopicListRouteType("actions")
     ) {
       displayMode.push("actions");

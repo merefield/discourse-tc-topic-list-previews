@@ -75,8 +75,15 @@ export default class LayoutRefresh extends Component {
     };
   });
 
+  get fallbackNoCSSMasonry() {
+    if (this.topicListPreviews.displayTiles && !CSS.supports('display: grid-lanes')) {
+      return true;
+    }
+    return false;
+  }
+
   <template>
-    {{#if this.topicListPreviews.displayTiles}}
+    {{#if this.fallbackNoCSSMasonry}}
       <div class="resize-watcher" {{this.attachResizeObserver}}></div>
     {{/if}}
   </template>
