@@ -128,12 +128,7 @@ export default apiInitializer("0.8", (api) => {
         value.push("has-thumbnail");
       }
       if (settings.topic_list_tiles_larger_featured_tiles) {
-        console.log("Checking for featured topic", context.topic?.tags);
-        console.log(
-          "Featured tags are",
-          settings.topic_list_featured_tags
-        );
-        if (context.topic?.tags.some((t) => settings.topic_list_featured_images_tag.includes(t))) {
+        if (context.topic?.tags.some((t) => settings.topic_list_featured_images_tag.includes(t.name))) {
           value.push("featured-topic");
         }
       }
