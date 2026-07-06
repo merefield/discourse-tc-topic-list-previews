@@ -58,7 +58,7 @@ export default apiInitializer("0.8", (api) => {
   const topicListPreviewsService = api.container.lookup(
     "service:topic-list-previews"
   );
-  const supportsGridLanes = CSS.supports('display: grid-lanes');
+  const supportsGridLanes = CSS.supports("display: grid-lanes");
 
   if (!supportsGridLanes) {
     console.warn(
@@ -66,15 +66,17 @@ export default apiInitializer("0.8", (api) => {
     );
 
     api.onPageChange(() => {
-      loadScript(getURLWithCDN(settings.theme_uploads.imagesloaded)).then(() => {
-        if (document.querySelector(".tiles-style")) {
-          //eslint-disable-next-line no-undef
-          imagesLoaded(
-            document.querySelector(".tiles-style"),
-            resizeAllGridItems()
-          );
+      loadScript(getURLWithCDN(settings.theme_uploads.imagesloaded)).then(
+        () => {
+          if (document.querySelector(".tiles-style")) {
+            //eslint-disable-next-line no-undef
+            imagesLoaded(
+              document.querySelector(".tiles-style"),
+              resizeAllGridItems()
+            );
+          }
         }
-      });
+      );
     });
 
     // Keep track of the last "step" of 400 pixels.
@@ -128,7 +130,11 @@ export default apiInitializer("0.8", (api) => {
         value.push("has-thumbnail");
       }
       if (settings.topic_list_tiles_larger_featured_tiles) {
-        if (context.topic?.tags.some((t) => settings.topic_list_featured_images_tag.includes(t.name))) {
+        if (
+          context.topic?.tags.some((t) =>
+            settings.topic_list_featured_images_tag.includes(t.name)
+          )
+        ) {
           value.push("featured-topic");
         }
       }

@@ -145,7 +145,6 @@ img.non-tiles-thumbnail {
     @supports (display: grid-lanes) {
       display: grid-lanes;
     }
-
     gap: 4px;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     border-top: none;
@@ -160,7 +159,8 @@ img.non-tiles-thumbnail {
     padding-left: 0;
   }
 
-  .tiles-grid-item-width2, .featured-topic {
+  .tiles-grid-item-width2,
+  .featured-topic {
     box-sizing: border-box;
     cursor: pointer;
     border-radius: 3px;

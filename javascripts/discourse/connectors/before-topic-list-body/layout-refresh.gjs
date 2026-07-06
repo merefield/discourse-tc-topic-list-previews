@@ -76,7 +76,10 @@ export default class LayoutRefresh extends Component {
   });
 
   get fallbackNoCSSMasonry() {
-    if (this.topicListPreviews.displayTiles && !CSS.supports('display: grid-lanes')) {
+    if (
+      this.topicListPreviews.displayTiles &&
+      !CSS.supports("display: grid-lanes")
+    ) {
       return true;
     }
     return false;
