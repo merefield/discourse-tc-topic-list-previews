@@ -136,10 +136,17 @@ img.non-tiles-thumbnail {
     .topic-list-item-separator {
       display: none;
     }
-    display: grid;
+
+    @supports not (display: grid-lanes) {
+      display: grid;
+      grid-auto-rows: 4px;
+    }
+
+    @supports (display: grid-lanes) {
+      display: grid-lanes;
+    }
     gap: 4px;
     grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    grid-auto-rows: 4px;
     border-top: none;
   }
 
@@ -152,7 +159,8 @@ img.non-tiles-thumbnail {
     padding-left: 0;
   }
 
-  .tiles-grid-item-width2 {
+  .tiles-grid-item-width2,
+  .featured-topic {
     box-sizing: border-box;
     cursor: pointer;
     border-radius: 3px;

@@ -58,34 +58,43 @@ export default apiInitializer("0.8", (api) => {
   const topicListPreviewsService = api.container.lookup(
     "service:topic-list-previews"
   );
+  const supportsGridLanes = CSS.supports("display: grid-lanes");
 
-  api.onPageChange(() => {
-    loadScript(getURLWithCDN(settings.theme_uploads.imagesloaded)).then(() => {
-      if (document.querySelector(".tiles-style")) {
-        //eslint-disable-next-line no-undef
-        imagesLoaded(
-          document.querySelector(".tiles-style"),
-          resizeAllGridItems()
-        );
+  if (!supportsGridLanes) {
+    console.warn(
+      "TLP: your browser does not support CSS Grid Lanes. Topic List Previews will fall back to a standard grid layout approximation for masonry. Please consider updating your browser for the best experience."
+    );
+
+    api.onPageChange(() => {
+      loadScript(getURLWithCDN(settings.theme_uploads.imagesloaded)).then(
+        () => {
+          if (document.querySelector(".tiles-style")) {
+            //eslint-disable-next-line no-undef
+            imagesLoaded(
+              document.querySelector(".tiles-style"),
+              resizeAllGridItems()
+            );
+          }
+        }
+      );
+    });
+
+    // Keep track of the last "step" of 400 pixels.
+    let lastIndex = 0;
+
+    // Some browsers do some strange things with off-screen images,
+    // so we need to resize the grid items when we scroll.
+    // Listen for scroll events.
+    window.addEventListener("scroll", () => {
+      // Calculate the current index (which 400-pixel block we are in)
+      const currentIndex = Math.floor(window.scrollY / 400);
+      // If we've moved into a new block, call the function.
+      if (currentIndex !== lastIndex) {
+        lastIndex = currentIndex;
+        resizeAllGridItems();
       }
     });
-  });
-
-  // Keep track of the last "step" of 400 pixels.
-  let lastIndex = 0;
-
-  // Some browsers do some strange things with off-screen images,
-  // so we need to resize the grid items when we scroll.
-  // Listen for scroll events.
-  window.addEventListener("scroll", () => {
-    // Calculate the current index (which 400-pixel block we are in)
-    const currentIndex = Math.floor(window.scrollY / 400);
-    // If we've moved into a new block, call the function.
-    if (currentIndex !== lastIndex) {
-      lastIndex = currentIndex;
-      resizeAllGridItems();
-    }
-  });
+  }
 
   api.registerValueTransformer("topic-list-columns", ({ value: columns }) => {
     if (topicListPreviewsService.displayTiles) {
@@ -119,6 +128,15 @@ export default apiInitializer("0.8", (api) => {
             settings.topic_list_default_thumbnail !== ""))
       ) {
         value.push("has-thumbnail");
+      }
+      if (settings.topic_list_tiles_larger_featured_tiles) {
+        if (
+          context.topic?.tags.some((t) =>
+            settings.topic_list_featured_images_tag.includes(t.name)
+          )
+        ) {
+          value.push("featured-topic");
+        }
       }
       if (
         siteSettings.topic_list_enable_thumbnail_colour_determination &&
