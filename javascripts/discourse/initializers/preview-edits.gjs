@@ -62,7 +62,7 @@ export default apiInitializer("0.8", (api) => {
 
   if (!supportsGridLanes) {
     console.warn(
-      "TLP: your browser does not support CSS Grid Lanes. Topic List Previews will fall back to a standard grid layout approximation for masonry. Please consider updating your browser for the best experience."
+      "TLP: your browser does not support CSS Grid Lanes. Topic List Previews will fall back to a standard grid layout approximation for masonry. Please consider updating your browser for the best experience.  Check out CanIUse for compatibility information: https://caniuse.com/css-grid-lanes"
     );
 
     api.onPageChange(() => {
