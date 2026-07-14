@@ -1,77 +1,114 @@
 import Component from "@glimmer/component";
-import { tracked } from "@glimmer/tracking";
 import { service } from "@ember/service";
 import { modifier } from "ember-modifier";
-import { resizeAllGridItems } from "../../lib/gridupdate";
+import { resizeGridItems } from "../../lib/gridupdate";
 
 export default class LayoutRefresh extends Component {
   @service topicListPreviews;
 
-  @tracked isResizing = false; // Prevent infinite loops
-
   attachResizeObserver = modifier((element) => {
     const topicList = element.closest(".topic-list");
-    const topicListBody = element.nextElementSibling;
+    const topicListBody = topicList?.querySelector("tbody");
     const listArea = document.getElementById("list-area");
 
-    if (!topicList) {
+    if (!topicList || !topicListBody) {
       // eslint-disable-next-line no-console
       console.error(
-        "topic-list-previews resize-observer must be inside a topic-list"
+        "topic-list-previews resize-observer requires a topic-list body"
       );
       return;
     }
 
-    let lastWidth = topicList.offsetWidth;
-    let lastCount = topicListBody.children.length;
+    let animationFrame = null;
+    let resizeAll = false;
+    const pendingItems = new Set();
 
-    // Function to trigger resize
-    const triggerResize = () => {
-      if (this.isResizing) {
+    const triggerResize = (item) => {
+      if (item && !resizeAll) {
+        pendingItems.add(item);
+      } else {
+        resizeAll = true;
+        pendingItems.clear();
+      }
+
+      if (animationFrame !== null) {
         return;
       }
-      requestAnimationFrame(() => {
-        this.isResizing = true;
-        let isSideBySide =
+
+      animationFrame = requestAnimationFrame(() => {
+        animationFrame = null;
+        const items = resizeAll ? null : pendingItems;
+        const isSideBySide =
           topicList?.classList.contains("side-by-side") &&
           listArea &&
           listArea.offsetWidth > 900;
-        resizeAllGridItems(isSideBySide);
-        this.isResizing = false;
+
+        resizeGridItems(topicList, isSideBySide, items);
+        resizeAll = false;
+        pendingItems.clear();
       });
     };
 
-    Window.triggerResize = triggerResize;
+    const observedWidths = new WeakMap([
+      [topicList, topicList.getBoundingClientRect().width],
+    ]);
+    if (listArea) {
+      observedWidths.set(listArea, listArea.getBoundingClientRect().width);
+    }
 
-    // Observe width changes
-    const onResize = () => {
-      const newWidth = topicList.offsetWidth;
-      const newCount = topicListBody.children.length;
-      if (newWidth !== lastWidth || newCount !== lastCount) {
-        lastWidth = newWidth;
-        lastCount = newCount;
-        triggerResize();
+    const onResize = (entries) => {
+      for (const entry of entries) {
+        const width = entry.contentRect.width;
+        if (width !== observedWidths.get(entry.target)) {
+          observedWidths.set(entry.target, width);
+          triggerResize();
+          break;
+        }
+      }
+    };
+
+    const onImageComplete = (event) => {
+      if (!(event.target instanceof HTMLImageElement)) {
+        return;
+      }
+
+      const item = event.target.closest(".topic-list-item");
+      if (item && topicListBody.contains(item)) {
+        triggerResize(item);
       }
     };
 
     const resizeObserver = new ResizeObserver(onResize);
     resizeObserver.observe(topicList);
+    if (listArea) {
+      resizeObserver.observe(listArea);
+    }
 
-    // Observe child mutations (added/removed elements)
     const mutationObserver = new MutationObserver((mutationsList) => {
-      for (let mutation of mutationsList) {
+      for (const mutation of mutationsList) {
         if (mutation.type === "childList") {
-          triggerResize(); // Resize when children change
-          break; // No need to check further mutations in this cycle
+          triggerResize();
+          break;
         }
       }
     });
 
-    mutationObserver.observe(topicList, { childList: true });
+    mutationObserver.observe(topicListBody, { childList: true });
+    topicListBody.addEventListener("load", onImageComplete, true);
+    topicListBody.addEventListener("error", onImageComplete, true);
+
+    // Size the initial list immediately. Images which are still loading will
+    // update their own item through the captured load/error handlers above.
+    triggerResize();
 
     return () => {
+      if (animationFrame !== null) {
+        cancelAnimationFrame(animationFrame);
+      }
       resizeObserver.disconnect();
       mutationObserver.disconnect();
+      topicListBody.removeEventListener("load", onImageComplete, true);
+      topicListBody.removeEventListener("error", onImageComplete, true);
     };
   });
 

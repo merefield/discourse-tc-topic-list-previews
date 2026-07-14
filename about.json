@@ -4,7 +4,6 @@
   "component": true,
   "authors": "Robert Barrow, Angus Mcleod",
   "modifiers": {
-    "csp_extensions": ["script_src: https://unpkg.com"],
     "svg_icons": ["images"],
     "serialize_topic_excerpts": true,
     "topic_thumbnail_sizes": [
@@ -14,9 +13,6 @@
       [400, 400],
       [800, 800]
     ]
-  },
-  "assets": {
-    "imagesloaded": "assets/imagesloaded.js"
   },
   "minimum_discourse_version": "3.4.0.beta4"
 }
