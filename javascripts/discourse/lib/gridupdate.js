@@ -1,42 +1,34 @@
-import loadScript from "discourse/lib/load-script";
-
 function resizeGridItem(item, isSideBySide, rowHeight, rowGap) {
-  loadScript(settings.theme_uploads.imagesloaded).then(() => {
-    //eslint-disable-next-line no-undef
-    imagesLoaded(item, function () {
-      let contentHeight = 0;
+  let contentHeight = 0;
 
-      if (isSideBySide) {
-        // Only use the height of the first child
-        let firstChild = item.children[0];
-        if (firstChild) {
-          contentHeight = firstChild.getBoundingClientRect().height;
-        }
-      } else {
-        // Sum all children's heights
-        Array.from(item.children).forEach((child) => {
-          contentHeight += child.getBoundingClientRect().height;
-        });
-      }
+  if (isSideBySide) {
+    // Only use the height of the first child
+    const firstChild = item.children[0];
+    if (firstChild) {
+      contentHeight = firstChild.getBoundingClientRect().height;
+    }
+  } else {
+    // Sum all children's heights
+    for (const child of item.children) {
+      contentHeight += child.getBoundingClientRect().height;
+    }
+  }
 
-      let rowSpan = Math.ceil((contentHeight + rowGap) / (rowHeight + rowGap));
-      if (rowSpan !== rowSpan) {
-        rowSpan = 1;
-      }
-      item.style.gridRowEnd = "span " + rowSpan;
-    });
-  });
+  const rowSpan = Math.max(
+    1,
+    Math.ceil((contentHeight + rowGap) / (rowHeight + rowGap)) || 1
+  );
+
+  return { item, rowSpan };
 }
 
-function resizeAllGridItems(isSideBySide) {
-  const allItems = document.getElementsByClassName("topic-list-item");
-  let grid = false;
-
-  grid = document.getElementsByTagName("tbody")[0];
+function resizeGridItems(topicList, isSideBySide, items) {
+  const grid = topicList.querySelector("tbody");
 
   if (!grid) {
     return;
   }
+
   const rowHeight = parseInt(
     window.getComputedStyle(grid).getPropertyValue("grid-auto-rows"),
     10
@@ -45,9 +37,23 @@ function resizeAllGridItems(isSideBySide) {
     window.getComputedStyle(grid).getPropertyValue("grid-row-gap"),
     10
   );
-  for (let x = 0; x < allItems.length; x++) {
-    resizeGridItem(allItems[x], isSideBySide, rowHeight, rowGap);
+
+  const gridItems = items
+    ? Array.from(items).filter((item) => grid.contains(item))
+    : Array.from(grid.getElementsByClassName("topic-list-item"));
+
+  // Read all layout values before writing styles to avoid forced reflows between
+  // individual topic-list items.
+  const updates = gridItems.map((item) =>
+    resizeGridItem(item, isSideBySide, rowHeight, rowGap)
+  );
+
+  for (const { item, rowSpan } of updates) {
+    const gridRowEnd = `span ${rowSpan}`;
+    if (item.style.gridRowEnd !== gridRowEnd) {
+      item.style.gridRowEnd = gridRowEnd;
+    }
   }
 }
 
-export { resizeAllGridItems };
+export { resizeGridItems };

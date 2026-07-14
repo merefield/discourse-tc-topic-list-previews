@@ -2,7 +2,7 @@ import { themePrefix } from "virtual:theme";
 import PreferenceCheckbox from "discourse/components/preference-checkbox";
 import { i18n } from "discourse-i18n";
 
-<template>
+export default <template>
   <label class="control-label">
     {{i18n (themePrefix "tlp.user_prefs.title")}}
   </label>

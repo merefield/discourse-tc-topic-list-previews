@@ -1,6 +1,6 @@
 import SelectThumbnail from "../../components/select-thumbnail";
 
-<template>
+export default <template>
   {{#if @outletArgs.model.sidecar_installed}}
     <SelectThumbnail
       @topic_id={{@outletArgs.model.id}}

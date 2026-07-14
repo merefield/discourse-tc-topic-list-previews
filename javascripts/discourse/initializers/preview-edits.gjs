@@ -1,9 +1,6 @@
 import { trustHTML } from "@ember/template";
 import { apiInitializer } from "discourse/lib/api";
-import { getURLWithCDN } from "discourse/lib/get-url";
 import { wantsNewWindow } from "discourse/lib/intercept-click";
-import loadScript from "discourse/lib/load-script";
-import { resizeAllGridItems } from "../lib/gridupdate";
 import PreviewsDetails from "./../components/previews-details";
 import PreviewsThumbnail from "./../components/previews-thumbnail";
 import PreviewsTilesThumbnail from "./../components/previews-tiles-thumbnail";
@@ -64,36 +61,6 @@ export default apiInitializer("0.8", (api) => {
     console.warn(
       "TLP: your browser does not support CSS Grid Lanes. Topic List Previews will fall back to a standard grid layout approximation for masonry. Please consider updating your browser for the best experience.  Check out CanIUse for compatibility information: https://caniuse.com/css-grid-lanes"
     );
-
-    api.onPageChange(() => {
-      loadScript(getURLWithCDN(settings.theme_uploads.imagesloaded)).then(
-        () => {
-          if (document.querySelector(".tiles-style")) {
-            //eslint-disable-next-line no-undef
-            imagesLoaded(
-              document.querySelector(".tiles-style"),
-              resizeAllGridItems()
-            );
-          }
-        }
-      );
-    });
-
-    // Keep track of the last "step" of 400 pixels.
-    let lastIndex = 0;
-
-    // Some browsers do some strange things with off-screen images,
-    // so we need to resize the grid items when we scroll.
-    // Listen for scroll events.
-    window.addEventListener("scroll", () => {
-      // Calculate the current index (which 400-pixel block we are in)
-      const currentIndex = Math.floor(window.scrollY / 400);
-      // If we've moved into a new block, call the function.
-      if (currentIndex !== lastIndex) {
-        lastIndex = currentIndex;
-        resizeAllGridItems();
-      }
-    });
   }
 
   api.registerValueTransformer("topic-list-columns", ({ value: columns }) => {
