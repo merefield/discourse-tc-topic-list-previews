@@ -118,6 +118,16 @@ img.non-tiles-thumbnail {
   margin-top: 60px;
 }
 
+@keyframes tlp-tile-highlight {
+  0% {
+    box-shadow: inset 0 0 0 3px var(--tertiary-low);
+  }
+
+  100% {
+    box-shadow: inset 0 0 0 0 transparent;
+  }
+}
+
 #list-area {
   container-type: inline-size;
   container-name: list-area;
@@ -174,6 +184,12 @@ img.non-tiles-thumbnail {
     grid-row-end: span 44;
     display: flex;
     flex-direction: column;
+
+    @media (prefers-reduced-motion: no-preference) {
+      &.highlighted {
+        animation: tlp-tile-highlight 2.5s ease-out;
+      }
+    }
 
     &.no-background-colour {
       border: 1px solid var(--primary-low);
