@@ -4,7 +4,7 @@ module PageObjects
   module Components
     # Drives the fallback topic-list masonry layout in a real browser.
     class FallbackMasonry < Base
-      ITEM_SELECTOR = '.topic-list.tiles-style .topic-list-item'
+      ITEM_SELECTOR = ".topic-list.tiles-style .topic-list-item"
 
       FORCE_FALLBACK_SCRIPT = <<~JS
         const nativeSupports = CSS.supports.bind(CSS);
@@ -63,7 +63,7 @@ module PageObjects
 
       def add_tall_image
         page.execute_script(ADD_TALL_IMAGE_SCRIPT)
-        find('#fallback-masonry-tall-image')
+        find("#fallback-masonry-tall-image")
       end
     end
   end
