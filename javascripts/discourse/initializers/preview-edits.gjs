@@ -50,7 +50,15 @@ function destinationUrl(topic) {
   return topicUrl || topic.url;
 }
 
-export default apiInitializer("0.8", (api) => {
+function dominantColour(topic) {
+  return topic?.dominant_colour ?? {};
+}
+
+function hasDominantColour(topic) {
+  return Object.keys(dominantColour(topic)).length > 0;
+}
+
+export default apiInitializer((api) => {
   const siteSettings = api.container.lookup("service:site-settings");
   const topicListPreviewsService = api.container.lookup(
     "service:topic-list-previews"
@@ -58,6 +66,7 @@ export default apiInitializer("0.8", (api) => {
   const supportsGridLanes = CSS.supports("display: grid-lanes");
 
   if (!supportsGridLanes) {
+    // eslint-disable-next-line no-console
     console.warn(
       "TLP: your browser does not support CSS Grid Lanes. Topic List Previews will fall back to a standard grid layout approximation for masonry. Please consider updating your browser for the best experience.  Check out CanIUse for compatibility information: https://caniuse.com/css-grid-lanes"
     );
@@ -90,7 +99,7 @@ export default apiInitializer("0.8", (api) => {
       }
       if (
         topicListPreviewsService.displayThumbnails &&
-        (context.topic.thumbnails?.length > 0 ||
+        (context.topic?.thumbnails?.length > 0 ||
           (settings.topic_list_default_thumbnail_fallback &&
             settings.topic_list_default_thumbnail !== ""))
       ) {
@@ -98,7 +107,7 @@ export default apiInitializer("0.8", (api) => {
       }
       if (settings.topic_list_tiles_larger_featured_tiles) {
         if (
-          context.topic?.tags.some((t) =>
+          context.topic?.tags?.some((t) =>
             settings.topic_list_featured_images_tag.includes(t.name)
           )
         ) {
@@ -109,21 +118,22 @@ export default apiInitializer("0.8", (api) => {
         siteSettings.topic_list_enable_thumbnail_colour_determination &&
         topicListPreviewsService.displayThumbnails
       ) {
-        let red = context.topic.dominant_colour?.red || 0;
-        let green = context.topic.dominant_colour?.green || 0;
-        let blue = context.topic.dominant_colour?.blue || 0;
+        const colour = dominantColour(context.topic);
+        let red = colour.red || 0;
+        let green = colour.green || 0;
+        let blue = colour.blue || 0;
 
         //make 1 the minimum value to avoid total black
         red = red === 0 ? 1 : red;
         green = green === 0 ? 1 : green;
         blue = blue === 0 ? 1 : blue;
 
-        let averageIntensity = context.topic.dominant_colour
+        let averageIntensity = hasDominantColour(context.topic)
           ? (red + green + blue) / 3
           : null;
 
         if (
-          Object.keys(context.topic?.dominant_colour).length === 0 ||
+          !hasDominantColour(context.topic) ||
           !(
             settings.topic_list_dominant_color_background === "always" ||
             (topicListPreviewsService.displayTiles &&
@@ -153,11 +163,12 @@ export default apiInitializer("0.8", (api) => {
         (settings.topic_list_dominant_color_background === "always" ||
           (topicListPreviewsService.displayTiles &&
             settings.topic_list_dominant_color_background === "tiles only")) &&
-        Object.keys(context.topic?.dominant_colour).length !== 0
+        hasDominantColour(context.topic)
       ) {
-        let red = context.topic.dominant_colour?.red || 0;
-        let green = context.topic.dominant_colour?.green || 0;
-        let blue = context.topic.dominant_colour?.blue || 0;
+        const colour = dominantColour(context.topic);
+        let red = colour.red || 0;
+        let green = colour.green || 0;
+        let blue = colour.blue || 0;
 
         //make 1 the minimum value to avoid total black
         red = red === 0 ? 1 : red;
