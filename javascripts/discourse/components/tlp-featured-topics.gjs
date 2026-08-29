@@ -1,12 +1,12 @@
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import EmberObject, { action, computed } from "@ember/object";
+import { action, computed } from "@ember/object";
 import didInsert from "@ember/render-modifiers/modifiers/did-insert";
 import didUpdate from "@ember/render-modifiers/modifiers/did-update";
 import { service } from "@ember/service";
-import discourseTag from "discourse/helpers/discourse-tag";
 import { findOrResetCachedTopicList } from "discourse/lib/cached-topic-list";
 import { cook } from "discourse/lib/text";
+import dDiscourseTag from "discourse/ui-kit/helpers/d-discourse-tag";
 import TlpFeaturedTopic from "./tlp-featured-topic";
 
 export default class TlpFeaturedTopicsComponent extends Component {
@@ -29,15 +29,13 @@ export default class TlpFeaturedTopicsComponent extends Component {
 
   @action
   async getFeaturedTopics() {
-    let topics = [];
-
     if (settings.topic_list_featured_images_tag !== "") {
       let filter = `tag/${settings.topic_list_featured_images_tag}`;
       findOrResetCachedTopicList(this.session, filter);
       let list = await this.store.findFiltered("topicList", { filter });
 
       if (typeof list !== "undefined") {
-        topics = EmberObject.create(list).topic_list.topics;
+        let topics = list.topics ?? list.topic_list?.topics ?? [];
 
         if (
           this.args.category &&
@@ -120,7 +118,7 @@ export default class TlpFeaturedTopicsComponent extends Component {
         {{#if this.showFeaturedTags}}
           <div class="featured-tags">
             {{#each this.featuredTags as |tag|}}
-              {{discourseTag tag}}
+              {{dDiscourseTag tag}}
             {{/each}}
           </div>
         {{/if}}
