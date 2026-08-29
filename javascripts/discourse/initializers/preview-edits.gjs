@@ -5,6 +5,7 @@ import Category from "discourse/models/category";
 import PreviewsDetails from "./../components/previews-details";
 import PreviewsThumbnail from "./../components/previews-thumbnail";
 import PreviewsTilesThumbnail from "./../components/previews-tiles-thumbnail";
+import { categoryContainsTopic } from "../lib/featured-topics-filter";
 
 const PLUGIN_ID = "discourse-tc-topic-list-previews";
 const INTERACTIVE_TILE_SELECTOR = [
@@ -60,15 +61,17 @@ function hasDominantColour(topic) {
 }
 
 function isFeaturedTopic(topic) {
+  if (!topic) {
+    return false;
+  }
+
   if (settings.topic_list_featured_images_filter_type === "category") {
     const featuredCategory = Category.findSingleBySlug(
       settings.topic_list_featured_images_tag
     );
     const topicCategory = Category.findById(topic.category_id);
 
-    return topicCategory?.ancestors.some(
-      (category) => category.id === featuredCategory?.id
-    );
+    return categoryContainsTopic(featuredCategory, topicCategory);
   }
 
   const featuredTags = settings.topic_list_featured_images_tag.split("|");
