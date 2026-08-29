@@ -1,6 +1,11 @@
 en:
   tlp:
     user_activity_portfolio_title: "Portfolio"
+    featured_topics:
+      label: "Featured topics"
+      next: "Next featured topics"
+      position: "%{start}–%{end} of %{total} featured topics"
+      previous: "Previous featured topics"
     thumbnail_selector:
       select_preview_button: "Select thumbnail"
       title: "Select the desired preview thumbnail"

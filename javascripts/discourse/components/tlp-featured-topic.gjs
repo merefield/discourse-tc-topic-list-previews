@@ -24,6 +24,10 @@ export default class TlpFeaturedTopicComponent extends Component {
   }
 
   get featuredTags() {
+    if (settings.topic_list_featured_images_filter_type === "category") {
+      return [];
+    }
+
     return settings.topic_list_featured_images_tag.split("|");
   }
 

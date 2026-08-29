@@ -1,9 +1,11 @@
 import { trustHTML } from "@ember/template";
 import { apiInitializer } from "discourse/lib/api";
 import { wantsNewWindow } from "discourse/lib/intercept-click";
+import Category from "discourse/models/category";
 import PreviewsDetails from "./../components/previews-details";
 import PreviewsThumbnail from "./../components/previews-thumbnail";
 import PreviewsTilesThumbnail from "./../components/previews-tiles-thumbnail";
+import { categoryContainsTopic } from "../lib/featured-topics-filter";
 
 const PLUGIN_ID = "discourse-tc-topic-list-previews";
 const INTERACTIVE_TILE_SELECTOR = [
@@ -58,6 +60,24 @@ function hasDominantColour(topic) {
   return Object.keys(dominantColour(topic)).length > 0;
 }
 
+function isFeaturedTopic(topic) {
+  if (!topic) {
+    return false;
+  }
+
+  if (settings.topic_list_featured_images_filter_type === "category") {
+    const featuredCategory = Category.findSingleBySlug(
+      settings.topic_list_featured_images_tag
+    );
+    const topicCategory = Category.findById(topic.category_id);
+
+    return categoryContainsTopic(featuredCategory, topicCategory);
+  }
+
+  const featuredTags = settings.topic_list_featured_images_tag.split("|");
+  return topic.tags?.some((tag) => featuredTags.includes(tag.name));
+}
+
 export default apiInitializer((api) => {
   const siteSettings = api.container.lookup("service:site-settings");
   const topicListPreviewsService = api.container.lookup(
@@ -106,11 +126,7 @@ export default apiInitializer((api) => {
         value.push("has-thumbnail");
       }
       if (settings.topic_list_tiles_larger_featured_tiles) {
-        if (
-          context.topic?.tags?.some((t) =>
-            settings.topic_list_featured_images_tag.includes(t.name)
-          )
-        ) {
+        if (isFeaturedTopic(context.topic)) {
           value.push("featured-topic");
         }
       }
