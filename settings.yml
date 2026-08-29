@@ -160,6 +160,29 @@ topic_list_featured_images:
   type: bool
   description:
     en: "Enable featured images for non-category routes."
+topic_list_featured_images_view_type:
+  default: Camera roll
+  type: enum
+  choices:
+    - Camera roll
+    - Carousel
+  description:
+    en: "Display featured images as a continuously scrolling camera roll or carousel."
+topic_list_featured_images_placement:
+  default: Above topic list
+  type: enum
+  choices:
+    - Above topic list
+    - Above navigation controls
+  description:
+    en: "Display featured images above the topic list (discovery-list-container-top) or above the navigation controls (discovery-list-controls-above)."
+topic_list_featured_images_carousel_count:
+  default: 3
+  min: 1
+  max: 4
+  type: integer
+  description:
+    en: "Maximum number of featured images shown in the desktop carousel. Narrow carousels show fewer; mobile always shows one."
 topic_list_featured_images_resolution_level:
   default: 2
   max: 6
@@ -177,17 +200,24 @@ topic_list_featured_images_from_current_category_only:
   type: bool
   description:
     en: "Show featured images only that exist in current Category"
+topic_list_featured_images_filter_type:
+  default: tag
+  type: enum
+  choices:
+    - tag
+    - category
+  description:
+    en: "Choose whether the featured image source is a tag or category."
 topic_list_featured_images_tag:
-  type: list
-  list_type: tag
+  type: string
   default: ""
   description:
-    en: "Featured images tag."
-topic_list_featured_images_tag_show:
+    en: "Enter a tag, pipe-delimited tags, or a category slug, depending on the featured image filter type."
+topic_list_featured_images_source_show:
   default: true
   type: bool
   description:
-    en: "Show featured images tag below featured images."
+    en: "Show the tag or category source below featured images."
 topic_list_featured_images_count:
   default: 0
   description:

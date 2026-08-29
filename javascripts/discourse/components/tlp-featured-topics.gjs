@@ -6,8 +6,12 @@ import didUpdate from "@ember/render-modifiers/modifiers/did-update";
 import { service } from "@ember/service";
 import { findOrResetCachedTopicList } from "discourse/lib/cached-topic-list";
 import { cook } from "discourse/lib/text";
+import Category from "discourse/models/category";
+import dCategoryBadge from "discourse/ui-kit/helpers/d-category-badge";
 import dDiscourseTag from "discourse/ui-kit/helpers/d-discourse-tag";
+import { featuredTopicsRequest } from "../lib/featured-topics-filter";
 import TlpFeaturedTopic from "./tlp-featured-topic";
+import TlpFeaturedTopicsCarousel from "./tlp-featured-topics-carousel";
 
 export default class TlpFeaturedTopicsComponent extends Component {
   @service appEvents;
@@ -30,9 +34,12 @@ export default class TlpFeaturedTopicsComponent extends Component {
   @action
   async getFeaturedTopics() {
     if (settings.topic_list_featured_images_tag !== "") {
-      let filter = `tag/${settings.topic_list_featured_images_tag}`;
+      const { filter, params } = featuredTopicsRequest(
+        settings.topic_list_featured_images_filter_type,
+        settings.topic_list_featured_images_tag
+      );
       findOrResetCachedTopicList(this.session, filter);
-      let list = await this.store.findFiltered("topicList", { filter });
+      let list = await this.store.findFiltered("topicList", { filter, params });
 
       if (typeof list !== "undefined") {
         let topics = list.topics ?? list.topic_list?.topics ?? [];
@@ -90,19 +97,41 @@ export default class TlpFeaturedTopicsComponent extends Component {
 
   @computed
   get featuredTags() {
+    if (settings.topic_list_featured_images_filter_type === "category") {
+      return [];
+    }
+
     return settings.topic_list_featured_images_tag.split("|");
   }
 
   @computed
-  get showFeaturedTags() {
-    return this.featuredTags && settings.topic_list_featured_images_tag_show;
+  get featuredCategory() {
+    if (settings.topic_list_featured_images_filter_type !== "category") {
+      return;
+    }
+
+    return Category.findSingleBySlug(settings.topic_list_featured_images_tag);
+  }
+
+  @computed
+  get showFeaturedSource() {
+    return (
+      settings.topic_list_featured_images_source_show &&
+      (this.featuredTags.length > 0 || this.featuredCategory)
+    );
+  }
+
+  get carouselView() {
+    return settings.topic_list_featured_images_view_type === "Carousel";
   }
 
   <template>
     <div
       {{didInsert this.getFeaturedTopics}}
       {{didUpdate this.getFeaturedTopics}}
-      class="tlp-featured-topics {{if this.showFeatured 'has-topics'}}"
+      class="tlp-featured-topics
+        {{if this.showFeatured 'has-topics'}}
+        {{if this.carouselView '--carousel'}}"
     >
       {{#if this.showFeatured}}
         {{#if this.showFeaturedTitle}}
@@ -110,16 +139,26 @@ export default class TlpFeaturedTopicsComponent extends Component {
             {{this.featuredTitle}}
           </div>
         {{/if}}
-        <div class="topics">
-          {{#each this.featuredTopics as |t|}}
-            <TlpFeaturedTopic @topic={{t}} />
-          {{/each}}
-        </div>
-        {{#if this.showFeaturedTags}}
-          <div class="featured-tags">
-            {{#each this.featuredTags as |tag|}}
-              {{dDiscourseTag tag}}
+        {{#if this.carouselView}}
+          <TlpFeaturedTopicsCarousel @topics={{this.featuredTopics}} as |topic|>
+            <TlpFeaturedTopic @topic={{topic}} />
+          </TlpFeaturedTopicsCarousel>
+        {{else}}
+          <div class="topics">
+            {{#each this.featuredTopics as |t|}}
+              <TlpFeaturedTopic @topic={{t}} />
             {{/each}}
+          </div>
+        {{/if}}
+        {{#if this.showFeaturedSource}}
+          <div class="featured-source">
+            {{#if this.featuredCategory}}
+              {{dCategoryBadge this.featuredCategory link=true}}
+            {{else}}
+              {{#each this.featuredTags as |tag|}}
+                {{dDiscourseTag tag}}
+              {{/each}}
+            {{/if}}
           </div>
         {{/if}}
       {{/if}}

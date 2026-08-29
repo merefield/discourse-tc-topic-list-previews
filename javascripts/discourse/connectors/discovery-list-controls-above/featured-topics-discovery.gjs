@@ -3,6 +3,6 @@ import TlpFeaturedTopicsPlacement from "../../components/tlp-featured-topics-pla
 export default <template>
   <TlpFeaturedTopicsPlacement
     @category={{@outletArgs.category}}
-    @placement="Above topic list"
+    @placement="Above navigation controls"
   />
 </template>
