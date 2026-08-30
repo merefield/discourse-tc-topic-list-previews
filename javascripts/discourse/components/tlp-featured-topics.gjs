@@ -22,6 +22,8 @@ export default class TlpFeaturedTopicsComponent extends Component {
   @tracked featuredTitle = "";
   @tracked featuredTopics = [];
 
+  featuredTopicsLoadId = 0;
+
   constructor() {
     super(...arguments);
     this.appEvents.trigger("topic:refresh-timeline-position");
@@ -34,6 +36,7 @@ export default class TlpFeaturedTopicsComponent extends Component {
 
   @action
   async getFeaturedTopics() {
+    const loadId = ++this.featuredTopicsLoadId;
     const source = settings.topic_list_featured_images_tag.trim();
 
     if (!this.featuredImagesEnabled || source.length === 0) {
@@ -65,6 +68,10 @@ export default class TlpFeaturedTopicsComponent extends Component {
       store: this.store,
       userId: this.currentUser?.id,
     });
+
+    if (loadId !== this.featuredTopicsLoadId) {
+      return;
+    }
 
     if (typeof list !== "undefined") {
       let topics = [...(list.topics ?? list.topic_list?.topics ?? [])].filter(
