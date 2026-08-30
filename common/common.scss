@@ -620,8 +620,7 @@ button.list-button {
         z-index: 0;
       }
 
-      .content,
-      .content a {
+      .content {
         z-index: -2;
         color: transparent;
         background-color: transparent;
@@ -630,6 +629,11 @@ button.list-button {
         padding: 15px;
         position: absolute;
         inset: 0;
+
+        a {
+          color: transparent;
+          background-color: transparent;
+        }
 
         .title {
           font-weight: 700;
@@ -657,10 +661,13 @@ button.list-button {
         transition: background-color 200ms linear;
       }
 
-      .content,
-      .content a {
+      .content {
         color: white;
         z-index: 2;
+
+        a {
+          color: white;
+        }
 
         .excerpt {
           font-size: smaller;
@@ -697,6 +704,28 @@ button.list-button {
           overflow: hidden;
         }
       }
+
+      .featured-details__heading {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5em;
+
+        .title {
+          flex: 1;
+          min-width: 0;
+          overflow-wrap: anywhere;
+        }
+
+        .featured-details__author {
+          flex: 0 0 auto;
+          margin-inline-start: auto;
+        }
+      }
+    }
+
+    .featured-details__author {
+      display: inline-block;
+      line-height: 0;
     }
   }
 

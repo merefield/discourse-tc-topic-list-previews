@@ -276,7 +276,7 @@ topic_list_featured_details_desktop:
     - Over on hover
     - Always over
   description:
-    en: "Display featured image details below the image, over the image on hover, or always over the image on desktop. Under-image details omit the username and avatar."
+    en: "Display featured image details below the image, over the image on hover, or always over the image on desktop."
 topic_list_featured_details_mobile:
   default: Over
   type: enum
@@ -284,7 +284,17 @@ topic_list_featured_details_mobile:
     - Over
     - Under
   description:
-    en: "Display featured image details over or below the image on mobile. Under-image details omit the username and avatar."
+    en: "Display featured image details over or below the image on mobile."
+topic_list_featured_author_desktop:
+  default: true
+  type: bool
+  description:
+    en: "Show the featured topic author on desktop. Over-image details show the username and avatar; under-image details show a clickable avatar beside the title."
+topic_list_featured_author_mobile:
+  default: true
+  type: bool
+  description:
+    en: "Show the featured topic author on mobile. Over-image details show the username and avatar; under-image details show only the avatar beside the title."
 topic_list_test_image_url_timeout:
   default: 5000
   type: integer

@@ -3,6 +3,7 @@ import { service } from "@ember/service";
 import { trustHTML } from "@ember/template";
 import avatar from "discourse/helpers/avatar";
 import concatClass from "discourse/helpers/concat-class";
+import DUserLink from "discourse/ui-kit/d-user-link";
 import PreviewsThumbnail from "./previews-thumbnail";
 
 export default class TlpFeaturedTopicComponent extends Component {
@@ -59,6 +60,10 @@ export default class TlpFeaturedTopicComponent extends Component {
     return this.detailsPresentation === "Under" ? "--under" : "--over";
   }
 
+  get isDesktop() {
+    return this.capabilities.viewport.sm;
+  }
+
   get detailsVisibilityClass() {
     return this.detailsPresentation === "Always over" ||
       (!this.capabilities.viewport.sm && this.detailsPresentation === "Over")
@@ -66,8 +71,18 @@ export default class TlpFeaturedTopicComponent extends Component {
       : "";
   }
 
-  get showAttribution() {
-    return this.detailsPositionClass === "--over";
+  get showAuthor() {
+    return this.isDesktop
+      ? settings.topic_list_featured_author_desktop
+      : settings.topic_list_featured_author_mobile;
+  }
+
+  get showOverImageAuthor() {
+    return this.showAuthor && this.detailsPositionClass === "--over";
+  }
+
+  get showUnderImageAuthor() {
+    return this.showAuthor && this.detailsPositionClass === "--under";
   }
 
   <template>
@@ -83,18 +98,45 @@ export default class TlpFeaturedTopicComponent extends Component {
           <PreviewsThumbnail @topic={{@topic}} />
         </div>
         <div class="content">
-          <div class="title">
-            {{@topic.title}}
+          <div class="featured-details__heading">
+            <div class="title">
+              {{@topic.title}}
+            </div>
+            {{#if this.showUnderImageAuthor}}
+              {{#if this.isDesktop}}
+                <DUserLink
+                  @user={{this.featuredUser}}
+                  class="featured-details__author"
+                >
+                  {{avatar this.featuredUser imageSize="small"}}
+                </DUserLink>
+              {{else}}
+                <span class="featured-details__author">
+                  {{avatar this.featuredUser imageSize="small"}}
+                </span>
+              {{/if}}
+            {{/if}}
           </div>
           {{#if this.featuredExcerpt}}
             <div class="excerpt">
               {{trustHTML this.featuredExcerpt}}
             </div>
           {{/if}}
-          {{#if this.showAttribution}}
+          {{#if this.showOverImageAuthor}}
             <span class="user">
               {{this.featuredUsername}}
-              {{avatar this.featuredUser imageSize="small"}}
+              {{#if this.isDesktop}}
+                <DUserLink
+                  @user={{this.featuredUser}}
+                  class="featured-details__author"
+                >
+                  {{avatar this.featuredUser imageSize="small"}}
+                </DUserLink>
+              {{else}}
+                <span class="featured-details__author">
+                  {{avatar this.featuredUser imageSize="small"}}
+                </span>
+              {{/if}}
             </span>
           {{/if}}
         </div>
