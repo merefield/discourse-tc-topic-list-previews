@@ -256,20 +256,35 @@ topic_list_featured_title:
   type: string
   description:
     en: "Featured images title. Supports Markdown."
-topic_list_featured_excerpt:
-  default: 100
+topic_list_featured_excerpt_desktop:
+  default: 0
+  min: 0
   type: integer
   description:
-    en: "Include topic excerpt in featured image and determine its length.  Set it to 0 for don't include"
-topic_list_featured_details_always_show:
-  default: only on hover
+    en: "Maximum number of excerpt characters shown with featured images on desktop. Set to 0 to hide excerpts."
+topic_list_featured_excerpt_mobile:
+  default: 0
+  min: 0
+  type: integer
+  description:
+    en: "Maximum number of excerpt characters shown with featured images on mobile. Set to 0 to hide excerpts."
+topic_list_featured_details_desktop:
+  default: Under
   type: enum
   choices:
-    - only on hover
-    - mobile device
-    - always
+    - Under
+    - Over on hover
+    - Always over
   description:
-    en: "Always show details in featured image"
+    en: "Display featured image details below the image, over the image on hover, or always over the image on desktop. Under-image details omit the username and avatar."
+topic_list_featured_details_mobile:
+  default: Over
+  type: enum
+  choices:
+    - Over
+    - Under
+  description:
+    en: "Display featured image details over or below the image on mobile. Under-image details omit the username and avatar."
 topic_list_test_image_url_timeout:
   default: 5000
   type: integer

@@ -606,6 +606,14 @@ button.list-button {
     .featured-details {
       position: relative;
 
+      &__image {
+        overflow: hidden;
+
+        > a {
+          display: block;
+        }
+      }
+
       img.thumbnail {
         min-height: var(--featured-thumbnail-height);
         width: auto;
@@ -642,9 +650,9 @@ button.list-button {
       }
     }
 
-    .featured-details:hover,
-    .featured-details.always-show {
-      img {
+    .featured-details.--over:hover,
+    .featured-details.--over.is-always-visible {
+      .featured-details__image img.thumbnail {
         filter: brightness(55%);
         transition: background-color 200ms linear;
       }
@@ -666,6 +674,27 @@ button.list-button {
         img {
           filter: brightness(100%);
           visibility: visible;
+        }
+      }
+    }
+
+    .featured-details.--under {
+      .content {
+        position: static;
+        z-index: auto;
+        padding: 0.75em 0 0;
+        color: var(--primary);
+
+        a {
+          position: static;
+          z-index: auto;
+          padding: 0;
+          color: var(--tertiary);
+        }
+
+        .excerpt {
+          font-size: smaller;
+          overflow: hidden;
         }
       }
     }
@@ -770,7 +799,7 @@ button.list-button {
     width: 100%;
     padding-inline-end: 0;
 
-    .featured-details {
+    .featured-details__image {
       overflow: hidden;
       max-height: var(--featured-thumbnail-height);
 
@@ -814,7 +843,7 @@ button.list-button {
 
   .tlp-featured-topics.has-topics.--carousel
     .tlp-featured-topic
-    .featured-details {
+    .featured-details__image {
     max-height: var(--featured-thumbnail-height-mobile);
   }
 
