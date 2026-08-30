@@ -112,6 +112,21 @@ export default class TlpFeaturedTopicsCarouselComponent extends Component {
     });
   }
 
+  get positionDots() {
+    if (!this.capabilities.viewport.sm && this.topics.length <= 7) {
+      return this.topics.map((_topic, index) => ({
+        id: `topic-${index}`,
+        isActive: index === this.position,
+      }));
+    }
+
+    return [
+      { id: "start", isActive: this.atStart },
+      { id: "middle", isActive: this.inMiddle },
+      { id: "end", isActive: this.atEnd },
+    ];
+  }
+
   get trackStyle() {
     const desktopOffset = (this.position * 100) / this.desktopVisibleCount;
     const desktopGapOffset =
@@ -402,20 +417,13 @@ export default class TlpFeaturedTopicsCarouselComponent extends Component {
     </div>
     <div class="tlp-featured-topics__position">
       <span class="sr-only">{{this.positionLabel}}</span>
-      <span
-        aria-hidden="true"
-        class="tlp-featured-topics__position-dot
-          {{if this.atStart 'is-active'}}"
-      ></span>
-      <span
-        aria-hidden="true"
-        class="tlp-featured-topics__position-dot
-          {{if this.inMiddle 'is-active'}}"
-      ></span>
-      <span
-        aria-hidden="true"
-        class="tlp-featured-topics__position-dot {{if this.atEnd 'is-active'}}"
-      ></span>
+      {{#each this.positionDots key="id" as |dot|}}
+        <span
+          aria-hidden="true"
+          class="tlp-featured-topics__position-dot
+            {{if dot.isActive 'is-active'}}"
+        ></span>
+      {{/each}}
     </div>
   </template>
 }

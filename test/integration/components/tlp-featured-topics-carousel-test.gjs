@@ -18,6 +18,12 @@ const TOPICS = [
   { id: 4, title: "Four" },
   { id: 5, title: "Five" },
 ];
+const SEVEN_TOPICS = [
+  ...TOPICS,
+  { id: 6, title: "Six" },
+  { id: 7, title: "Seven" },
+];
+const EIGHT_TOPICS = [...SEVEN_TOPICS, { id: 8, title: "Eight" }];
 
 class A11yStub extends Service {
   announce() {}
@@ -49,6 +55,9 @@ module("Integration | Component | TlpFeaturedTopicsCarousel", function (hooks) {
     assert
       .dom(".tlp-featured-topics__slide")
       .exists({ count: 5 }, "all topics are rendered in the track");
+    assert
+      .dom(".tlp-featured-topics__position-dot")
+      .exists({ count: 3 }, "desktop retains the compact position indicator");
     assert
       .dom(".tlp-featured-topics__track")
       .hasAttribute(
@@ -123,6 +132,7 @@ module("Integration | Component | TlpFeaturedTopicsCarousel", function (hooks) {
   test("mobile drag advances a single-image window", async function (assert) {
     this.owner.unregister("service:capabilities");
     this.owner.register("service:capabilities", MobileCapabilitiesStub);
+    this.topics = SEVEN_TOPICS;
 
     await render(
       <template>
@@ -131,6 +141,16 @@ module("Integration | Component | TlpFeaturedTopicsCarousel", function (hooks) {
         </TlpFeaturedTopicsCarousel>
       </template>
     );
+
+    assert
+      .dom(".tlp-featured-topics__position-dot")
+      .exists(
+        { count: 7 },
+        "a mobile list of seven topics renders one dot per topic"
+      );
+    assert
+      .dom(".tlp-featured-topics__position-dot.is-active")
+      .exists({ count: 1 }, "only the first topic dot is initially active");
 
     const viewport = find(".tlp-featured-topics__viewport");
     Object.defineProperty(viewport, "clientWidth", { value: 300 });
@@ -152,9 +172,42 @@ module("Integration | Component | TlpFeaturedTopicsCarousel", function (hooks) {
 
     assert
       .dom(".tlp-featured-topics__position .sr-only")
-      .hasText("2–2 of 5 featured topics", "the drag advances one image");
+      .hasText("2–2 of 7 featured topics", "the drag advances one image");
     assert
       .dom(".tlp-featured-topics__position-dot:nth-child(3)")
-      .hasClass("is-active", "the middle dot is active");
+      .hasClass("is-active", "the second topic dot is active");
+    assert
+      .dom(".tlp-featured-topics__position-dot.is-active")
+      .exists({ count: 1 }, "only the current topic dot is active");
+  });
+
+  test("mobile lists longer than seven topics use the compact indicator", async function (assert) {
+    this.owner.unregister("service:capabilities");
+    this.owner.register("service:capabilities", MobileCapabilitiesStub);
+    this.topics = EIGHT_TOPICS;
+
+    await render(
+      <template>
+        <TlpFeaturedTopicsCarousel @topics={{this.topics}} as |topic|>
+          <span>{{topic.title}}</span>
+        </TlpFeaturedTopicsCarousel>
+      </template>
+    );
+
+    assert
+      .dom(".tlp-featured-topics__position-dot")
+      .exists(
+        { count: 3 },
+        "a mobile list of eight topics retains the compact indicator"
+      );
+    assert
+      .dom(".tlp-featured-topics__position-dot:nth-child(2)")
+      .hasClass("is-active", "the beginning dot is active");
+
+    await triggerKeyEvent(".tlp-featured-topics__viewport", "keydown", "End");
+
+    assert
+      .dom(".tlp-featured-topics__position-dot:nth-child(4)")
+      .hasClass("is-active", "the end dot becomes active");
   });
 });
