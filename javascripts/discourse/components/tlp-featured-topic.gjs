@@ -3,11 +3,12 @@ import { service } from "@ember/service";
 import { trustHTML } from "@ember/template";
 import avatar from "discourse/helpers/avatar";
 import concatClass from "discourse/helpers/concat-class";
+import DUserLink from "discourse/ui-kit/d-user-link";
 import PreviewsThumbnail from "./previews-thumbnail";
 
 export default class TlpFeaturedTopicComponent extends Component {
+  @service capabilities;
   @service currentUser;
-  @service site;
 
   get featuredUser() {
     return this.args.topic.posters[0].user;
@@ -18,9 +19,17 @@ export default class TlpFeaturedTopicComponent extends Component {
   }
 
   get featuredExcerpt() {
-    return settings.topic_list_featured_excerpt > 0 && this.args.topic.excerpt
-      ? this.args.topic.excerpt.slice(0, settings.topic_list_featured_excerpt)
+    return this.featuredExcerptLength > 0 && this.args.topic.excerpt
+      ? this.args.topic.excerpt.slice(0, this.featuredExcerptLength)
       : false;
+  }
+
+  get featuredExcerptLength() {
+    const configuredLength = this.capabilities.viewport.sm
+      ? settings.topic_list_featured_excerpt_desktop
+      : settings.topic_list_featured_excerpt_mobile;
+
+    return Math.max(0, Number(configuredLength) || 0);
   }
 
   get featuredTags() {
@@ -41,31 +50,95 @@ export default class TlpFeaturedTopicComponent extends Component {
     return `/t/${this.args.topic.id}`;
   }
 
-  get alwaysShowDetails() {
-    return settings.topic_list_featured_details_always_show === "always" ||
-      (this.site.mobileView &&
-        settings.topic_list_featured_details_always_show === "mobile device")
-      ? "always-show"
+  get detailsPresentation() {
+    return this.capabilities.viewport.sm
+      ? settings.topic_list_featured_details_desktop
+      : settings.topic_list_featured_details_mobile;
+  }
+
+  get detailsPositionClass() {
+    return this.detailsPresentation === "Under" ? "--under" : "--over";
+  }
+
+  get isDesktop() {
+    return this.capabilities.viewport.sm;
+  }
+
+  get detailsVisibilityClass() {
+    return this.detailsPresentation === "Always over" ||
+      (!this.capabilities.viewport.sm && this.detailsPresentation === "Over")
+      ? "is-always-visible"
       : "";
+  }
+
+  get showAuthor() {
+    return this.isDesktop
+      ? settings.topic_list_featured_author_desktop
+      : settings.topic_list_featured_author_mobile;
+  }
+
+  get showOverImageAuthor() {
+    return this.showAuthor && this.detailsPositionClass === "--over";
+  }
+
+  get showUnderImageAuthor() {
+    return this.showAuthor && this.detailsPositionClass === "--under";
   }
 
   <template>
     <a href={{this.href}} class="tlp-featured-topic {{this.featuredTag}}">
-      <div class={{concatClass "featured-details" this.alwaysShowDetails}}>
-        <PreviewsThumbnail @topic={{@topic}} />
+      <div
+        class={{concatClass
+          "featured-details"
+          this.detailsPositionClass
+          this.detailsVisibilityClass
+        }}
+      >
+        <div class="featured-details__image">
+          <PreviewsThumbnail @topic={{@topic}} />
+        </div>
         <div class="content">
-          <div class="title">
-            {{@topic.title}}
+          <div class="featured-details__heading">
+            <div class="title">
+              {{@topic.title}}
+            </div>
+            {{#if this.showUnderImageAuthor}}
+              {{#if this.isDesktop}}
+                <DUserLink
+                  @user={{this.featuredUser}}
+                  class="featured-details__author"
+                >
+                  {{avatar this.featuredUser imageSize="small"}}
+                </DUserLink>
+              {{else}}
+                <span class="featured-details__author">
+                  {{avatar this.featuredUser imageSize="small"}}
+                </span>
+              {{/if}}
+            {{/if}}
           </div>
           {{#if this.featuredExcerpt}}
             <div class="excerpt">
               {{trustHTML this.featuredExcerpt}}
             </div>
           {{/if}}
-          <span class="user">
-            {{this.featuredUsername}}
-            {{avatar this.featuredUser imageSize="small"}}
-          </span>
+          {{#if this.showOverImageAuthor}}
+            <span class="user">
+              {{this.featuredUsername}}
+              {{#if this.isDesktop}}
+                <DUserLink
+                  @user={{this.featuredUser}}
+                  class="featured-details__author"
+                >
+                  {{avatar this.featuredUser imageSize="small"}}
+                </DUserLink>
+              {{else}}
+                <span class="featured-details__author">
+                  {{avatar this.featuredUser imageSize="small"}}
+                </span>
+              {{/if}}
+            </span>
+          {{/if}}
         </div>
       </div>
     </a>
