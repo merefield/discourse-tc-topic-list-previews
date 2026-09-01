@@ -46,8 +46,14 @@ module("Integration | Component | TlpFeaturedTopicsCarousel", function (hooks) {
   test("desktop navigation moves a spaced three-image row through the topics", async function (assert) {
     await render(
       <template>
-        <TlpFeaturedTopicsCarousel @topics={{this.topics}} as |topic|>
-          <span class="test-topic">{{topic.title}}</span>
+        <TlpFeaturedTopicsCarousel @topics={{this.topics}}>
+          <:default as |topic|>
+            <span class="test-topic">{{topic.title}}</span>
+          </:default>
+
+          <:positionTrailing>
+            <span class="featured-source">Featured</span>
+          </:positionTrailing>
         </TlpFeaturedTopicsCarousel>
       </template>
     );
@@ -58,6 +64,9 @@ module("Integration | Component | TlpFeaturedTopicsCarousel", function (hooks) {
     assert
       .dom(".tlp-featured-topics__position-dot")
       .exists({ count: 3 }, "desktop retains the compact position indicator");
+    assert
+      .dom(".tlp-featured-topics__position-trailing .featured-source")
+      .hasText("Featured", "the position row exposes trailing content");
     assert
       .dom(".tlp-featured-topics__track")
       .hasAttribute(

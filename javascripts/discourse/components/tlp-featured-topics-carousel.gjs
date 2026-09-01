@@ -416,14 +416,22 @@ export default class TlpFeaturedTopicsCarouselComponent extends Component {
       />
     </div>
     <div class="tlp-featured-topics__position">
-      <span class="sr-only">{{this.positionLabel}}</span>
-      {{#each this.positionDots key="id" as |dot|}}
-        <span
-          aria-hidden="true"
-          class="tlp-featured-topics__position-dot
-            {{if dot.isActive 'is-active'}}"
-        ></span>
-      {{/each}}
+      <div class="tlp-featured-topics__position-dots">
+        <span class="sr-only">{{this.positionLabel}}</span>
+        {{#each this.positionDots key="id" as |dot|}}
+          <span
+            aria-hidden="true"
+            class="tlp-featured-topics__position-dot
+              {{if dot.isActive 'is-active'}}"
+          ></span>
+        {{/each}}
+      </div>
+
+      {{#if (has-block "positionTrailing")}}
+        <div class="tlp-featured-topics__position-trailing">
+          {{yield to="positionTrailing"}}
+        </div>
+      {{/if}}
     </div>
   </template>
 }

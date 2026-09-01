@@ -730,7 +730,7 @@ button.list-button {
   }
 
   .featured-source {
-    margin-top: 10px;
+    margin-block: 10px;
     padding-inline-end: 10px;
     float: inline-end;
   }
@@ -804,10 +804,30 @@ button.list-button {
   }
 
   &__position {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(max-content, 1fr);
+    align-items: center;
+    gap: 0.75em;
+    margin-block: 0.75em;
+  }
+
+  &__position-dots {
     display: flex;
+    grid-column: 2;
     justify-content: center;
     gap: 0.5em;
-    margin-block-start: 0.75em;
+  }
+
+  &__position-trailing {
+    grid-column: 3;
+    justify-self: end;
+    text-align: end;
+
+    .featured-source {
+      margin-block: 0;
+      padding-inline-end: 0;
+      float: none;
+    }
   }
 
   &__position-dot {
