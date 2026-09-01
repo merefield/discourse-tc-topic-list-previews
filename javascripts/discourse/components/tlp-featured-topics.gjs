@@ -178,8 +178,24 @@ export default class TlpFeaturedTopicsComponent extends Component {
           </div>
         {{/if}}
         {{#if this.carouselView}}
-          <TlpFeaturedTopicsCarousel @topics={{this.featuredTopics}} as |topic|>
-            <TlpFeaturedTopic @topic={{topic}} />
+          <TlpFeaturedTopicsCarousel @topics={{this.featuredTopics}}>
+            <:default as |topic|>
+              <TlpFeaturedTopic @topic={{topic}} />
+            </:default>
+
+            <:positionTrailing>
+              {{#if this.showFeaturedSource}}
+                <div class="featured-source">
+                  {{#if this.featuredCategory}}
+                    {{dCategoryBadge this.featuredCategory link=true}}
+                  {{else}}
+                    {{#each this.featuredTags as |tag|}}
+                      {{dDiscourseTag tag}}
+                    {{/each}}
+                  {{/if}}
+                </div>
+              {{/if}}
+            </:positionTrailing>
           </TlpFeaturedTopicsCarousel>
         {{else}}
           <div class="topics">
@@ -188,17 +204,19 @@ export default class TlpFeaturedTopicsComponent extends Component {
             {{/each}}
           </div>
         {{/if}}
-        {{#if this.showFeaturedSource}}
-          <div class="featured-source">
-            {{#if this.featuredCategory}}
-              {{dCategoryBadge this.featuredCategory link=true}}
-            {{else}}
-              {{#each this.featuredTags as |tag|}}
-                {{dDiscourseTag tag}}
-              {{/each}}
-            {{/if}}
-          </div>
-        {{/if}}
+        {{#unless this.carouselView}}
+          {{#if this.showFeaturedSource}}
+            <div class="featured-source">
+              {{#if this.featuredCategory}}
+                {{dCategoryBadge this.featuredCategory link=true}}
+              {{else}}
+                {{#each this.featuredTags as |tag|}}
+                  {{dDiscourseTag tag}}
+                {{/each}}
+              {{/if}}
+            </div>
+          {{/if}}
+        {{/unless}}
       {{/if}}
     </div>
   </template>
