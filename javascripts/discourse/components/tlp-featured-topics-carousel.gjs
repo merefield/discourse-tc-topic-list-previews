@@ -390,6 +390,7 @@ export default class TlpFeaturedTopicsCarouselComponent extends Component {
           onDrag=this.onDrag
           onDragEnd=this.onDragEnd
           onDragCancel=this.onDragCancel
+          cancelCommits=this.capabilities.isIOS
           draggingClass="is-dragging"
           threshold=4
           touchAction="pan-y"

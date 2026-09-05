@@ -34,6 +34,10 @@ class MobileCapabilitiesStub extends Service {
   viewport = { sm: false };
 }
 
+class IOSMobileCapabilitiesStub extends MobileCapabilitiesStub {
+  isIOS = true;
+}
+
 module("Integration | Component | TlpFeaturedTopicsCarousel", function (hooks) {
   setupRenderingTest(hooks);
 
@@ -189,6 +193,57 @@ module("Integration | Component | TlpFeaturedTopicsCarousel", function (hooks) {
       .dom(".tlp-featured-topics__position-dot.is-active")
       .exists({ count: 1 }, "only the current topic dot is active");
   });
+
+  for (const { platform, capabilities, expectedPosition } of [
+    {
+      platform: "iOS",
+      capabilities: IOSMobileCapabilitiesStub,
+      expectedPosition: "2–2 of 5 featured topics",
+    },
+    {
+      platform: "Android",
+      capabilities: MobileCapabilitiesStub,
+      expectedPosition: "1–1 of 5 featured topics",
+    },
+  ]) {
+    test(`${platform} handles a cancelled mobile drag`, async function (assert) {
+      this.owner.unregister("service:capabilities");
+      this.owner.register("service:capabilities", capabilities);
+
+      await render(
+        <template>
+          <TlpFeaturedTopicsCarousel @topics={{this.topics}} as |topic|>
+            <span>{{topic.title}}</span>
+          </TlpFeaturedTopicsCarousel>
+        </template>
+      );
+
+      const viewport = find(".tlp-featured-topics__viewport");
+      Object.defineProperty(viewport, "clientWidth", { value: 300 });
+      stubPointerCapture(viewport);
+
+      await triggerEvent(viewport, "pointerdown", {
+        button: 0,
+        pointerId: 1,
+        clientX: 280,
+      });
+      await triggerEvent(viewport, "pointermove", {
+        pointerId: 1,
+        clientX: 20,
+      });
+      await triggerEvent(viewport, "pointercancel", {
+        pointerId: 1,
+        clientX: 20,
+      });
+
+      assert
+        .dom(".tlp-featured-topics__position .sr-only")
+        .hasText(
+          expectedPosition,
+          "iOS commits the swipe while Android retains cancellation behaviour"
+        );
+    });
+  }
 
   test("mobile lists longer than seven topics use the compact indicator", async function (assert) {
     this.owner.unregister("service:capabilities");
