@@ -240,7 +240,7 @@ module("Integration | Component | TlpFeaturedTopicsCarousel", function (hooks) {
         .dom(".tlp-featured-topics__position .sr-only")
         .hasText(
           expectedPosition,
-          "iOS commits the swipe while Android retains cancellation behaviour"
+          `${platform} shows ${expectedPosition} after pointer cancellation`
         );
     });
   }
